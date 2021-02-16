@@ -1,0 +1,41 @@
+/name "test simple config"
+
+/farms {
+  /farm_with_full_cache {
+    /cache {
+      /docroot "/opt/dispatcher/cache"
+      /statfile  "/tmp/dispatcher-website.stat?lang=en"
+      /allowAuthorized "0"
+      /rules {
+        /0000  {  /glob "*"   /type "deny" }
+        /0001  {  /glob "*.html" /type "allow" }
+      }
+      /invalidate {
+        /0000  { /glob "*" /type "deny" }
+        /0001  { /glob "*.html" /type "allow" }
+      }
+      /statfileslevel 2
+      /serveStaleOnError "1"
+      /gracePeriod 2
+      /enableTTL "1"
+      /invalidateHandler "/opt/dispatcher/scripts/invalidate.sh?lang=en"
+      /allowedClients {
+        /0001 { /glob "*.*.*.*"  /type "deny" }
+        /0002 { /glob "127.0.0.1" /type "allow" }
+      }
+      /ignoreUrlParams {
+        /0001 { /glob "*" /type "deny" }
+        /0002 { /glob "q" /type "allow" }
+      }
+      /headers{
+        "Cache-Control"
+        "Content-Disposition"
+        "Content-Type"
+        "Expires"
+        "Last-Modified"
+        "X-Content-Type-Options"
+        "Last-Modified"
+      }
+      /mode 2222
+    }
+}

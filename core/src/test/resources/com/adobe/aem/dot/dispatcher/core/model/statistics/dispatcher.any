@@ -1,0 +1,7 @@
+/name "test session Management config"
+/farms {
+  /statistics_farm {
+    $include "statistics.any"
+              }
+
+  }

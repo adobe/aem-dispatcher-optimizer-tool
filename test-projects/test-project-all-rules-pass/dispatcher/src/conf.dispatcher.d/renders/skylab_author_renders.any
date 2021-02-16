@@ -1,0 +1,6 @@
+## Add values for author instances you'll pull content from
+/0 {
+  /hostname "127.0.0.1"
+  /port "4502"
+  /timeout "10000"
+}

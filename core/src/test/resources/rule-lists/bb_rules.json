@@ -1,0 +1,24 @@
+{
+  "mergeMode": "EXTEND",
+  "rules": [
+    {
+      "id": "AEMRules3:Disp-1",
+      "description": "ignoreUrlParams should be configured in an allow list manner, by specifying a `/0001 { /glob \"*\" /type \"allow\" }` rule first then \"deny\"-ing specific known parameters",
+      "severity": "CRITICAL",
+      "farmTypeList": ["PUBLISH"],
+      "element": "top.cache.ignoreUrlParams",
+      "tags": ["new-tag"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "RULE_LIST_STARTS_WITH",
+          "ruleValue": {
+            "glob": "*",
+            "type": "DENY"
+          },
+          "failIf": true
+        }
+      ]
+    }
+  ]
+}

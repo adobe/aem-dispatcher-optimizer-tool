@@ -1,0 +1,11 @@
+### Name of the dispatcher
+/name "skylab-server"
+
+/farms {
+  $include "enabled_farms/*_farm.any"
+}
+
+/misplacedSection {
+  /misplacedProp "test"
+# deliberately not closing this section
+#}

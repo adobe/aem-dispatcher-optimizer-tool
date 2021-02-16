@@ -1,0 +1,208 @@
+{
+  "rules": [
+    {
+      "id": "DOTRules:Disp-1",
+      "description": "The Dispatcher publish farm cache should have its ignoreUrlParams rules configured in an allow list manner.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.ignoreUrlParams",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "RULE_LIST_STARTS_WITH",
+          "ruleValue": {
+            "glob": "*",
+            "type": "ALLOW"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-2",
+      "description": "The Dispatcher publish farm cache statfileslevel property should be >= 2.",
+      "severity": "MINOR",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.statfileslevel",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "INT_GREATER_OR_EQUAL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-3",
+      "description": "The Dispatcher publish farm gracePeriod property should be >= 2.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.gracePeriod",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "INT_GREATER_OR_EQUAL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-4",
+      "description": "The Dispatcher publish farm filters should contain the default `deny` rules from the 6.x.x version of the AEM archetype.",
+      "severity": "MINOR",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.filter",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "FILTER_LIST_STARTS_WITH",
+          "filterValue": {
+            "type": "DENY",
+            "url": "*"
+          },
+          "context": "The farm's filter list should start with: /0001 { /type \"deny\" /url \"*\" }"
+        },
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "selectors": "(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)",
+            "extension": "(json|xml|html|feed)"
+          },
+          "context": "The farm's filter list should include: /<id> { /type \"deny\" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed)' }"
+        },
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "method": "GET",
+            "query": "debug=*"
+          },
+          "context": "The farm's filter list should include: `/<id> { /type \"deny\" /method \"GET\" /query \"debug=*\" }`"
+        },
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "method": "GET",
+            "query": "wcmmode=*"
+          },
+          "context": "The farm's filter list should include: `/<id> { /type \"deny\" /method \"GET\" /query \"wcmmode=*\" }`"
+        },
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "path": "/content/ams/healthcheck/*"
+          },
+          "context": "The farm's filter list should include: `/<id> { /type \"deny\" /path \"/content/ams/healthcheck/*\"}`"
+        },
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "url": "/content/regent.html"
+          },
+          "context": "The farm's filter list should include: `/<id> { /type \"deny\" /url \"/content/regent.html\"}`"
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-5",
+      "description": "The Dispatcher publish farm cache should have serveStaleOnError enabled.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.serveStaleOnError",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "BOOLEAN_EQUALS",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-6",
+      "description": "The Dispatcher publish farm filters should specify the allowed Sling suffix patterns in an allow list manner.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.filter",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "url": "/content/*",
+            "suffix": "*"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-7",
+      "description": "The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.filter",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "FILTER_LIST_INCLUDES",
+          "filterValue": {
+            "type": "DENY",
+            "url": "/content/*",
+            "selectors": "*"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-8",
+      "description": "Each Dispatcher farm should have a unique name.",
+      "severity": "MINOR",
+      "farmTypeList": ["PUBLISH","AUTHOR"],
+      "element": "farm",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "IS_UNIQUE_LABEL"
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Httpd-1",
+      "description": "The 'Require all granted' directive should not be used in a VirtualHost Directory section with a root directory-path.",
+      "severity": "MINOR",
+      "element": "httpd.vhost.directory.root",
+      "type": "Code Smell",
+      "tags": ["beta","dispatcher"],
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "HAS_DIRECTIVE",
+          "directiveValue": {
+            "name": "Require",
+            "arguments": ["all", "granted"]
+          },
+          "failIf": true
+        }
+      ]
+    }
+  ]
+}

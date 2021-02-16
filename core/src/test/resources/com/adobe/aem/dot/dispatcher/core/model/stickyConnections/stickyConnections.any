@@ -1,0 +1,12 @@
+
+/stickyConnections {
+  /paths {
+    "/content/image?lang=en"       "/content/video?lang=en"
+
+    "/var/files/pdfs?lang=it"
+    "/freestuff"
+  }
+  /httpOnly "1"
+  /secure "1"
+  /unknownToken "1"
+}

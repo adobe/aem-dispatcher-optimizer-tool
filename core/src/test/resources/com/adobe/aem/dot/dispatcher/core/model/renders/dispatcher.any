@@ -1,0 +1,43 @@
+/name "test render config"
+
+/farms {
+  # Comment!
+  /filter_farm
+  {
+  /renders   {
+               /myRenderer
+                 {
+                 # hostname or IP of the renderer
+                 /hostname "aem.myCompany.com"
+                 # port of the renderer
+                 # connection timeout in milliseconds, "0" (default) waits indefinitely
+                 /timeout "0"
+       /secure "1"
+                 }
+  /mySecondRenderer
+      {
+      /hostname "127.0.0.1"
+      /port "4503"
+      /timeout "20"
+       /ipv4 "1"
+       /always-resolve "1"
+       /secure "1"
+       /receiveTimeout "10"  # Very small timeout!
+       /unknown "1"
+      }
+  /myThirdRenderer
+      {
+      /hostname "127.0.0.1"
+      /timeout "20"
+       /ipv4 "1"
+       /always-resolve "1"
+       /receiveTimeout "10"  # Very small timeout!
+       /unknown "1"
+      }
+
+    { # No name
+      /hostname "127.1.1.1"
+      }
+  }
+  }
+  }

@@ -1,0 +1,19 @@
+/name "test statistics config"
+/farms {
+  /statistics_farm {
+    /statistics
+      {
+      /categories
+        {
+          /search { /glob "*search.html" }
+          /html { /glob "*.html" }
+          /top { /glob "*.top" }
+
+
+          /others  /glob "*"
+
+              }
+      }
+              }
+
+  }

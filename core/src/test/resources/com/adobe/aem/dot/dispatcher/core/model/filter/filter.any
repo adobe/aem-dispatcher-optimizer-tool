@@ -1,0 +1,20 @@
+
+    /0001  { /glob "*" /type "deny" /unknown "2" }
+    /0002  {  /type "allow"  /url "/libs/cq/workflow/content/console*"  }
+    /hi  {
+    /path "a_path"
+     /type "deny" /url "*.asp"  }
+    /there { /type "allow" /method
+     "POST" /extension '(json|xml)'
+      /url "/content/[.]*.form.html" }
+    /tester
+       {
+       /type
+        "deny"
+          /url
+          "/huh"
+       /query "this_is_a_weird_query"
+       /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy)' /suffix "end_with_this"
+            }
+            /nobrace "1"
+    /notype { /glob "*top" /method "get" /suffix "top" }

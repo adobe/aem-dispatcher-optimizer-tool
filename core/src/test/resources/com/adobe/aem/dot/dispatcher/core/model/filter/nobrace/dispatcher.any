@@ -1,0 +1,7 @@
+/name "test no brace health_check config"
+/farms {
+  /no_brace_on_filters {
+    /filter
+    /0001 {  /type "allow"  /url "/libs/cq/workflow/content/console*"  }
+  }
+}

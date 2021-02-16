@@ -1,0 +1,15 @@
+/name "test rules config"
+/farms {
+  /rules_farm {
+  /cache
+    {
+    /docroot "/opt/dispatcher/cache"
+    /statfile  "/tmp/dispatcher-website.stat?lang=en"
+    /allowAuthorized "0"
+
+    $include "rules.any"
+                  }
+
+}  /rules_farm2 {
+  # Empty
+}}

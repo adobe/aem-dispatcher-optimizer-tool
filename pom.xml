@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.adobe.aem.dot</groupId>
+  <artifactId>dispatcher-optimizer-parent</artifactId>
+  <version>0.2.5-SNAPSHOT</version>
+  <name>Dispatcher Optimizer - Parent project</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.release.version>2.5.3</maven.release.version>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <release.tag.name.format>parent-v@{project.version}</release.tag.name.format>
+  </properties>
+
+  <scm>
+    <connection>scm:git:git@git.corp.adobe.com:Skylab/aem-dispatcher-optimizer.git</connection>
+    <developerConnection>scm:git:git@git.corp.adobe.com:Skylab/aem-dispatcher-optimizer.git</developerConnection>
+    <url>https://git.corp.adobe.com/Skylab/aem-dispatcher-optimizer</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <!-- Distribution Management -->
+  <distributionManagement>
+    <repository>
+      <id>${releaseRepository-Id}</id>
+      <name>${releaseRepository-Name}</name>
+      <url>${releaseRepository-URL}</url>
+    </repository>
+    <snapshotRepository>
+      <id>${snapshotRepository-Id}</id>
+      <name>${snapshotRepository-Name}</name>
+      <url>${snapshotRepository-URL}</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <modules>
+    <module>core</module>
+    <module>app</module>
+    <module>plugin</module>
+    <module>plugin-it</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <!-- Maven Release Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven.release.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.release</groupId>
+            <artifactId>maven-release-oddeven-policy</artifactId>
+            <version>${maven.release.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.maven.scm</groupId>
+            <artifactId>maven-scm-provider-gitexe</artifactId>
+            <version>1.9.4</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <scmCommentPrefix>[maven-scm] :</scmCommentPrefix>
+          <preparationGoals>clean install</preparationGoals>
+          <goals>deploy</goals>
+          <localCheckout>true</localCheckout>
+          <releaseProfiles>release</releaseProfiles>
+          <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
+          <tagNameFormat>${release.tag.name.format}</tagNameFormat>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

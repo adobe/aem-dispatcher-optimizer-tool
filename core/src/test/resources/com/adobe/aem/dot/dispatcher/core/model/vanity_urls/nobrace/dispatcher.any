@@ -1,0 +1,13 @@
+
+
+/name "test vanity urls no brace config"
+/farms {
+  /vanity_urls_farm {
+    /vanity_urls
+      /url "/libs/granite/dispatcher/content/very_vane.html"
+      /file "/tmp/conceited"
+      # SKip this
+      /delay 350# Confuse this
+
+  }
+ }

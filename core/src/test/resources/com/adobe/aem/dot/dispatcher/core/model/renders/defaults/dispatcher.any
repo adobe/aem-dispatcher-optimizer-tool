@@ -1,0 +1,12 @@
+/name "test render default config values"
+/farms {
+  /render_farm
+  {
+    /renders   {
+      /all_defaults_on_render { /hostname "aem.myCompany.com" }
+      /all_defaults_on_render_except_secure { /hostname "aem.myCompany.com"
+        /secure "1" }
+    }
+  }
+}
+

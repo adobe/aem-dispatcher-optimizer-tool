@@ -1,0 +1,14 @@
+"authorization"
+"proxy-authorization"
+"proxy-connection"
+"cq-action"
+"cq-handle"
+# deliberately using unmatched quotes below
+"handle'
+"action"
+"cqstats"
+"dav"
+"ms-author-via"
+"x-destination"
+"x-depth"
+"x-overwrite"

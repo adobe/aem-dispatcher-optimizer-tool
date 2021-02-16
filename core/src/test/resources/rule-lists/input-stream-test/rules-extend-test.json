@@ -1,0 +1,23 @@
+{
+  "mergeMode": "EXTEND",
+  "rules": [
+    {
+      "id": "NEWRules3:Disp-10",
+      "description": "NEW RULE!",
+      "severity": "MINOR",
+      "farmTypeList": ["PUBLISH"],
+      "element": "top.cache.ignoreUrlParams",
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "RULE_LIST_STARTS_WITH",
+          "ruleValue": {
+            "glob": "EXTENDTEST",
+            "type": "DENY"
+          },
+          "failIf": false
+        }
+      ]
+    }
+  ]
+}

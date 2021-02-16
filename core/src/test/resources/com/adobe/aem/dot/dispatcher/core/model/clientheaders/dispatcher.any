@@ -1,0 +1,7 @@
+/name "test client headers config"
+/farms {
+  /clientheaders_farm {
+  /clientheaders {
+    $include "clientheaders.any"
+  }}
+}

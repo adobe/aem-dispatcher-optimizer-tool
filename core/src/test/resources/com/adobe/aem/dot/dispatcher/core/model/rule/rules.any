@@ -1,0 +1,9 @@
+/junk "I wonder what this will do"
+
+/rules
+  {
+   /0000  { /glob "*" /type "allow" }      /stout  { /glob /en/news/'*?lang=en /type "deny" }
+   /notype { /method "get" }
+   { /glob "*/private/*" /type "deny" /extra "extra_param"  }
+
+  }

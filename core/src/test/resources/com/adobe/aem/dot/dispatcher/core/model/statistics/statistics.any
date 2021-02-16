@@ -1,0 +1,16 @@
+
+
+/statistics
+  {
+  /categories
+    {
+      /search { /glob "*search.html" }
+      /html { /glob "*.html" }
+      /top { /glob "*.top" }
+
+
+      /others  { /glob "*" /unknownToken "1" }
+
+          }
+          /unknownToken "1"
+  }

@@ -1,0 +1,6 @@
+/junk "I wonder what /hello this will do"
+
+  /directory "/usr/local/apache/.sessions"
+  /encode "md6"
+  /header "HTTP:authorization"
+  /timeout "805"

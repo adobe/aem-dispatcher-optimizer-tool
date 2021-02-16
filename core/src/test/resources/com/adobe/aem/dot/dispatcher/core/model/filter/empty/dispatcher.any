@@ -1,0 +1,14 @@
+/name "test filter config"
+
+/farms {
+  # Comment!
+  /filter_farm
+  {
+    /filter
+    {
+      /0001 { /glob "*" /type "deny" }
+      /0003
+      /0005 {  /type "allow"  /url "/libs/cq/workflow/content/console*"  }
+    }
+  }
+}

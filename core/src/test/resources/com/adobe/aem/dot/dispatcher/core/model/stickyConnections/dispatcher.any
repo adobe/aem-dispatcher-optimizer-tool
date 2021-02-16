@@ -1,0 +1,7 @@
+/name "test sticky connections config"
+/farms {
+  /stickyConnections_farm {
+    $include "stickyConnectionsFor.any"
+    $include "stickyConnections.any"
+  }
+  }

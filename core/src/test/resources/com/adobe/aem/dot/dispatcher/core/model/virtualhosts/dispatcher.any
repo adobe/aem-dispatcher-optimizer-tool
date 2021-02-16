@@ -1,0 +1,7 @@
+/name "test virtual hosts config"
+/farms {
+  /virtual_hosts_farm {
+  /virtualhosts {
+    $include "virtualhosts.any"
+  }}
+}

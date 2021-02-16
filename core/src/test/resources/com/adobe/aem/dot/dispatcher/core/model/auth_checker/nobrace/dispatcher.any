@@ -1,0 +1,42 @@
+/name "test auth_checker config"
+
+/farms {
+  # Comment!
+  /auth_checker_author_farm
+  {
+    /auth_checker
+      # request is sent to this URL with '?uri=<page>' appended
+      /url "/bin/check"
+
+      # only the requested pages matching the filter section below are checked,
+      # all other pages get delivered unchecked
+      /filter
+      {
+      /0000
+        {
+        /glob "*"
+        /type "deny"
+        }
+      /0001
+        {
+        /glob "/content/secure/*.html"
+        /type "allow"
+        }
+      }
+      # any header line returned from the auth_checker's HEAD request matching
+      # the section below will be returned as well
+      /headers
+      {
+      /0003
+        {
+        /glob "*"
+        /type "deny"
+        }
+      /whatever
+        {
+        /glob "Set-Cookie:*"
+        /type "allow"
+        }
+      }
+    }
+}

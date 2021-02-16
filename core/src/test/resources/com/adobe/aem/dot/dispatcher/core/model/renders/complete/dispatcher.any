@@ -1,0 +1,25 @@
+/name "test simple config"
+
+/farms {
+  /farm_with_full_render {
+    /renders {
+      /myRenderer {
+        /hostname "aem.myCompany.com"
+        /port "4503"
+        /timeout "0"
+        /receiveTimeout "59000"
+        /ipv4 1
+        /secure 1
+        /always-resolve 1
+      }
+      /myOtherRenderer {
+        /hostname "aem.yourCompany.com"
+        /port "4504"
+        /timeout "1"
+        /receiveTimeout "59400"
+        /ipv4 0
+        /secure 0
+        /always-resolve 0
+      }
+    }
+}

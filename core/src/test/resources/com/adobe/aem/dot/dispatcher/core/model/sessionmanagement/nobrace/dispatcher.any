@@ -1,0 +1,11 @@
+/name "test rules config"
+/farms {
+  /sessionmanagement_farm {
+    /sessionmanagement
+      /directory "/usr/local/apache/.sessions"
+      /encode "md5"
+      /header "HTTP:authorization"
+      /timeout "805"
+
+  }
+}

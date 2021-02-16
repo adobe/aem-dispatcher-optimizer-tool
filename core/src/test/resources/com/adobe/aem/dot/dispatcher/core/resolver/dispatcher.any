@@ -1,0 +1,12 @@
+/name "test config"
+
+/farms {
+  # Comment!
+  /publish {
+    /clientheaders #inline comment
+    {
+      "*"    "Cache-Control"            #    more inline comment details!
+      $include "infinite.any"
+    }
+  }
+}

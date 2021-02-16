@@ -1,0 +1,70 @@
+{
+  "mergeMode": "EXTEND",
+  "rules": [
+    {
+      "id": "DOTRules:Disp-1",
+      "description": "ignoreUrlParams should be configured in an allow list manner, by specifying a `/0001 { /glob \"*\" /type \"allow\" }` rule first then \"deny\"-ing specific known parameters",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.ignoreUrlParams",
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "RULE_LIST_STARTS_WITH",
+          "ruleValue": {
+            "glob": "TEST1*",
+            "type": "ALLOW"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEMRules2:Disp-2",
+      "description": "statfileslevel should be set to a value greater than 8 for publish farms.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.statfileslevel",
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "INT_GREATER_OR_EQUAL",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "id": "AEMRules2:Disp-3",
+      "description": "gracePeriod should be set to a value greater than 0 for publish farms.",
+      "severity": "INFO",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.cache.gracePeriod",
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "INT_GREATER_OR_EQUAL",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-5",
+      "description": "The default deny rules from the AMS-style dispatcher module of the AEM project Maven archetype should be left in-place and extended as needed.",
+      "severity": "MAJOR",
+      "farmTypeList": [
+        "PUBLISH"
+      ],
+      "element": "farm.filter",
+      "enabled": false,
+      "checks": [
+        {
+          "condition": "FILTER_LIST_STARTS_WITH",
+          "filterValue": {
+            "type": "DENY",
+            "url": "*"
+          },
+          "context": "The farm's filter list should start with: /0001 { /type \"deny\"  /url \"*\" }"
+        }
+      ]
+    }
+  ]
+}

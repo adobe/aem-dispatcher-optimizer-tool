@@ -1,0 +1,54 @@
+/name "test simple config"
+
+/farms {
+  /farm_with_everything {
+    /clientheaders { "CSRF-Token" }
+    /virtualhosts { "www.myCompany.com" }
+    /sessionmanagement {
+      /directory "/usr/local/apache/.sessions"
+      /encode "md5"
+      /header "HTTP:authorization"
+      /timeout "815"
+    }
+    /renders {
+      /myRenderer {
+        /hostname "aem.myCompany.com"
+        /port "4503"
+        /timeout "0"
+      }
+    }
+    /filter { /0001  { /glob "*" /type "deny" } }
+    /vanity_urls {
+      /url "/libs/granite/dispatcher/content/vanityUrls.html"
+      /file "/tmp/vanity_urls"
+      /delay 300
+    }
+    /cache {
+      /docroot "/opt/dispatcher/cache"
+      /statfile  "/tmp/dispatcher-website.stat?lang=en"
+      /allowAuthorized "0"
+      /rules { /0000  {  /glob "*"   /type "deny" } }
+      /invalidate { /0000  { /glob "*" /type "deny" } }
+    }
+    /statistics {
+      /categories {
+        /html { /glob "*.html" }
+        /others  { /glob "*" }
+      }
+    }
+    /stickyConnectionsFor "/myFolder"
+    /health_check { /url "/health_check.html?lang=en" }
+    /auth_checker {
+      /url "/bin/permissioncheck"
+      /filter {
+          /0000 { /glob "*" /type "deny" }
+          /0001 { /glob "/content/secure/*.html" /type "allow" }
+        }
+        /headers {
+          /0000 { /glob "*" /type "deny" }
+          /0001 { /glob "Set-Cookie:*" /type "allow" }
+        }
+    }
+    /homepage "deprecated"
+  }
+}

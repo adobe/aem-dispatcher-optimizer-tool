@@ -1,0 +1,42 @@
+{
+  "mergeMode": "REPLACE",
+  "rules": [
+    {
+      "id": "AEMRules3:Disp-1",
+      "description": "ignoreUrlParams should be configured in an allow list manner, by specifying a `/0001 { /glob \"*\" /type \"allow\" }` rule first then \"deny\"-ing specific known parameters",
+      "severity": "CRITICAL",
+      "farmTypeList": ["PUBLISH"],
+      "element": "top.cache.ignoreUrlParams",
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "RULE_LIST_STARTS_WITH",
+          "ruleValue": {
+            "glob": "TEST2*",
+            "type": "DENY"
+          },
+          "failIf": false
+        }
+      ]
+    },
+    {
+      "id": "DOTRules:Disp-4",
+      "description": "The default deny rules from the AMS-style dispatcher module of the AEM project Maven archetype should be left in-place and extended as needed.",
+      "severity": "MAJOR",
+      "farmTypeList": ["PUBLISH"],
+      "element": "farm.filter",
+      "enabled": true,
+      "checks": [
+        {
+          "condition": "FILTER_LIST_STARTS_WITH",
+          "filterValue": {
+            "type": "DENY",
+            "url": "TEST3*"
+          },
+          "context": "The farm's filter list should start with: /0001 { /type \"deny\"  /url \"*\" }",
+          "failIf": false
+        }
+      ]
+    }
+  ]
+}

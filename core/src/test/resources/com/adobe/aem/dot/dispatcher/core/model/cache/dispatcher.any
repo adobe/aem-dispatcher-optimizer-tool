@@ -1,0 +1,6 @@
+/name "test cache config"
+/farms {
+  /cache_farm {
+    $include "cache.any"
+  }
+}

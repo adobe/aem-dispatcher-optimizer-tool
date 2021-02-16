@@ -1,0 +1,33 @@
+/cache
+{
+  /docroot "/opt/dispatcher/cache"
+  /statfile "/tmp/dispatcher-website.stat?lang=en"
+  /serveStaleOnError "1"
+  /allowAuthorized "1"
+  /statfileslevel "3"
+  /invalidate
+  {
+     /0000 { /glob "*" /type "deny" }
+     /0001 { /glob "*.html" /type "allow" }
+   }
+  /invalidateHandler "/opt/dispatcher/scripts/invalidate.sh?lang=en"
+  /allowedClients
+  {
+   /0001 { /glob "*.*.*.*"  /type "deny" }
+   /0002 { /glob "127.0.0.1" /type "allow" }
+   /0003 { /glob "127.0.0.2" /type "allow" }
+  }
+  /ignoreUrlParams
+  {
+      /0001 { /glob "*" /type "deny" }
+      /0002 { /glob "q" /type "allow" }
+      /0010 { /glob "andrew" /type "allow" }
+      /0014 { /glob "top" /type "allow" }
+  }
+  /headers {
+    $include "../clientheaders/clientheaders.any"
+  }
+  /mode "0200"
+  /gracePeriod "2"
+  /enableTTL "1"
+}

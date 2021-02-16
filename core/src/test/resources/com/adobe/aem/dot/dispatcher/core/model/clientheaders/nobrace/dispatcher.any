@@ -1,0 +1,14 @@
+/name "test client headers no brace"
+/farms {
+  /clientheaders_nobrace_farm {
+    /virtualhosts
+    "no_brace_host"
+    /clientheaders
+      "CSRF-Token"
+      { "X-Forwarded-Proto" }
+      "referer"
+      "user-agent"
+      "authorization"
+
+  }
+}

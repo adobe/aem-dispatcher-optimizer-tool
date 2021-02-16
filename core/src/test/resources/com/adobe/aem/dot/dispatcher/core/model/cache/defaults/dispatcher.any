@@ -1,0 +1,17 @@
+/name "test simple config"
+
+/farms {
+  /farm_with_default_cache {
+    /cache {
+      /docroot "/opt/dispatcher/cache"
+      /statfile  "/tmp/dispatcher-website.stat?lang=en"
+      /rules { /0000  {  /glob "*"   /type "deny" } }
+      /invalidate { /0000  { /glob "*" /type "deny" } }
+      /invalidateHandler "/opt/dispatcher/scripts/invalidate.sh?lang=en"
+      /allowedClients { /0001 { /glob "*.*.*.*"  /type "deny" } }
+      /ignoreUrlParams {  /0001 { /glob "*" /type "deny" } }
+      /headers { "Cache-Control" }
+    }
+}
+
+# note missing } brace

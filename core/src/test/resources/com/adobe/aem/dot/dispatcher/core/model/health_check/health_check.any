@@ -1,0 +1,6 @@
+
+
+ /health_check {
+      /url "/health_check.html?lang=de"
+      /unknown "1"
+ }

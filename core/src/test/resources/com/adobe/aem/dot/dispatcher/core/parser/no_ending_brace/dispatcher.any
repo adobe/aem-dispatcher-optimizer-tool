@@ -1,0 +1,9 @@
+/name "test config"
+
+/farms {
+  # Comment!
+  /author1 {
+    / /clientheaders #inline comment
+    {
+      "*"    "Cache-Control"            #    more inline comment details!
+

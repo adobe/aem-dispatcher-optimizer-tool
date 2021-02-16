@@ -1,0 +1,8 @@
+/name "test session Management config"
+/farms {
+  /sessionManagement_default_farm {
+    /sessionmanagement {
+      /directory "/usr/local/apache/.sessions"
+    }
+  }
+}

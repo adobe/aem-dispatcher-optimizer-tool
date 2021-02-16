@@ -1,0 +1,18 @@
+/name "test no brace render config"
+
+/farms {
+  # Comment!
+  /filter_farm
+  {
+  /renders
+       /myRenderer
+         {
+         # hostname or IP of the renderer
+         /hostname "aem.myCompany.com"
+         # port of the renderer
+         /port "1234"
+         # connection timeout in milliseconds, "0" (default) waits indefinitely
+         /timeout "0"
+         }
+  }
+  }

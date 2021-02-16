@@ -1,0 +1,6 @@
+/name "test health_check config"
+/farms {
+  /health_check_farm {
+    $include "health_check.any"
+  }
+}

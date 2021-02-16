@@ -1,0 +1,9 @@
+/name "test session Management config"
+/farms {
+  /sessionManagement_farm {
+  /sessionmanagement {
+    $include "sessionmanagement.any"
+    }
+
+  }
+  }

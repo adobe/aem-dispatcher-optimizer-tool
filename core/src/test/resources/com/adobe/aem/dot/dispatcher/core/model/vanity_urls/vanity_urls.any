@@ -1,0 +1,10 @@
+
+
+ /vanity_urls {
+      /url "/libs/granite/dispatcher/content/very_vane.html"
+      /file "/tmp/conceited"
+      # SKip this
+      /delay # new line
+          350# Confuse this
+      /unknowntoken "1"
+ }

@@ -1,0 +1,6 @@
+/name "test rules config"
+/farms {
+  /sessionmanagement_farm {
+    /sessionmanagement {}
+  }
+}

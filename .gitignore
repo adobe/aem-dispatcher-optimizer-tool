@@ -1,0 +1,17 @@
+target/
+.DS_Store
+.settings/
+.vscode/
+.classpath
+.factorypath
+.project
+*.iml
+.idea
+validator-results/
+results/
+app/report/
+examples/
+
+# Do not check in these configurations.
+core/src/test/resources/com/adobe/aem/dot/common/analyzer/MultiConfigTests/configurations/*
+core/src/test/resources/com/adobe/aem/dot/common/analyzer/MultiConfigTests/configurations_disabled/*

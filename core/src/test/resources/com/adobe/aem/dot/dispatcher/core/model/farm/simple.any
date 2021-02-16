@@ -1,0 +1,19 @@
+/name "test_simple_config"
+/ignoreEINTR "1"
+
+/farms {
+  /simple_farm
+  {
+  {
+  }
+    # Put in the simple properties
+    /retryDelay "200"
+    /numberOfRetries 10   # Cool
+    /unavailablePenalty 2
+    /homepage "deprecated"
+    /failover "1"
+    /health_check {
+      /glob /health_check.html?lang=en
+    }
+  }
+}

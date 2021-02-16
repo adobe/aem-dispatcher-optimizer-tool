@@ -1,0 +1,7 @@
+/name "test no brace health_check config"
+/farms {
+  /health_check_farm {
+ /health_check
+      /url "/health_check.html?lang=de"
+  }
+}

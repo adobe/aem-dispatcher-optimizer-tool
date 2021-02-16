@@ -1,0 +1,22 @@
+/filter {
+  # Bad top level token - will report ERROR - this makes sure the error is benign
+  #Filter stuff in the other file
+  # Does this confuse parser ? ' { " } " ' /hello
+}
+
+/name "test filter config"
+
+/farms {
+  # Comment!
+  /filter_farm
+  {
+    /filter
+
+
+    {
+      #Filter stuff in the other file
+      # Does this confuse parser ? ' { " } " ' /hello
+      $include "filter.any"
+      }
+  }
+}

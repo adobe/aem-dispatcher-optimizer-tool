@@ -1,0 +1,6 @@
+/name "test vanity urls config"
+/farms {
+  /vanity_urls_farm {
+    $include "vanity_urls.any"
+  }
+}

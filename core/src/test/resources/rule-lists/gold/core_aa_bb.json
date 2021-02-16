@@ -1,0 +1,244 @@
+{
+  "mergeMode" : "EXTEND",
+  "rules" : [ {
+    "id" : "DOTRules:Disp-1",
+    "description" : "ignoreUrlParams short test",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.cache.ignoreUrlParams",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "RULE_LIST_STARTS_WITH",
+      "ruleValue" : {
+        "glob" : "TEST1*",
+        "type" : "ALLOW"
+      },
+      "failIf" : true
+    } ],
+    "origin" : "aa_rules.json",
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-1_en"
+  }, {
+    "id" : "DOTRules:Disp-2",
+    "description" : "The Dispatcher publish farm cache statfileslevel property should be >= 2.",
+    "severity" : "MINOR",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.cache.statfileslevel",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "INT_GREATER_OR_EQUAL",
+      "value" : "2",
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-2_en"
+  }, {
+    "id" : "DOTRules:Disp-3",
+    "description" : "The Dispatcher publish farm gracePeriod property should be >= 2.",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.cache.gracePeriod",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "INT_GREATER_OR_EQUAL",
+      "value" : "2",
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-3_en"
+  }, {
+    "id" : "DOTRules:Disp-4",
+    "description" : "The Dispatcher publish farm filters should contain the default `deny` rules from the 6.x.x version of the AEM archetype.",
+    "severity" : "MINOR",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.filter",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "FILTER_LIST_STARTS_WITH",
+      "filterValue" : {
+        "type" : "DENY",
+        "url" : "*"
+      },
+      "context" : "The farm's filter list should start with: /0001 { /type \"deny\" /url \"*\" }",
+      "failIf" : false
+    }, {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "extension" : "(json|xml|html|feed)",
+        "selectors" : "(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)"
+      },
+      "context" : "The farm's filter list should include: /<id> { /type \"deny\" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed)' }",
+      "failIf" : false
+    }, {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "method" : "GET",
+        "query" : "debug=*"
+      },
+      "context" : "The farm's filter list should include: `/<id> { /type \"deny\" /method \"GET\" /query \"debug=*\" }`",
+      "failIf" : false
+    }, {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "method" : "GET",
+        "query" : "wcmmode=*"
+      },
+      "context" : "The farm's filter list should include: `/<id> { /type \"deny\" /method \"GET\" /query \"wcmmode=*\" }`",
+      "failIf" : false
+    }, {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "path" : "/content/ams/healthcheck/*"
+      },
+      "context" : "The farm's filter list should include: `/<id> { /type \"deny\" /path \"/content/ams/healthcheck/*\"}`",
+      "failIf" : false
+    }, {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "url" : "/content/regent.html"
+      },
+      "context" : "The farm's filter list should include: `/<id> { /type \"deny\" /url \"/content/regent.html\"}`",
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-4_en"
+  }, {
+    "id" : "DOTRules:Disp-5",
+    "description" : "The Dispatcher publish farm cache should have serveStaleOnError enabled.",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.cache.serveStaleOnError",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "BOOLEAN_EQUALS",
+      "value" : "true",
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-5_en"
+  }, {
+    "id" : "DOTRules:Disp-6",
+    "description" : "The Dispatcher publish farm filters should specify the allowed Sling suffix patterns in an allow list manner.",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.filter",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "url" : "/content/*",
+        "suffix" : "*"
+      },
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-6_en"
+  }, {
+    "id" : "DOTRules:Disp-7",
+    "description" : "The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner.",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.filter",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "FILTER_LIST_INCLUDES",
+      "filterValue" : {
+        "type" : "DENY",
+        "url" : "/content/*",
+        "selectors" : "*"
+      },
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-7_en"
+  }, {
+    "id" : "DOTRules:Disp-8",
+    "description" : "Each Dispatcher farm should have a unique name.",
+    "severity" : "MINOR",
+    "farmTypeList" : [ "PUBLISH", "AUTHOR" ],
+    "element" : "farm",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "IS_UNIQUE_LABEL",
+      "failIf" : false
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-8_en"
+  }, {
+    "id" : "DOTRules:Httpd-1",
+    "description" : "The 'Require all granted' directive should not be used in a VirtualHost Directory section with a root directory-path.",
+    "severity" : "MINOR",
+    "element" : "httpd.vhost.directory.root",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "HAS_DIRECTIVE",
+      "directiveValue" : {
+        "name" : "Require",
+        "arguments" : [ "all", "granted" ]
+      },
+      "failIf" : true
+    } ],
+    "type" : "Code Smell",
+    "tags" : [ "beta", "dispatcher" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_httpd-1_en"
+  }, {
+    "id" : "AEMRules2:Disp-2",
+    "description" : "statfileslevel should be set to a value greater than 8 for publish farms.",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.cache.statfileslevel",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "INT_GREATER_OR_EQUAL",
+      "value" : "8",
+      "failIf" : false
+    } ],
+    "origin" : "aa_rules.json",
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-2_en"
+  }, {
+    "id" : "AEMRules2:Disp-3",
+    "description" : "gracePeriod should be set to a value greater than 0 for publish farms.",
+    "severity" : "INFO",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "farm.cache.gracePeriod",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "INT_GREATER_OR_EQUAL",
+      "value" : "4",
+      "failIf" : false
+    } ],
+    "origin" : "aa_rules.json",
+    "type" : "Very Bad Code Smell",
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-3_en"
+  }, {
+    "id" : "AEMRules3:Disp-1",
+    "description" : "ignoreUrlParams should be configured in an allow list manner, by specifying a `/0001 { /glob \"*\" /type \"allow\" }` rule first then \"deny\"-ing specific known parameters",
+    "severity" : "CRITICAL",
+    "farmTypeList" : [ "PUBLISH" ],
+    "element" : "top.cache.ignoreUrlParams",
+    "enabled" : true,
+    "checks" : [ {
+      "condition" : "RULE_LIST_STARTS_WITH",
+      "ruleValue" : {
+        "glob" : "*",
+        "type" : "DENY"
+      },
+      "failIf" : true
+    } ],
+    "origin" : "bb_rules.json",
+    "tags" : [ "new-tag" ],
+    "documentationURL" : "https://www.adobe.com/go/aem_cmcq_disp-1_en"
+  } ]
+}
