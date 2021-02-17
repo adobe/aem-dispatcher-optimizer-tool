@@ -49,7 +49,8 @@ public class GoUrlUtilTest {
           { "DOTRules:Disp-S3---quote-unmatched", "https://www.adobe.com/go/aem_cmcq_disp-s3---quote-unma_en" },
           { "DOTRules:Disp-S2---token-unexpected", "https://www.adobe.com/go/aem_cmcq_disp-s2---token-unex_en" },
           { "DOTRules:Disp-S1---brace-missing", "https://www.adobe.com/go/aem_cmcq_disp-s1---brace-miss_en" },
-          { "DOTRules:Disp-S5---mandatory-missing", "https://www.adobe.com/go/aem_cmcq_disp-s5---mandatory-_en" }
+          { "DOTRules:Disp-S5---mandatory-missing", "https://www.adobe.com/go/aem_cmcq_disp-s5---mandatory-_en" },
+          { "DOTRules:Disp-S7---no-dispatcher-config", "https://www.adobe.com/go/aem_cmcq_disp-s7---no-dispatc_en" }
   }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
 
   @Test

@@ -26,7 +26,6 @@ import lombok.Getter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,6 +51,7 @@ public class ConfigurationViolations {
           {"DOTRules:Disp-S4---brace-unclosed", "Unclosed brace encountered."},
           {"DOTRules:Disp-S5---mandatory-missing", " is missing mandatory "},
           {"DOTRules:Disp-S6---property-deprecated", " is deprecated."},
+          {"DOTRules:Disp-S7---no-dispatcher-config", "Could not find Dispatcher configuration file."},
           {"DOTRules:Httpd-S1---include-failed", "Include directive must include existing files."}
   }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
 
