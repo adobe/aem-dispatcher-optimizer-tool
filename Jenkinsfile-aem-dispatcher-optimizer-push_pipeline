@@ -2,13 +2,13 @@ pipeline {
     agent any
     
     environment{
-        GITHUB_CLONE_URL = 'git@git.corp.adobe.com:Skylab/aem-dispatcher-optimizer.git'
+        GITHUB_CLONE_URL = 'git@github.com:adobe/aem-dispatcher-optimizer-tool.git'
         GITHUB_CLONE_CREDENTIALS = 'dispjenk_credential'
-        GITHUB_CLONE_ORG = 'Skylab'
-        GITHUB_CLONE_REPO = 'aem-dispatcher-optimizer'
+        GITHUB_CLONE_ORG = 'adobe'
+        GITHUB_CLONE_REPO = 'aem-dispatcher-optimizer-tool'
         GITHUB_CLONE_BRANCH = 'main'
         EMAIL_ENABLED = true
-        EMAIL_RECIPIENTS = 'blefebvr@adobe.com, top@adobe.com'
+        EMAIL_RECIPIENTS = 'aem-dot@adobe.com'
     }
 
     stages{

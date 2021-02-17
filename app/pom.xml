@@ -22,9 +22,9 @@
   </properties>
 
   <scm>
-    <connection>scm:git:git@git.corp.adobe.com:Skylab/aem-dispatcher-optimizer.git</connection>
-    <developerConnection>scm:git:git@git.corp.adobe.com:Skylab/aem-dispatcher-optimizer.git</developerConnection>
-    <url>https://git.corp.adobe.com/Skylab/aem-dispatcher-optimizer/tree/main/app</url>
+    <connection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</connection>
+    <developerConnection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</developerConnection>
+    <url>https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/app</url>
     <tag>v0.2.2</tag>
   </scm>
 
