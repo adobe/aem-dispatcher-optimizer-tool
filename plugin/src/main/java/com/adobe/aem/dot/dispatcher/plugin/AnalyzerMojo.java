@@ -125,8 +125,8 @@ public class AnalyzerMojo extends AbstractMojo {
       getLog().debug("[Dispatcher Optimizer] Parsing dispatcher config...");
 
       DispatcherConfigurationFactory dispatcherFactory = new DispatcherConfigurationFactory();
-      ConfigurationParseResults<DispatcherConfiguration> dispatcherResults = dispatcherFactory.parseConfiguration(this.dispatcherModuleDir,
-              this.dispatcherConfigPath);
+      ConfigurationParseResults<DispatcherConfiguration> dispatcherResults = dispatcherFactory.parseConfiguration(
+              this.dispatcherModuleDir, this.dispatcherConfigPath);
       DispatcherConfiguration dispatcherConfiguration = dispatcherResults.getConfiguration();
 
       // Collect the violations from the Dispatcher parsing/reading (i.e. not from rule violations)
@@ -149,8 +149,10 @@ public class AnalyzerMojo extends AbstractMojo {
       AnalyzerRuleList list = AnalyzerRuleListFactory.getAnalyzerRuleList(rulesFolder);
 
       // Analyze the dispatcher configuration against the loaded rules.
-      DispatcherAnalyzer dispatcherAnalyzer = new DispatcherAnalyzer(list);
-      violationCollector.addAll(dispatcherAnalyzer.getViolations(dispatcherConfiguration, violationVerbosity));
+      if (dispatcherConfiguration != null) {
+        DispatcherAnalyzer dispatcherAnalyzer = new DispatcherAnalyzer(list);
+        violationCollector.addAll(dispatcherAnalyzer.getViolations(dispatcherConfiguration, violationVerbosity));
+      }
 
       // Analyze the Httpd configuration against the loaded rules, if it loaded.
       if (httpdConfiguration != null) {

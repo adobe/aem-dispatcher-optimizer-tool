@@ -19,7 +19,10 @@ package com.adobe.aem.dot.dispatcher.core;
 import com.adobe.aem.dot.common.ConfigurationException;
 import com.adobe.aem.dot.common.ConfigurationFileFinder;
 import com.adobe.aem.dot.common.ConfigurationLine;
+import com.adobe.aem.dot.common.ConfigurationSource;
+import com.adobe.aem.dot.common.analyzer.Severity;
 import com.adobe.aem.dot.common.parser.ConfigurationParseResults;
+import com.adobe.aem.dot.common.parser.ConfigurationViolations;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
 import com.adobe.aem.dot.dispatcher.core.parser.ConfigurationParser;
 import com.adobe.aem.dot.dispatcher.core.parser.ConfigurationSyntaxException;
@@ -81,9 +84,9 @@ public class DispatcherConfigurationFactory {
 
       // Config file was not found.
       if (dispatcherAnyFile == null) {
-        throw new ConfigurationException(
-                MessageFormat.format("Could not find \"{0}\" configuration file in \"{1}\"",
-                        DispatcherConstants.DISPATCHER_ANY, repoPath));
+        ConfigurationViolations.addViolation("Could not find Dispatcher configuration file.", Severity.MINOR,
+                new ConfigurationSource(repoPath, 0));
+        return new ConfigurationParseResults<>(null, ConfigurationViolations.getViolations());
       }
     }
 

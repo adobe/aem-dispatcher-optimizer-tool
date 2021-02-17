@@ -17,21 +17,31 @@
 package com.adobe.aem.dot.dispatcher.core;
 
 import com.adobe.aem.dot.common.ConfigurationException;
+import com.adobe.aem.dot.common.analyzer.ViolationVerbosity;
+import com.adobe.aem.dot.common.helpers.DispatcherConfigTestHelper;
 import com.adobe.aem.dot.common.helpers.PathEncodingHelper;
 import com.adobe.aem.dot.common.parser.ConfigurationParseResults;
+import com.adobe.aem.dot.common.parser.ConfigurationViolations;
+import com.adobe.aem.dot.common.util.PathUtil;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
 import com.adobe.aem.dot.dispatcher.core.model.Farm;
 import org.apache.commons.io.FilenameUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class DispatcherConfigurationFactoryTest {
+  private static DispatcherConfigTestHelper helper;
+
+  @BeforeClass
+  public static void beforeClass() {
+    helper = new DispatcherConfigTestHelper();
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void nullRepoTest() throws ConfigurationException {
@@ -59,12 +69,18 @@ public class DispatcherConfigurationFactoryTest {
     dcf.parseConfiguration("/hi", "/there");
   }
 
-  @Test(expected = ConfigurationException.class)
+  @Test
   public void folderWithNoAnyFileTest() throws ConfigurationException {
+    ConfigurationViolations.clearViolations();
     DispatcherConfigurationFactory dcf = new DispatcherConfigurationFactory();
     String classPath = PathEncodingHelper.getDecodedClassPath(this.getClass());
     // Provide valid repo path without any 'dispatcher.any' files.
-    dcf.parseConfiguration(classPath + File.separator + "util", "hi");
+    ConfigurationParseResults<DispatcherConfiguration> results = dcf.parseConfiguration(
+            PathUtil.appendPaths(classPath, "util"), "hi");
+    assertNotNull(results);
+    assertNull(results.getConfiguration());
+    assertEquals(1, results.getViolations(ViolationVerbosity.MINIMIZED).size());
+    assertTrue(ConfigurationViolations.getViolations().get(0).getContext().startsWith("Could not find Dispatcher configuration file."));
   }
 
   @Test

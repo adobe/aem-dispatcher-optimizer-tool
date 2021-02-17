@@ -49,17 +49,17 @@ public class MultiConfigHelper {
 
   // Find good identifiers from the (variable) path
   public static String getConfigurationDirectoryId(String relativeConfPath) {
-    // This is not a foolproof way to get an unique Id, but it served the purpose for the configs that were tested.
-    String pathInfo = PathUtil.stripLastPathElement(relativeConfPath);
-    String folderId = getLastPathElement(pathInfo, true);
-    pathInfo = PathUtil.stripLastPathElement(pathInfo);
-    folderId = getLastPathElement(pathInfo, false) + folderId;  // Last 2 directories in config path.
-    String[] pathParts = PathUtil.split(pathInfo);
-    if (pathParts[pathParts.length - 2].equals("configurations")) {
-      folderId = PathUtil.getLastPathElement(folderId);
+    String directoryId = "unknown";
+    String[] pathParts = PathUtil.split(relativeConfPath);
+    int i;
+    for (i = 0; i < pathParts.length - 2; i++) {
+      if (pathParts[i].equals("configurations")) {
+        directoryId = pathParts[i+2];
+        break;
+      }
     }
 
-    return folderId.indexOf(File.separatorChar) >= 0 ? PathUtil.stripLastPathElement(folderId) : folderId;
+    return directoryId;
   }
 
   /**

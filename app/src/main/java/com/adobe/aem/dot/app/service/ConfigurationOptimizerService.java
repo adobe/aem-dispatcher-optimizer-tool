@@ -115,14 +115,19 @@ public class ConfigurationOptimizerService {
 
     logger.trace("Begin DispatcherConfigService");
 
+    List<Violation> violationCollector = new ArrayList<>();
     DispatcherConfigurationFactory factory = new DispatcherConfigurationFactory();
     ConfigurationParseResults<DispatcherConfiguration> results = factory.parseConfiguration(this.repoURL, this.anyDir);
-    List<Violation> violationCollector = new ArrayList<>(results.getViolations(this.verbosity));
+    if (results != null) {
+      violationCollector.addAll(results.getViolations(this.verbosity));
 
-    // Analyze the dispatcher configuration for violations
-    DispatcherConfiguration dispatcherConfiguration = results.getConfiguration();
-    if (dispatcherConfiguration != null) {
-      violationCollector.addAll(this.dispatcherAnalyzer.getViolations(dispatcherConfiguration, this.verbosity));
+      // Analyze the dispatcher configuration for violations
+      DispatcherConfiguration dispatcherConfiguration = results.getConfiguration();
+      if (dispatcherConfiguration != null) {
+        violationCollector.addAll(this.dispatcherAnalyzer.getViolations(dispatcherConfiguration, this.verbosity));
+      } else {
+        logger.warn("Dispatcher configuration failed to parse correctly.");  // Probably already logged as error.
+      }
     }
 
     // Analyze the Apache Httpd configuration for violations
