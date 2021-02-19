@@ -90,12 +90,4 @@ public class ConfigurationSource {
                    .append(getLineNumber(), value.getLineNumber())
                    .isEquals();
   }
-
-  /**
-   * Return an identifier for this file including a relative path to the file.
-   * @return a string identifying this file
-   */
-  public String getFileLocation() {
-    return "dispatcher:" + this.getFileName();
-  }
 }

@@ -27,6 +27,7 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,9 @@ public class Farm extends LabeledConfigurationValue {
   private ConfigurationValue<Boolean> failOver = DEFAULT_BOOLEAN_FALSE;
   private ConfigurationValue<AuthChecker> authChecker;
 
+  private static final String PUBLISH = "PUBLISH";
+  private static final String PUBLISH_PORT = "4503";
+
   private static final Logger logger = LoggerFactory.getLogger(Farm.class);
 
   Logger getLogger() {
@@ -71,13 +75,45 @@ public class Farm extends LabeledConfigurationValue {
     return getClass().getSimpleName();
   }
 
+  /**
+   * Is this farm an author farm?
+   * @return true if it is NOT a publish farm.
+   */
   public boolean isAuthorFarm() {
-    // TODO: this is a very crude check and will be wrong much of the time
-    return this.getLabel().contains("author");
+    return !this.isPublishFarm();
   }
 
+  /**
+   * Is this farm a publish farm?
+   * @return true if it is.
+   */
   public boolean isPublishFarm() {
-    return !this.isAuthorFarm();
+    // Does the label contain "publish"?
+    boolean labelContainsPublish = this.getLabel().toUpperCase().contains(PUBLISH);
+
+    boolean filenameContainsPublish = false;
+    // Does the filename contain "publish"?
+    if (this.getLabelData() != null && this.getLabelData().getFileName() != null) {
+      String[] pathParts = this.getLabelData().getFileName().split(File.separator);
+      String fileName = pathParts[pathParts.length - 1];
+      filenameContainsPublish = fileName.toUpperCase().contains(PUBLISH);
+    }
+
+    boolean renderUsesPublishPort = false;
+    boolean renderUsesPublishHost = false;
+    // Does the first render look like a publish render?
+    if (this.getRenders() != null && this.getRenders().getValue().size() > 0) {
+      Render firstRender = this.getRenders().getValue().get(0);
+      // `/port` is often set to "${PUBLISH_PORT}" or "4503" for publish instances
+      String renderPort = firstRender.getPort() != null ? firstRender.getPort().getValue() : "";
+      renderUsesPublishPort = renderPort.toUpperCase().contains(PUBLISH) || renderPort.contains(PUBLISH_PORT);
+
+      // `/hostname` is often set to "${PUBLISH_IP}" for publish instances
+      String hostname = firstRender.getHostname() != null ? firstRender.getHostname().getValue() : "";
+      renderUsesPublishHost = hostname.toUpperCase().contains(PUBLISH);
+    }
+
+    return labelContainsPublish || filenameContainsPublish || renderUsesPublishPort || renderUsesPublishHost;
   }
 
   public static List<ConfigurationValue<Farm>> parseFarms(ConfigurationReader reader) throws ConfigurationSyntaxException {

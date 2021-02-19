@@ -125,4 +125,80 @@ public class FarmTest {
     AssertHelper.assertValues(farm.getUnavailablePenalty(), anyPath, 1, 4, DispatcherConstants.DISPATCHER_ANY, null);
     AssertHelper.assertValues(farm.getFailOver(), anyPath, false, 4, DispatcherConstants.DISPATCHER_ANY, null);
   }
+
+  @Test
+  public void testFarmType() throws ConfigurationException {
+    Farm farm = new Farm();
+
+    // Basic cases
+    farm.setLabel(new ConfigurationValue<>("publishfarm"));
+
+    assertTrue(farm.isPublishFarm());
+    assertFalse(farm.isAuthorFarm());
+
+    farm.setLabel(new ConfigurationValue<>("thepublish"));
+
+    assertTrue(farm.isPublishFarm());
+    assertFalse(farm.isAuthorFarm());
+
+    farm.setLabel(new ConfigurationValue<>("an_author_farm"));
+
+    assertTrue(farm.isAuthorFarm());
+    assertFalse(farm.isPublishFarm());
+
+    farm.setLabel(new ConfigurationValue<>("a_author"));
+
+    assertTrue(farm.isAuthorFarm());
+    assertFalse(farm.isPublishFarm());
+
+    // More difficult to determine
+    farm.setLabel(new ConfigurationValue<>("acme", "path/to/acme_publish-farm.any", 1));
+
+    assertTrue(farm.isPublishFarm());
+    assertFalse(farm.isAuthorFarm());
+
+    farm.setLabel(new ConfigurationValue<>("acme", "path/to/acme_author-farm.any", 1));
+
+    assertTrue(farm.isAuthorFarm());
+    assertFalse(farm.isPublishFarm());
+
+    // Use the render to determine
+    String absPathToComplete = DispatcherConfigTestHelper.getConfigFileAbsolutePath(this.getClass(),
+            "farm/complete/" + DispatcherConstants.DISPATCHER_ANY);
+    ConfigurationParseResults<DispatcherConfiguration> results = helper.loadDispatcherConfiguration(absPathToComplete);
+    farm = results.getConfiguration().getFarms().get(0).getValue();
+
+    // Should be able to determine that it's a publish instance by port
+    String port = farm.getRenders().getValue().get(0).getPort().getValue();
+    assertEquals("Port should be set correctly", "4503", port);
+
+    assertTrue(farm.isPublishFarm());
+    assertFalse(farm.isAuthorFarm());
+
+    // Test another config - with a telltale hostname
+    absPathToComplete = DispatcherConfigTestHelper.getConfigFileAbsolutePath(this.getClass(),
+            "farm/determine_type_with_hostname/" + DispatcherConstants.DISPATCHER_ANY);
+    results = helper.loadDispatcherConfiguration(absPathToComplete);
+    farm = results.getConfiguration().getFarms().get(0).getValue();
+
+    // Should be able to determine that it's a publish instance by hostname
+    String hostname = farm.getRenders().getValue().get(0).getHostname().getValue();
+    assertEquals("Hostname should be set correctly", "_ENV___PUBLISH_IP__", hostname);
+
+    assertTrue(farm.isPublishFarm());
+    assertFalse(farm.isAuthorFarm());
+
+    // Test another config - with a telltale hostname
+    absPathToComplete = DispatcherConfigTestHelper.getConfigFileAbsolutePath(this.getClass(),
+            "farm/determine_type_with_hostname2/" + DispatcherConstants.DISPATCHER_ANY);
+    results = helper.loadDispatcherConfiguration(absPathToComplete);
+    farm = results.getConfiguration().getFarms().get(0).getValue();
+
+    // Should be able to determine that it's a author instance by hostname
+    hostname = farm.getRenders().getValue().get(0).getHostname().getValue();
+    assertEquals("Hostname should be set correctly", "_ENV___AUTHOR_IP__", hostname);
+
+    assertTrue(farm.isAuthorFarm());
+    assertFalse(farm.isPublishFarm());
+  }
 }

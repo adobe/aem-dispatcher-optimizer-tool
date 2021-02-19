@@ -30,15 +30,6 @@ public class ConfigurationSourceTest {
   private static final String includeName = "included.txt";
 
   @Test
-  public void getFileLocationTest() {
-    ConfigurationSource configurationSource = new ConfigurationSource();
-    assertEquals("File name is not set", "dispatcher:null", configurationSource.getFileLocation());
-
-    configurationSource = new ConfigurationSource("test_file", 1);
-    assertEquals("File name is not set", "dispatcher:test_file", configurationSource.getFileLocation());
-  }
-
-  @Test
   public void basicsCheck() {
     ConfigurationSource cvs1 = new ConfigurationSource();
     assertNull("should be null", cvs1.getFileName());
