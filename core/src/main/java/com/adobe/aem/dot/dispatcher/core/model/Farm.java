@@ -62,8 +62,8 @@ public class Farm extends LabeledConfigurationValue {
   private ConfigurationValue<Boolean> failOver = DEFAULT_BOOLEAN_FALSE;
   private ConfigurationValue<AuthChecker> authChecker;
 
-  private static final String PUBLISH = "PUBLISH";
-  private static final String PUBLISH_PORT = "4503";
+  private static final String AUTHOR = "AUTHOR";
+  private static final String AUTHOR_PORT = "4502";
 
   private static final Logger logger = LoggerFactory.getLogger(Farm.class);
 
@@ -77,43 +77,43 @@ public class Farm extends LabeledConfigurationValue {
 
   /**
    * Is this farm an author farm?
-   * @return true if it is NOT a publish farm.
+   * @return true if it is.
    */
   public boolean isAuthorFarm() {
-    return !this.isPublishFarm();
+    // Does the label contain "author"?
+    boolean labelContainsAuthor = this.getLabel().toUpperCase().contains(AUTHOR);
+
+    boolean filenameContainsAuthor = false;
+    // Does the filename contain "author"?
+    if (this.getLabelData() != null && this.getLabelData().getFileName() != null) {
+      String[] pathParts = this.getLabelData().getFileName().split(File.separator);
+      String fileName = pathParts[pathParts.length - 1];
+      filenameContainsAuthor = fileName.toUpperCase().contains(AUTHOR);
+    }
+
+    boolean renderUsesAuthorPort = false;
+    boolean renderUsesAuthorHost = false;
+    // Does the first render look like an author render?
+    if (this.getRenders() != null && this.getRenders().getValue().size() > 0) {
+      Render firstRender = this.getRenders().getValue().get(0);
+      // `/port` is often set to "${AUTHOR_PORT}" or "4502" for author instances
+      String renderPort = firstRender.getPort() != null ? firstRender.getPort().getValue() : "";
+      renderUsesAuthorPort = renderPort.toUpperCase().contains(AUTHOR) || renderPort.contains(AUTHOR_PORT);
+
+      // `/hostname` is often set to "${AUTHOR_IP}" for publish instances
+      String hostname = firstRender.getHostname() != null ? firstRender.getHostname().getValue() : "";
+      renderUsesAuthorHost = hostname.toUpperCase().contains(AUTHOR);
+    }
+
+    return labelContainsAuthor || filenameContainsAuthor || renderUsesAuthorPort || renderUsesAuthorHost;
   }
 
   /**
    * Is this farm a publish farm?
-   * @return true if it is.
+   * @return true if it is NOT an author farm.
    */
   public boolean isPublishFarm() {
-    // Does the label contain "publish"?
-    boolean labelContainsPublish = this.getLabel().toUpperCase().contains(PUBLISH);
-
-    boolean filenameContainsPublish = false;
-    // Does the filename contain "publish"?
-    if (this.getLabelData() != null && this.getLabelData().getFileName() != null) {
-      String[] pathParts = this.getLabelData().getFileName().split(File.separator);
-      String fileName = pathParts[pathParts.length - 1];
-      filenameContainsPublish = fileName.toUpperCase().contains(PUBLISH);
-    }
-
-    boolean renderUsesPublishPort = false;
-    boolean renderUsesPublishHost = false;
-    // Does the first render look like a publish render?
-    if (this.getRenders() != null && this.getRenders().getValue().size() > 0) {
-      Render firstRender = this.getRenders().getValue().get(0);
-      // `/port` is often set to "${PUBLISH_PORT}" or "4503" for publish instances
-      String renderPort = firstRender.getPort() != null ? firstRender.getPort().getValue() : "";
-      renderUsesPublishPort = renderPort.toUpperCase().contains(PUBLISH) || renderPort.contains(PUBLISH_PORT);
-
-      // `/hostname` is often set to "${PUBLISH_IP}" for publish instances
-      String hostname = firstRender.getHostname() != null ? firstRender.getHostname().getValue() : "";
-      renderUsesPublishHost = hostname.toUpperCase().contains(PUBLISH);
-    }
-
-    return labelContainsPublish || filenameContainsPublish || renderUsesPublishPort || renderUsesPublishHost;
+    return !this.isAuthorFarm();
   }
 
   public static List<ConfigurationValue<Farm>> parseFarms(ConfigurationReader reader) throws ConfigurationSyntaxException {

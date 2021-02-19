@@ -16,6 +16,10 @@
 	  /delay  300
 	}
 
+	/renders {
+		$include "renders/skylab_publish_renders.any"
+	}
+
 	## allow propagation of replication posts (should seldomly be used)
 	# /propagateSyndPost "0"
 	## the cache is used to store requests from the renders for faster delivery
