@@ -42,7 +42,7 @@ public abstract class LabeledConfigurationValue implements LabeledItem {
         return this.label == null ? "" : this.label.getValue();
     }
     // This is mainly for testing ConfigurationValue parsing values.
-    ConfigurationValue<String> getLabelData() {
+    protected ConfigurationValue<String> getLabelData() {
         return this.label;
     }
 

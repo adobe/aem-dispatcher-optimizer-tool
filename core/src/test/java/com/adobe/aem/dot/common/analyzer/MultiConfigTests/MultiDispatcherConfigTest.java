@@ -64,9 +64,9 @@ public class MultiDispatcherConfigTest {
    * 'configurationId1' as its reporting identifier).
    * If using many zip files, each containing one configurations, the following steps may simplify the extraction
    * process:
-   * - place the zip files in core/src/test/resources/com/adobe/aem/common/analyzer/MultiConfigTests/configurations
+   * - place the zip files in core/src/test/resources/com/adobe/aem/dot/common/analyzer/MultiConfigTests/configurations
    * - cd to that 'analyzer/MultiConfigTests/configurations' folder
-   * - run ../scripts/unzip_configs.sh <folder>
+   * - run ../../scripts/unzip_configs.sh <folder>
    *     - will unzip each configuration
    *     - will move that zip to the 'zipfiles' folder
    * - the desired result will be configurations, each in their own folder, in the 'configurations' folders
@@ -161,9 +161,9 @@ public class MultiDispatcherConfigTest {
       }
 
       String assertMessage = "A portion of the " + files.size() + " configurations do violate the rules.";
-      assertEquals(assertMessage, 513, parseViolationsByConfig.size());  // Lots of violations.
-
       MultiConfigHelper.writeIndexHtml(configurationReportData, "dispatcherIndex.html", targetReportPath);
+
+      assertEquals(assertMessage, 513, parseViolationsByConfig.size());  // Lots of violations.
     } else {
       if (!failures.isEmpty()) {
         System.out.println("============= DISPATCHER VIOLATIONS: Parsing only ====================");

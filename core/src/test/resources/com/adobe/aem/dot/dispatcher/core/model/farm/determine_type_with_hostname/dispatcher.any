@@ -1,0 +1,31 @@
+/name "test simple config"
+
+/farms {
+  /farm {
+    /clientheaders {
+    }
+    /virtualhosts {
+    }
+    /sessionmanagement {
+    }
+    /renders {
+      /myRenderer {
+        /hostname "${PUBLISH_IP}"
+        /port "1234"
+        /timeout "0"
+      }
+    }
+    /filter {
+      /0001  { /glob "*" /type "deny" }
+      /0002 { /type "allow" /method "POST" /url "/content/[.]*.form.html" }
+    }
+    /cache {
+    }
+    /statistics {
+    }
+    /stickyConnectionsFor "/myFolder"
+    /health_check {
+      /url "/health_check.html?lang=en"
+    }
+  }
+}

@@ -27,6 +27,7 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,9 @@ public class Farm extends LabeledConfigurationValue {
   private ConfigurationValue<Boolean> failOver = DEFAULT_BOOLEAN_FALSE;
   private ConfigurationValue<AuthChecker> authChecker;
 
+  private static final String AUTHOR = "AUTHOR";
+  private static final String AUTHOR_PORT = "4502";
+
   private static final Logger logger = LoggerFactory.getLogger(Farm.class);
 
   Logger getLogger() {
@@ -71,11 +75,62 @@ public class Farm extends LabeledConfigurationValue {
     return getClass().getSimpleName();
   }
 
+  /**
+   * Is this farm an author farm? The dispatcher module itself doesn't differentiate between farm types, so we need to
+   * use the contents of the configuration to make an educated guess.
+   * @return true if, by our best estimation, this is an author farm.
+   */
   public boolean isAuthorFarm() {
-    // TODO: this is a very crude check and will be wrong much of the time
-    return this.getLabel().contains("author");
+    // Does the label contain "author"?
+    // By convention, the author farm often (but not always) contains the word "author". If it does, we can be
+    // reasonably sure this is an author farm.
+    boolean labelContainsAuthor = this.getLabel().toUpperCase().contains(AUTHOR);
+    if (labelContainsAuthor) {
+      return true;
+    }
+
+    // Does the filename contain "author"?
+    // If the label itself does not contain "author", sometimes the actual farm file in the dispatcher config does. We
+    // can inspect this filename via the getLabelData() accessor.
+    boolean filenameContainsAuthor = false;
+    if (this.getLabelData() != null && this.getLabelData().getFileName() != null) {
+      String[] pathParts = this.getLabelData().getFileName().split(File.separator);
+      String fileName = pathParts[pathParts.length - 1];
+      filenameContainsAuthor = fileName.toUpperCase().contains(AUTHOR);
+      if (filenameContainsAuthor) {
+        return true;
+      }
+    }
+
+    // Does the first render look like an author render?
+    // If neither the label or farm filename reveal the type, we can inspect the farm's render for hints.
+    boolean renderUsesAuthorPort = false;
+    boolean renderUsesAuthorHost = false;
+    if (this.getRenders() != null && this.getRenders().getValue().size() > 0) {
+      Render firstRender = this.getRenders().getValue().get(0);
+      // The render's `/port` property is often set to "${AUTHOR_PORT}" or "4502" for author instances
+      String renderPort = firstRender.getPort() != null ? firstRender.getPort().getValue() : "";
+      renderUsesAuthorPort = renderPort.toUpperCase().contains(AUTHOR) || renderPort.contains(AUTHOR_PORT);
+      if (renderUsesAuthorPort) {
+        return true;
+      }
+
+      // The render's `/hostname` property is often set to "${AUTHOR_IP}" for author instances
+      String hostname = firstRender.getHostname() != null ? firstRender.getHostname().getValue() : "";
+      renderUsesAuthorHost = hostname.toUpperCase().contains(AUTHOR);
+      if (renderUsesAuthorHost) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
+  /**
+   * Is this farm a publish farm? The dispatcher module itself doesn't differentiate between farm types, so we need to
+   * use the contents of the configuration to make an educated guess.
+   * @return true if it is NOT an author farm.
+   */
   public boolean isPublishFarm() {
     return !this.isAuthorFarm();
   }
