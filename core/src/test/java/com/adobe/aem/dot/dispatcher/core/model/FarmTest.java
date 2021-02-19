@@ -136,7 +136,7 @@ public class FarmTest {
     assertTrue(farm.isPublishFarm());
     assertFalse(farm.isAuthorFarm());
 
-    farm.setLabel(new ConfigurationValue<>("thepublish"));
+    farm.setLabel(new ConfigurationValue<>("thePublish"));
 
     assertTrue(farm.isPublishFarm());
     assertFalse(farm.isAuthorFarm());
@@ -146,7 +146,7 @@ public class FarmTest {
     assertTrue(farm.isAuthorFarm());
     assertFalse(farm.isPublishFarm());
 
-    farm.setLabel(new ConfigurationValue<>("a_author"));
+    farm.setLabel(new ConfigurationValue<>("a_AUTHor"));
 
     assertTrue(farm.isAuthorFarm());
     assertFalse(farm.isPublishFarm());

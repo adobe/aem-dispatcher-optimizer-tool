@@ -76,40 +76,59 @@ public class Farm extends LabeledConfigurationValue {
   }
 
   /**
-   * Is this farm an author farm?
-   * @return true if it is.
+   * Is this farm an author farm? The dispatcher module itself doesn't differentiate between farm types, so we need to
+   * use the contents of the configuration to make an educated guess.
+   * @return true if, by our best estimation, this is an author farm.
    */
   public boolean isAuthorFarm() {
     // Does the label contain "author"?
+    // By convention, the author farm often (but not always) contains the word "author". If it does, we can be
+    // reasonably sure this is an author farm.
     boolean labelContainsAuthor = this.getLabel().toUpperCase().contains(AUTHOR);
+    if (labelContainsAuthor) {
+      return true;
+    }
 
-    boolean filenameContainsAuthor = false;
     // Does the filename contain "author"?
+    // If the label itself does not contain "author", sometimes the actual farm file in the dispatcher config does. We
+    // can inspect this filename via the getLabelData() accessor.
+    boolean filenameContainsAuthor = false;
     if (this.getLabelData() != null && this.getLabelData().getFileName() != null) {
       String[] pathParts = this.getLabelData().getFileName().split(File.separator);
       String fileName = pathParts[pathParts.length - 1];
       filenameContainsAuthor = fileName.toUpperCase().contains(AUTHOR);
+      if (filenameContainsAuthor) {
+        return true;
+      }
     }
 
+    // Does the first render look like an author render?
+    // If neither the label or farm filename reveal the type, we can inspect the farm's render for hints.
     boolean renderUsesAuthorPort = false;
     boolean renderUsesAuthorHost = false;
-    // Does the first render look like an author render?
     if (this.getRenders() != null && this.getRenders().getValue().size() > 0) {
       Render firstRender = this.getRenders().getValue().get(0);
-      // `/port` is often set to "${AUTHOR_PORT}" or "4502" for author instances
+      // The render's `/port` property is often set to "${AUTHOR_PORT}" or "4502" for author instances
       String renderPort = firstRender.getPort() != null ? firstRender.getPort().getValue() : "";
       renderUsesAuthorPort = renderPort.toUpperCase().contains(AUTHOR) || renderPort.contains(AUTHOR_PORT);
+      if (renderUsesAuthorPort) {
+        return true;
+      }
 
-      // `/hostname` is often set to "${AUTHOR_IP}" for publish instances
+      // The render's `/hostname` property is often set to "${AUTHOR_IP}" for author instances
       String hostname = firstRender.getHostname() != null ? firstRender.getHostname().getValue() : "";
       renderUsesAuthorHost = hostname.toUpperCase().contains(AUTHOR);
+      if (renderUsesAuthorHost) {
+        return true;
+      }
     }
 
-    return labelContainsAuthor || filenameContainsAuthor || renderUsesAuthorPort || renderUsesAuthorHost;
+    return false;
   }
 
   /**
-   * Is this farm a publish farm?
+   * Is this farm a publish farm? The dispatcher module itself doesn't differentiate between farm types, so we need to
+   * use the contents of the configuration to make an educated guess.
    * @return true if it is NOT an author farm.
    */
   public boolean isPublishFarm() {

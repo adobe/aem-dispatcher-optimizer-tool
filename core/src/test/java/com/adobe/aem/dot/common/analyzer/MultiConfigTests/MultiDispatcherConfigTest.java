@@ -161,9 +161,9 @@ public class MultiDispatcherConfigTest {
       }
 
       String assertMessage = "A portion of the " + files.size() + " configurations do violate the rules.";
-      assertEquals(assertMessage, 513, parseViolationsByConfig.size());  // Lots of violations.
-
       MultiConfigHelper.writeIndexHtml(configurationReportData, "dispatcherIndex.html", targetReportPath);
+
+      assertEquals(assertMessage, 513, parseViolationsByConfig.size());  // Lots of violations.
     } else {
       if (!failures.isEmpty()) {
         System.out.println("============= DISPATCHER VIOLATIONS: Parsing only ====================");

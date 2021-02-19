@@ -128,9 +128,9 @@ public class MultiHttpdConfigTest {
       }
 
       String assertMessage = "A portion of the " + files.size() + " configurations do violate the rules.";
-      assertEquals(assertMessage, 49, parseViolationsByConfig.size());  // Lots of violations.
-
       MultiConfigHelper.writeIndexHtml(configurationReportData, "httpdIndex.html", targetReportPath);
+
+      assertEquals(assertMessage, 48, parseViolationsByConfig.size());  // Lots of violations.
     } else {
       if (!failures.isEmpty()) {
         System.out.println("================================================");
