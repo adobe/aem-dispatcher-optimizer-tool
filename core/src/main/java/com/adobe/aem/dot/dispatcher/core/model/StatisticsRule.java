@@ -50,7 +50,7 @@ public class StatisticsRule extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each StatisticsRule block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new StatisticsRule();
     }
 
@@ -72,7 +72,7 @@ public class StatisticsRule extends LabeledConfigurationValue {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /StatisticsRule level token.  Token=\"{}\".",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

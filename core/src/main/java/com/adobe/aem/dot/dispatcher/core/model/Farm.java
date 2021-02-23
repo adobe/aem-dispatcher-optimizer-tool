@@ -141,7 +141,7 @@ public class Farm extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /farms block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new ArrayList<>();
     }
 
@@ -170,7 +170,7 @@ public class Farm extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /farm block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new Farm();
     }
 
@@ -225,7 +225,7 @@ public class Farm extends LabeledConfigurationValue {
           break;
         case "/homepage":
           FeedbackProcessor.error(logger, "/homepage is deprecated. Use IIS URL Rewrite Module.", currentToken,
-                  Severity.MINOR);
+                  Severity.MAJOR);
           farm.setHomePage(reader.next(false));
           break;
         case "/sessionmanagement":
@@ -294,7 +294,7 @@ public class Farm extends LabeledConfigurationValue {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /farm level token. Token=\"{}\".", currentToken,
-                  Severity.MINOR);
+                  Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

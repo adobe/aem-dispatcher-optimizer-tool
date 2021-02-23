@@ -43,7 +43,7 @@ public class Statistics extends ConfigurationSource {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /statistics block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new Statistics();
     }
 
@@ -65,7 +65,7 @@ public class Statistics extends ConfigurationSource {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /statistics level token.  Token=\"{}\".",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

@@ -95,7 +95,7 @@ public class SessionManagement extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /sessionManagement block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new SessionManagement();
     }
 
@@ -133,13 +133,13 @@ public class SessionManagement extends LabeledConfigurationValue {
           hasMoreToProcess = false;
           if (sessionManagement.getDirectory() == null) {
             FeedbackProcessor.error(logger,"SessionManagement is missing mandatory 'directory' value.",
-                    currentToken, Severity.MINOR);
+                    currentToken, Severity.MAJOR);
           }
           processDefaultValues(sessionManagement, parentValue);
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /sessionmanagement level token.  Token=\"{}\".",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

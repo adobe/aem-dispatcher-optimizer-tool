@@ -170,7 +170,7 @@ public class Filter extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /filter block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new ConfigurationValue<>(new ArrayList<>());
     }
 
@@ -185,7 +185,7 @@ public class Filter extends LabeledConfigurationValue {
       } else if (!currentToken.getValue().startsWith("/") && !currentToken.getValue().startsWith("{")) {
         // Names should start with a /.  If no name, it should be an opening brace.
         FeedbackProcessor.error(logger, "Skipping unknown token in filter. Value=\"{0}\". Skipping value.",
-                currentToken, Severity.MINOR);
+                currentToken, Severity.MAJOR);
       } else {
         // If the next character is a open brace, the label (/0001) was skipped.
         boolean missingLabel = currentToken.getValue().equals("{");
@@ -213,7 +213,7 @@ public class Filter extends LabeledConfigurationValue {
     if (!skipLabel) {
       if (!reader.isNextChar('{', false)) {
         FeedbackProcessor.error(logger,"Each filter must begin with a '{' character.",
-                reader.getCurrentConfigurationValue(), Severity.MINOR);
+                reader.getCurrentConfigurationValue(), Severity.MAJOR);
         return new Filter();
       }
       reader.next(); // Advance the reader's pointer passed the "{" marker.
@@ -285,7 +285,7 @@ public class Filter extends LabeledConfigurationValue {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /filter level token. Token=\"{}\".",
-                  nextToken, Severity.MINOR);
+                  nextToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

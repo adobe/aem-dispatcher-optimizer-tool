@@ -123,7 +123,7 @@ public class ConfigurationReader {
       value = Integer.parseInt(nextToken.getValue());
     } catch (NumberFormatException nfe) {
       FeedbackProcessor.error(logger, "Skipping unknown integer value. Value=\"{0}\"", nextToken,
-              Severity.MINOR);
+              Severity.MAJOR);
     }
     return new ConfigurationValue<>(value, nextToken.getFileName(), nextToken.getLineNumber(),
             getCurrentIncludedFrom());
@@ -206,7 +206,7 @@ public class ConfigurationReader {
     ConfigurationValue<String> currentToken = this.next();
     if (!currentToken.getValue().equals("{")) {
       FeedbackProcessor.warn(logger,"Each 'string list' block should begin with a '{' character.",
-              currentToken, Severity.MINOR);
+              currentToken, Severity.MAJOR);
       openingBrace = false;
       list.add(currentToken);
     }
@@ -274,7 +274,7 @@ public class ConfigurationReader {
         // If next value is empty, it means the end of the configuration has been reached.
         if (nextToken == null) {
           // The braces were unmatched. Avoid missing the entirety of the configuration: reset the original pointers.
-          FeedbackProcessor.error(logger, "Unclosed brace encountered.", startToken, Severity.MINOR);
+          FeedbackProcessor.error(logger, "Unclosed brace encountered.", startToken, Severity.MAJOR);
           this.configurationIndex = new ConfigurationIndex(originalCharIndex, originalLineIndex);
           this.incrementIndex(); // Passed the "startToken" value = "{".
           return;
