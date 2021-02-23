@@ -65,7 +65,7 @@ public class Render extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /renders block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new ArrayList<>();
     }
 
@@ -80,7 +80,7 @@ public class Render extends LabeledConfigurationValue {
       } else if (!currentToken.getValue().startsWith("/") && !currentToken.getValue().startsWith("{")) {
         // Names should start with a /.  If no name, it should be an opening brace.
         FeedbackProcessor.error(logger, "Skipping unknown value in a render. Value=\"{0}\". Skipping value.",
-                currentToken, Severity.MINOR);
+                currentToken, Severity.MAJOR);
       } else {
         // If the next character is a open brace, the label (/0001) was skipped.
         boolean missingLabel = currentToken.getValue().equals("{");
@@ -106,7 +106,7 @@ public class Render extends LabeledConfigurationValue {
     if (!skipLabel) {
       if (!reader.isNextChar('{', false)) {
         FeedbackProcessor.error(logger,"Each render must begin with a '{' character.",
-                reader.getCurrentConfigurationValue(), Severity.MINOR);
+                reader.getCurrentConfigurationValue(), Severity.MAJOR);
         return new Render();
       }
       parentValue = reader.next();
@@ -157,7 +157,7 @@ public class Render extends LabeledConfigurationValue {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /render level token.  Token=\"{}\".", nextToken,
-                  Severity.MINOR);
+                  Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

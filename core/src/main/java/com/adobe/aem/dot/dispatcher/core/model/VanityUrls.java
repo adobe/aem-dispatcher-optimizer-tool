@@ -47,7 +47,7 @@ public class VanityUrls extends ConfigurationSource {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /vanity_urls block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new VanityUrls();
     }
 
@@ -81,7 +81,7 @@ public class VanityUrls extends ConfigurationSource {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /vanity_urls level token.  Token=\"{}\".",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

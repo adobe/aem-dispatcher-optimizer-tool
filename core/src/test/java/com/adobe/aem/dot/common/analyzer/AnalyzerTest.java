@@ -75,7 +75,7 @@ public class AnalyzerTest {
       assertEquals(0, results.getViolations(ViolationVerbosity.MINIMIZED).size());
       List<Violation> violations = dispatcherAnalyzer.getViolations(config, FULL);
       assertEquals("Should have 6 violations", 6, violations.size());
-      assertTrue("First violation should contain MINOR", violations.get(0).toString().contains("MINOR"));
+      assertTrue("First violation should contain MAJOR", violations.get(0).toString().contains("MAJOR"));
 
     } catch(ConfigurationException dcEx) {
       Assert.fail("Config should have loaded correctly: " + dcEx.getLocalizedMessage());
@@ -93,11 +93,11 @@ public class AnalyzerTest {
       assertEquals(0, results.getViolations(ViolationVerbosity.MINIMIZED).size());
       List<Violation> violations = dispatcherAnalyzer.getViolations(config, MINIMIZED);
       assertEquals("Should have 2 violations, from 6", 2, violations.size());
-      assertTrue("First violation should contain MINOR", violations.get(0).toString().contains("MINOR"));
+      assertTrue("First violation should contain MAJOR", violations.get(0).toString().contains("MAJOR"));
 
       violations = dispatcherAnalyzer.getViolations(config, PARTIAL);
       assertEquals("Should have 2 violations, from 6", 2, violations.size());
-      assertTrue("First violation should contain MINOR", violations.get(0).toString().contains("MINOR"));
+      assertTrue("First violation should contain MAJOR", violations.get(0).toString().contains("MAJOR"));
 
     } catch(ConfigurationException dcEx) {
       Assert.fail("Config should have loaded correctly: " + dcEx.getLocalizedMessage());
@@ -121,11 +121,11 @@ public class AnalyzerTest {
 
     List<Violation> violations = httpdAnalyzer.getViolations(config, MINIMIZED);
     assertEquals("Should have 1 violation", 1, violations.size());
-    assertTrue("First violation should contain MINOR", violations.get(0).toString().contains("MINOR"));
+    assertTrue("First violation should contain MAJOR", violations.get(0).toString().contains("MAJOR"));
 
     violations = httpdAnalyzer.getViolations(config, PARTIAL);
     assertEquals("Should have 1 violation", 1, violations.size());
-    assertTrue("First violation should contain MINOR", violations.get(0).toString().contains("MINOR"));
+    assertTrue("First violation should contain MAJOR", violations.get(0).toString().contains("MAJOR"));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -322,11 +322,11 @@ public class AnalyzerTest {
 
     CountedRuleViolation first = (CountedRuleViolation) counted.get(0);
     CountedRuleViolation second = (CountedRuleViolation) counted.get(1);
-    assertEquals("First should have count 3", 3, first.getRuleViolationCount());
-    assertEquals("First should have context2", "context2", first.getContext());
-    assertEquals("Second should have count 1", 1, second.getRuleViolationCount());
-    assertEquals("Second should have context1", "context1", second.getContext());
-    assertEquals("Second should have rule Disp-1", "DOTRules:Disp-1", second.getAnalyzerRule().getId());
+    assertEquals("First should have count 1", 1, first.getRuleViolationCount());
+    assertEquals("First should have context1", "context1", first.getContext());
+    assertEquals("Second should have count 3", 3, second.getRuleViolationCount());
+    assertEquals("Second should have context2", "context2", second.getContext());
+    assertEquals("Second should have rule Disp-2", "DOTRules:Disp-2", second.getAnalyzerRule().getId());
 
     counted = Analyzer.reduceViolationList(violations, false);
     assertNotNull(counted);
@@ -335,12 +335,12 @@ public class AnalyzerTest {
     first = (CountedRuleViolation) counted.get(0);
     second = (CountedRuleViolation) counted.get(1);
     assertEquals("First should have count -1", -1, first.getRuleViolationCount());
-    assertEquals("First should have context2", "context2", first.getContext());
+    assertEquals("First should have context1", "context1", first.getContext());
     assertEquals("Second should have count -1", -1, second.getRuleViolationCount());
-    assertEquals("Second should have context4", "context4", second.getContext());
+    assertEquals("Second should have context2", "context2", second.getContext());
     assertEquals("Second should have rule Disp-2", "DOTRules:Disp-2", second.getAnalyzerRule().getId());
 
-    assertEquals("Third should have context5", "context5", counted.get(2).getContext());
-    assertEquals("Fourth should have context1", "context1", counted.get(3).getContext());
+    assertEquals("Third should have context4", "context4", counted.get(2).getContext());
+    assertEquals("Fourth should have context5", "context5", counted.get(3).getContext());
   }
 }

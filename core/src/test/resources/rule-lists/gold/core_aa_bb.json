@@ -20,7 +20,7 @@
   }, {
     "id" : "DOTRules:Disp-2",
     "description" : "The Dispatcher publish farm cache statfileslevel property should be >= 2.",
-    "severity" : "MINOR",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH" ],
     "element" : "farm.cache.statfileslevel",
     "enabled" : true,
@@ -35,7 +35,7 @@
   }, {
     "id" : "DOTRules:Disp-3",
     "description" : "The Dispatcher publish farm gracePeriod property should be >= 2.",
-    "severity" : "INFO",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH" ],
     "element" : "farm.cache.gracePeriod",
     "enabled" : true,
@@ -50,7 +50,7 @@
   }, {
     "id" : "DOTRules:Disp-4",
     "description" : "The Dispatcher publish farm filters should contain the default `deny` rules from the 6.x.x version of the AEM archetype.",
-    "severity" : "MINOR",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH" ],
     "element" : "farm.filter",
     "enabled" : true,
@@ -112,7 +112,7 @@
   }, {
     "id" : "DOTRules:Disp-5",
     "description" : "The Dispatcher publish farm cache should have serveStaleOnError enabled.",
-    "severity" : "INFO",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH" ],
     "element" : "farm.cache.serveStaleOnError",
     "enabled" : true,
@@ -127,7 +127,7 @@
   }, {
     "id" : "DOTRules:Disp-6",
     "description" : "The Dispatcher publish farm filters should specify the allowed Sling suffix patterns in an allow list manner.",
-    "severity" : "INFO",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH" ],
     "element" : "farm.filter",
     "enabled" : true,
@@ -146,7 +146,7 @@
   }, {
     "id" : "DOTRules:Disp-7",
     "description" : "The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner.",
-    "severity" : "INFO",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH" ],
     "element" : "farm.filter",
     "enabled" : true,
@@ -165,7 +165,7 @@
   }, {
     "id" : "DOTRules:Disp-8",
     "description" : "Each Dispatcher farm should have a unique name.",
-    "severity" : "MINOR",
+    "severity" : "MAJOR",
     "farmTypeList" : [ "PUBLISH", "AUTHOR" ],
     "element" : "farm",
     "enabled" : true,
@@ -179,7 +179,7 @@
   }, {
     "id" : "DOTRules:Httpd-1",
     "description" : "The 'Require all granted' directive should not be used in a VirtualHost Directory section with a root directory-path.",
-    "severity" : "MINOR",
+    "severity" : "MAJOR",
     "element" : "httpd.vhost.directory.root",
     "enabled" : true,
     "checks" : [ {

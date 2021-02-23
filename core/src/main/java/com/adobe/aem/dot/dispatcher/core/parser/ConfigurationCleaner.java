@@ -69,11 +69,11 @@ class ConfigurationCleaner {
       long sqCount = line.getContents().chars().filter(ch -> ch == '\'').count();
       int escapedCount = StringUtils.countMatches(line.getContents(), "\\\"");
       if ((dqCount - escapedCount) > 0 && (dqCount - escapedCount) % 2 != 0) {
-        FeedbackProcessor.warn(logger, "Unmatched quote (\").  Line=\"{}\"", line, Severity.MINOR);
+        FeedbackProcessor.warn(logger, "Unmatched quote (\").  Line=\"{}\"", line, Severity.MAJOR);
       }
       escapedCount = StringUtils.countMatches(line.getContents(), "\\'");
       if ((sqCount - escapedCount) > 0 && (sqCount - escapedCount) % 2 != 0) {
-        FeedbackProcessor.warn(logger, "Unmatched quote (').  Line=\"{}\"", line, Severity.MINOR);
+        FeedbackProcessor.warn(logger, "Unmatched quote (').  Line=\"{}\"", line, Severity.MAJOR);
       }
 
       long openBraceCount = line.getContents().chars().filter(ch -> ch == '{').count();

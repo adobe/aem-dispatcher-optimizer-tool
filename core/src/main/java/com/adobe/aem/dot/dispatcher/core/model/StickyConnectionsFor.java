@@ -102,7 +102,7 @@ public class StickyConnectionsFor extends LabeledConfigurationValue {
             break;
           default:
             FeedbackProcessor.error(logger, "Skipping unknown /stickyConnectionsFor level token.  Token=\"{}\".",
-                    currentToken, Severity.MINOR);
+                    currentToken, Severity.MAJOR);
             reader.advancePastThisElement();
         }
       }

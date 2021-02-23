@@ -74,7 +74,7 @@ public class ConfigurationParser {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown top level token.  Token=\"{}\"",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

@@ -63,7 +63,7 @@ public class Cache {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /cache block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new Cache();
     }
 
@@ -147,7 +147,7 @@ public class Cache {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /cache level token. Token=\"{}\".", currentToken,
-                  Severity.MINOR);
+                  Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

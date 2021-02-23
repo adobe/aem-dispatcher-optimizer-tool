@@ -60,7 +60,7 @@ public class AuthChecker extends LabeledConfigurationValue {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /auth_checker block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new AuthChecker();
     }
 
@@ -91,7 +91,7 @@ public class AuthChecker extends LabeledConfigurationValue {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /auth_checker level token. Token=\"{}\".",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }

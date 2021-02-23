@@ -43,7 +43,7 @@ public class HealthCheck extends ConfigurationSource {
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
       FeedbackProcessor.error(logger,"Each /health_check block must begin with a '{' character.",
-              reader.getCurrentConfigurationValue(), Severity.MINOR);
+              reader.getCurrentConfigurationValue(), Severity.MAJOR);
       return new HealthCheck();
     }
 
@@ -64,7 +64,7 @@ public class HealthCheck extends ConfigurationSource {
           break;
         default:
           FeedbackProcessor.error(logger, "Skipping unknown /health_check level token.  Token=\"{}\".",
-                  currentToken, Severity.MINOR);
+                  currentToken, Severity.MAJOR);
           reader.advancePastThisElement();
       }
     }
