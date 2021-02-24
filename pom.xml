@@ -4,8 +4,11 @@
   <groupId>com.adobe.aem.dot</groupId>
   <artifactId>dispatcher-optimizer-parent</artifactId>
   <version>0.2.7-SNAPSHOT</version>
-  <name>Dispatcher Optimizer - Parent project</name>
   <packaging>pom</packaging>
+
+  <name>Dispatcher Optimizer - Parent project</name>
+  <description>Analyze an AEM dispatcher module for misconfigurations.</description>
+  <url>https://github.com/adobe/aem-dispatcher-optimizer-tool</url>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -22,6 +25,21 @@
     <url>https://github.com/adobe/aem-dispatcher-optimizer-tool</url>
     <tag>HEAD</tag>
   </scm>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Adobe DOT team</name>
+      <email>aem-dot@adobe.com</email>
+    </developer>
+  </developers>
 
   <!-- Distribution Management -->
   <distributionManagement>
