@@ -21,7 +21,7 @@ import com.adobe.aem.dot.common.ConfigurationSource;
 import java.util.List;
 
 /**
- * Represents <Files> and <FilesMatch> sections.
+ * Represents &lt;Files&gt; and &lt;FilesMatch&gt; sections.
  * For additional detail on these sections: http://httpd.apache.org/docs/2.4/configuring.html
  */
 public class FilesSection extends Section {

@@ -27,7 +27,7 @@ import static com.adobe.aem.dot.dispatcher.core.model.ConfigurationValueDefaults
 /**
  * The <code>ConfigurationValue</code> class encapsulates a value from the Configuration.  It stores any type
  * of value along with the filename and the line number from where the value was extracted.
- * @param <E>
+ * @param <E> type of the configuration value to store
  */
 @Getter
 @Setter(AccessLevel.PRIVATE)

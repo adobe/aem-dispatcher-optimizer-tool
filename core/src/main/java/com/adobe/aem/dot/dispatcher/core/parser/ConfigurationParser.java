@@ -38,7 +38,8 @@ public class ConfigurationParser {
   /**
    * Parse the provided configurationString into a DispatcherConfiguration object.
    * @param configurationLines - a list of <code>ConfigurationLine</code> objects.
-   * @return A <code>DispatcherConfiguration</code> object, as parsed from the provided String.
+   * @return A <code>DispatcherConfiguration</code> object, as parsed from the provided String
+   * @throws ConfigurationSyntaxException when issues parsing the configuration are encountered
    */
   public ConfigurationParseResults<DispatcherConfiguration> parseConfiguration(
           List<ConfigurationLine> configurationLines) throws ConfigurationSyntaxException {

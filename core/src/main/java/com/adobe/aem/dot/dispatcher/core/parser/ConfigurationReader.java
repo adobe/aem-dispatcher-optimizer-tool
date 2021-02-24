@@ -96,7 +96,7 @@ public class ConfigurationReader {
    * Finds and returns the next complete dispatcher configuration token from this scanner.
    * @return the next token, a String
    */
-  public ConfigurationValue<String> next() throws ConfigurationSyntaxException {
+  public ConfigurationValue<String> next() {
     return this.next(false);
   }
 
@@ -104,7 +104,7 @@ public class ConfigurationReader {
    * Finds and returns the next complete dispatcher configuration token from this scanner.
    * @return the next token, a Boolean
    */
-  public ConfigurationValue<Boolean> nextBoolean() throws ConfigurationSyntaxException {
+  public ConfigurationValue<Boolean> nextBoolean() {
     ConfigurationValue<String> nextToken = this.next();
     Boolean positive = nextToken.getValue().equals("1") || nextToken.getValue().equals("true");
     return new ConfigurationValue<>(positive, this.getCurrentFileName(), getCurrentLineNumber(),
@@ -113,9 +113,10 @@ public class ConfigurationReader {
 
   /**
    * Finds and returns the next complete dispatcher configuration token from this scanner.
-   * @return the next token, a Boolean
+   * @param defaultInt a fallback value to be used if an invalid integer is read by the scanner
+   * @return the next token, an Integer
    */
-  public ConfigurationValue<Integer> nextInteger(Integer defaultInt) throws ConfigurationSyntaxException {
+  public ConfigurationValue<Integer> nextInteger(Integer defaultInt) {
     Integer value = defaultInt;
     ConfigurationValue<String> nextToken = this.next();
 
@@ -134,7 +135,7 @@ public class ConfigurationReader {
    * if present.
    * @return the next token, a String, with its "/" prefix removed
    */
-  public ConfigurationValue<String> nextName() throws ConfigurationSyntaxException {
+  public ConfigurationValue<String> nextName() {
     ConfigurationValue<String> nameWithOptionalSlash = this.next();
     if (nameWithOptionalSlash != null) {
       nameWithOptionalSlash.setValue(nameWithOptionalSlash.getValue().replace("/", ""));
@@ -147,7 +148,7 @@ public class ConfigurationReader {
    * or single quotes are used, read until the end of the line, or until a comment character is encountered.
    * @return the next token, a String, with its "/" prefix removed
    */
-  public ConfigurationValue<String> nextString() throws ConfigurationSyntaxException {
+  public ConfigurationValue<String> nextString() {
     int currentLineNumber = this.getCurrentLineNumber();
     ConfigurationValue<String> nextString = this.next(true);
     // Handle normal quoted string.
@@ -172,9 +173,9 @@ public class ConfigurationReader {
    * Finds and returns the next complete configuration token, optionally keeping any quotes
    * (single or double) that were present around the token was it was interpreted.
    * @param preserveQuotes if true, quotes wrapping the token will be left as-is
-   * @return the next token, a <code>ConfigurationValue<String></code>
+   * @return the next token, a <code>ConfigurationValue&lt;String&gt;</code>
    */
-  public ConfigurationValue<String> next(boolean preserveQuotes) throws ConfigurationSyntaxException {
+  public ConfigurationValue<String> next(boolean preserveQuotes) {
     if (!this.advanceToNextToken()) {
       // No additional tokens to parse
       return null;
@@ -196,9 +197,8 @@ public class ConfigurationReader {
   /**
    * Finds and returns the next list of Strings from this scanner. Supports format: `{ "string1" "string2" "string3" }`.
    * @return a list of Strings, as parsed from the scanner.
-   * @throws ConfigurationSyntaxException if the scanner does not find the required format.
    */
-  public List<ConfigurationValue<String>> nextStringList() throws ConfigurationSyntaxException {
+  public List<ConfigurationValue<String>> nextStringList() {
     List<ConfigurationValue<String>> list = new ArrayList<>();
 
     // Expect { to begin the list section
@@ -260,33 +260,24 @@ public class ConfigurationReader {
     ConfigurationValue<?> startToken;
 
     // Clear the "{"
-    try {
-      startToken = this.next(false);
-    } catch(ConfigurationSyntaxException csEx) {
-      // Since `isNextChar()` succeeded, this should never happen.  If it does, leave reader pointer untouched.
-      return;
-    }
+    startToken = this.next(false);
 
     long braceCount = 1;
     while (braceCount > 0) {
-      try {
-        ConfigurationValue<?> nextToken = this.next(true);
-        // If next value is empty, it means the end of the configuration has been reached.
-        if (nextToken == null) {
-          // The braces were unmatched. Avoid missing the entirety of the configuration: reset the original pointers.
-          FeedbackProcessor.error(logger, "Unclosed brace encountered.", startToken, Severity.MAJOR);
-          this.configurationIndex = new ConfigurationIndex(originalCharIndex, originalLineIndex);
-          this.incrementIndex(); // Passed the "startToken" value = "{".
-          return;
-        }
-        String nextValue = nextToken.getValue().toString();
-        if (nextValue.equals("{")) {
-          braceCount++;
-        } else if (nextValue.equals("}")) {
-          braceCount--;
-        }
-      } catch(ConfigurationSyntaxException ignored) {
-        // keep reading...
+      ConfigurationValue<?> nextToken = this.next(true);
+      // If next value is empty, it means the end of the configuration has been reached.
+      if (nextToken == null) {
+        // The braces were unmatched. Avoid missing the entirety of the configuration: reset the original pointers.
+        FeedbackProcessor.error(logger, "Unclosed brace encountered.", startToken, Severity.MAJOR);
+        this.configurationIndex = new ConfigurationIndex(originalCharIndex, originalLineIndex);
+        this.incrementIndex(); // Passed the "startToken" value = "{".
+        return;
+      }
+      String nextValue = nextToken.getValue().toString();
+      if (nextValue.equals("{")) {
+        braceCount++;
+      } else if (nextValue.equals("}")) {
+        braceCount--;
       }
     }
   }

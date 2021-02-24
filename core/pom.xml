@@ -13,7 +13,7 @@
   <version>1.0.5-SNAPSHOT</version>
 
   <properties>
-    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <maven.javadoc.skip>false</maven.javadoc.skip>
     <release.tag.name.format>core-v@{project.version}</release.tag.name.format>
   </properties>
 

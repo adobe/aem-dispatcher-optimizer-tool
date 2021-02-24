@@ -29,7 +29,7 @@ public class IntGreaterOrEqualCheck extends IntCheck {
   }
 
   /**
-   * Compare to see if the config value is >= the check value.
+   * Compare to see if the config value is &gt;= the check value.
    * @param configValue the value from the dispatcher configuration
    * @param checkValue the value from the optimizer <code>Check</code>
    * @return true if the configuration value is considered valid, false otherwise

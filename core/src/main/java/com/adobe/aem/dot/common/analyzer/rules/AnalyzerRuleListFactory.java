@@ -23,9 +23,12 @@ import java.io.InputStream;
  * Represents a list of analyzer rules.
  */
 public class AnalyzerRuleListFactory {
+  private AnalyzerRuleListFactory() {}
+
   /**
-   * Get the list of default Analyzer Rules
+   * Get the list of default Analyzer Rules.
    * @throws IOException Can throw exception if reading files present a problem.
+   * @return an AnalyzerRuleList instance containing only the core rules
    */
   public static AnalyzerRuleList getAnalyzerRuleList() throws IOException {
     JSONRuleReader jsonRuleReader = new JSONRuleReader();
@@ -35,7 +38,8 @@ public class AnalyzerRuleListFactory {
   /**
    * Get the list of default Analyzer Rules combined with any additional rules defined in the `rulesDirectory`.
    * @param rulesDirectory A folder with addition rules to read.
-   * @throws IOException Can throw exception if reading files present a problem.
+   * @throws IOException Can throw exception if reading files presents a problem.
+   * @return an AnalyzerRuleList instance containing both core rules and additional rules from `rulesDirectory`
    */
   public static AnalyzerRuleList getAnalyzerRuleList(final String rulesDirectory) throws IOException {
     JSONRuleReader jsonRuleReader = new JSONRuleReader();
@@ -46,6 +50,7 @@ public class AnalyzerRuleListFactory {
    * Get the list of default Analyzer Rules combined with any additional rules defined in the provided InputStream.
    * @param externalRules An input stream with additional rules to read.
    * @throws IOException if IO issues are encountered.
+   * @return an AnalyzerRuleList instance containing both core rules and additional rules from the provided InputStream
    */
   public static AnalyzerRuleList getAnalyzerRuleListFromInputStream(final InputStream externalRules) throws IOException {
     JSONRuleReader jsonRuleReader = new JSONRuleReader();
