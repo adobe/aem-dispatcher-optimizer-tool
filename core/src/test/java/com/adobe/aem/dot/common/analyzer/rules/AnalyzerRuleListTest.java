@@ -105,8 +105,6 @@ public class AnalyzerRuleListTest {
 
   @Test
   public void shouldReadInternalRules() {
-    AnalyzerRuleListFactory factory = new AnalyzerRuleListFactory();
-    assertNotNull(factory);
     assertTrue("Should have at least 9 core rules available", testRuleList.getEnabledRules().size() >= 9);
     List<Check> checks = testRuleList.getEnabledRules().get(0).getChecks();
     assertTrue("First rules should have 1 check available", checks.size() > 0);
