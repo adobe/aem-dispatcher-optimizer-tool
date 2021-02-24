@@ -21,7 +21,7 @@ import com.adobe.aem.dot.common.ConfigurationSource;
 import java.util.List;
 
 /**
- * Represents a <VirtualHost> section.
+ * Represents a &lt;VirtualHost&gt; section.
  * For additional detail: http://httpd.apache.org/docs/2.4/configuring.html
  */
 public class VirtualHost extends Section {

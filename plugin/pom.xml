@@ -28,6 +28,7 @@
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.version>3.3.9</maven.version>
     <release.tag.name.format>plugin-v@{project.version}</release.tag.name.format>
+    <maven.javadoc.skip>false</maven.javadoc.skip>
   </properties>
 
   <prerequisites>

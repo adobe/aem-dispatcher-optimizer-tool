@@ -88,6 +88,7 @@ public class HttpdConfigurationParser {
    * single ConfigurationLine item. For multiline items, the sourceLineNumber will point to the first line.
    * @param configFile The file to read and parse the configuration data from. Usually httpd.conf or a file it includes
    * @param basePath The path of the "top" configuration, usually the current working directory of httpd.conf
+   * @param optional If set to true, a violation will not be raised if this file cannot be found
    * @return a list of ConfigurationLine items in the order that they were read.
    * @throws IOException when there is an issue reading from a file.
    * @throws FileNotFoundException when configuration file is not found, or is a directory.

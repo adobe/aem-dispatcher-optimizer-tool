@@ -21,7 +21,7 @@ import com.adobe.aem.dot.common.ConfigurationSource;
 import java.util.List;
 
 /**
- * Represents <Directory> and <DirectoryMatch> sections.
+ * Represents &lt;Directory&gt; and &lt;DirectoryMatch&gt; sections.
  * For additional detail on these sections: http://httpd.apache.org/docs/2.4/configuring.html
  */
 public class DirectorySection extends Section {

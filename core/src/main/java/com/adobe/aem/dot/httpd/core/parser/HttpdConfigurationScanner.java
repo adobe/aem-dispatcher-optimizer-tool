@@ -29,8 +29,8 @@ public class HttpdConfigurationScanner extends ConfigurationScanner {
 
   /**
    * Httpd config files have different rules for what constitutes the end of a token (whitespace only).
-   * @param character
-   * @return
+   * @param character the character to test
+   * @return true, if and only if the provided character is whitespace or the beginning of the next token
    */
   @Override
   protected boolean isWhitespaceOrBeginningOfNextToken(char character) {
