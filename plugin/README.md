@@ -17,7 +17,7 @@ Include the following in the project's pom.xml, build.plugins section:
 <plugin>
     <groupId>com.adobe.aem.dot</groupId>
     <artifactId>dispatcher-optimizer-maven-plugin</artifactId>
-    <version>0.2.6</version>
+    <version>0.2.8</version>
     <configuration>
         <reportVerbosity>MINIMIZED</reportVerbosity>
     </configuration>
