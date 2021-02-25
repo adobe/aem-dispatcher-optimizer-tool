@@ -157,6 +157,9 @@ public class AnalyzerMojo extends AbstractMojo {
       // Analyze the Httpd configuration against the loaded rules, if it loaded.
       if (httpdConfiguration != null) {
         HttpdAnalyzer httpdAnalyzer = new HttpdAnalyzer(list);
+        // Collect the violations from the Httpd config parsing/reading (i.e. not from rule violations)
+        violationCollector.addAll(httpdResults.getViolations(violationVerbosity));
+        // Collect the Httpd rule violations
         violationCollector.addAll(httpdAnalyzer.getViolations(httpdConfiguration, violationVerbosity));
       }
 

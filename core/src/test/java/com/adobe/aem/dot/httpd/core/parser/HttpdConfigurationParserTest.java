@@ -236,7 +236,7 @@ public class HttpdConfigurationParserTest {
       Violation violation = ConfigurationViolations.getViolations().get(0);
       assertNotNull(violation);
       assertTrue(violation.getContext().startsWith(errMsg));
-      assertEquals(Severity.MINOR, violation.getAnalyzerRule().getSeverity());
+      assertEquals(Severity.MAJOR, violation.getAnalyzerRule().getSeverity());
     }
   }
 

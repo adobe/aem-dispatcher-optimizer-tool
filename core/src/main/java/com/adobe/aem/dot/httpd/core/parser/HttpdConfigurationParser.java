@@ -131,7 +131,7 @@ public class HttpdConfigurationParser {
                 FeedbackProcessor.error(logger,
                         "Include directive must include existing files.  Check path, or use IncludeOptional.",
                         "", new ConfigurationSource(relativeFilePath, readResult.getLineNumber()),
-                        toInclude.contains("${") ? null : Severity.MINOR);   // Not a violation if path has EnvVar.
+                        toInclude.contains("${") ? null : Severity.MAJOR);   // Not a violation if path has EnvVar.
               } else {
                 configurationLines.addAll(includeConfigurationFiles(includedFiles, configurationLines.size(),
                         includeType, basePath, configFile, currentLineNumber));
@@ -393,7 +393,7 @@ public class HttpdConfigurationParser {
           FeedbackProcessor.error(logger,
                   "Include directive must include existing files.  Check path, or use IncludeOptional.",
                   "", new ConfigurationSource(configFile.getPath(), currentLineNumber),
-                  includeFile.getPath().contains("${") ? null : Severity.MINOR);   // Not a violation if path has EnvVar.
+                  includeFile.getPath().contains("${") ? null : Severity.MAJOR);   // Not a violation if path has EnvVar.
         }
       }
     }

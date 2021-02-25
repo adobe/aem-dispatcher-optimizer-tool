@@ -84,7 +84,7 @@ public class DispatcherConfigurationFactory {
 
       // Config file was not found.
       if (dispatcherAnyFile == null) {
-        ConfigurationViolations.addViolation("Could not find Dispatcher configuration file.", Severity.MINOR,
+        ConfigurationViolations.addViolation("Could not find Dispatcher configuration file.", Severity.MAJOR,
                 new ConfigurationSource(repoPath, 0));
         return new ConfigurationParseResults<>(null, ConfigurationViolations.getViolations());
       }
