@@ -19,6 +19,7 @@ package com.adobe.aem.dot.dispatcher.core.model;
 import com.adobe.aem.dot.common.ConfigurationSource;
 import com.adobe.aem.dot.common.analyzer.Severity;
 import com.adobe.aem.dot.common.util.FeedbackProcessor;
+import com.adobe.aem.dot.common.util.PathUtil;
 import com.adobe.aem.dot.dispatcher.core.parser.ConfigurationReader;
 import com.adobe.aem.dot.dispatcher.core.parser.ConfigurationSyntaxException;
 import lombok.AccessLevel;
@@ -94,7 +95,7 @@ public class Farm extends LabeledConfigurationValue {
     // can inspect this filename via the getLabelData() accessor.
     boolean filenameContainsAuthor = false;
     if (this.getLabelData() != null && this.getLabelData().getFileName() != null) {
-      String[] pathParts = this.getLabelData().getFileName().split(File.separator);
+      String[] pathParts = PathUtil.split(this.getLabelData().getFileName());
       String fileName = pathParts[pathParts.length - 1];
       filenameContainsAuthor = fileName.toUpperCase().contains(AUTHOR);
       if (filenameContainsAuthor) {
