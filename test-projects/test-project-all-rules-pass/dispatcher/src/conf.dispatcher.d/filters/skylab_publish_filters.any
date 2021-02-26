@@ -37,7 +37,7 @@
 /0021 { /type "deny" /url "/content/regent.html"}
 
 # Deny all suffixes
-/0101 { /type "deny"  /url "/content/*" /suffix "*"  }
+/0101 { /type "deny"  /url "/content*" /suffix "*"  }
 
 # Deny all selectors
-/0102 { /type "deny"  /url "/content/*" /selectors "*"  }
+/0102 { /type "deny"  /url "/content*" /selectors "*"  }
