@@ -143,6 +143,7 @@ public class Filter extends LabeledConfigurationValue {
             .append(getUrl(), filter.getUrl())
             .append(getExtension(), filter.getExtension())
             .append(getSelectors(), filter.getSelectors())
+            .append(getSuffix(), filter.getSuffix())
             .append(getPath(), filter.getPath())
             .append(getMethod(), filter.getMethod())
             .append(getQuery(), filter.getQuery())

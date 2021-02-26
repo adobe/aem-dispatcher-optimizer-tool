@@ -135,7 +135,7 @@
       "condition" : "FILTER_LIST_INCLUDES",
       "filterValue" : {
         "type" : "DENY",
-        "url" : "/content/*",
+        "url" : "/content*",
         "suffix" : "*"
       },
       "failIf" : false
@@ -154,7 +154,7 @@
       "condition" : "FILTER_LIST_INCLUDES",
       "filterValue" : {
         "type" : "DENY",
-        "url" : "/content/*",
+        "url" : "/content*",
         "selectors" : "*"
       },
       "failIf" : false

@@ -194,4 +194,19 @@ public class FilterTest {
     assertTrue(logsList.get(0).getMessage().startsWith("Each /filter block must begin with a '{' character."));
     assertEquals("Severity should be ERROR.", Level.ERROR, logsList.get(0).getLevel());
   }
+
+  @Test
+  public void filterSelectorSuffixDifferenceNotEqual() {
+    Filter selectorFilter = new Filter();
+    selectorFilter.setType("DENY");
+    selectorFilter.setURL("/content*");
+    selectorFilter.setSelectors("*");
+
+    Filter suffixFilter = new Filter();
+    suffixFilter.setType("DENY");
+    suffixFilter.setURL("/content*");
+    suffixFilter.setSuffix("*");
+
+    assertNotEquals("Filters using selector & suffix properties should not be considered equal", selectorFilter, suffixFilter);
+  }
 }

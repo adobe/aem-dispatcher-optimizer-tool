@@ -45,7 +45,7 @@
     /filter {
         /0001 { /type "deny" /url "*" }
         /0002 { /type "allow" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|pdf|png|svg|swf|ttf|woff|woff2|html)' /path "/content/dispatchertester" }
-        /0003 { /type "deny" /url "/content/*" /suffix "*" }
+        /0003 { /type "deny" /url "/content*" /suffix "*" }
       }
 
     /cache {
