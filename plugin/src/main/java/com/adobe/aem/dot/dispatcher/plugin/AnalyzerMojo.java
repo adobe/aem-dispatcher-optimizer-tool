@@ -132,17 +132,22 @@ public class AnalyzerMojo extends AbstractMojo {
       // Collect the violations from the Dispatcher parsing/reading (i.e. not from rule violations)
       List<Violation> violationCollector = dispatcherResults.getViolations(violationVerbosity);
 
-      getLog().debug("[Dispatcher Optimizer] Finished parsing dispatcher config!  Violations: " +
+      getLog().debug("[Dispatcher Optimizer] Finished parsing dispatcher config.  Violations: " +
                              violationCollector.size());
 
       getLog().debug("[Dispatcher Optimizer] Parsing Apache Httpd config...");
 
+      HttpdConfiguration httpdConfiguration = null;
       HttpdConfigurationFactory httpdConfigurationFactory = new HttpdConfigurationFactory();
       ConfigurationParseResults<HttpdConfiguration> httpdResults = httpdConfigurationFactory.getHttpdConfiguration(this.dispatcherModuleDir,
               this.apacheHttpdConfigPath);
-      HttpdConfiguration httpdConfiguration = httpdResults.getConfiguration();
+      if (httpdResults != null) {
+        httpdConfiguration = httpdResults.getConfiguration();
 
-      getLog().debug("[Dispatcher Optimizer] Finished parsing Apache Httpd config!");
+        getLog().debug("[Dispatcher Optimizer] Finished parsing Apache Httpd config.");
+      } else {
+        getLog().debug("[Dispatcher Optimizer] Failed to parse the Apache Httpd config.");
+      }
 
       getLog().debug("[Dispatcher Optimizer] Analyzing Dispatcher and Apache Httpd configurations for violations...");
 
