@@ -1,7 +1,7 @@
 {
   "rules": [
     {
-      "id": "DOTRules:Disp-1",
+      "id": "DOTRules:Disp-1---ignoreUrlParams-allow-list",
       "description": "The Dispatcher publish farm cache should have its ignoreUrlParams rules configured in an allow list manner.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -20,7 +20,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-2",
+      "id": "DOTRules:Disp-2---statfileslevel",
       "description": "The Dispatcher publish farm cache statfileslevel property should be >= 2.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-3",
+      "id": "DOTRules:Disp-3---gracePeriod",
       "description": "The Dispatcher publish farm gracePeriod property should be >= 2.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-4",
+      "id": "DOTRules:Disp-4---default-filter-deny-rules",
       "description": "The Dispatcher publish farm filters should contain the default `deny` rules from the 6.x.x version of the AEM archetype.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -115,7 +115,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-5",
+      "id": "DOTRules:Disp-5---serveStaleOnError",
       "description": "The Dispatcher publish farm cache should have serveStaleOnError enabled.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -131,7 +131,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-6",
+      "id": "DOTRules:Disp-6---suffix-allow-list",
       "description": "The Dispatcher publish farm filters should specify the allowed Sling suffix patterns in an allow list manner.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -151,7 +151,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-7",
+      "id": "DOTRules:Disp-7---selector-allow-list",
       "description": "The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
@@ -171,7 +171,7 @@
       ]
     },
     {
-      "id": "DOTRules:Disp-8",
+      "id": "DOTRules:Disp-8---unique-farm-name",
       "description": "Each Dispatcher farm should have a unique name.",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH","AUTHOR"],
@@ -186,7 +186,7 @@
       ]
     },
     {
-      "id": "DOTRules:Httpd-1",
+      "id": "DOTRules:Httpd-1---require-all-granted",
       "description": "The 'Require all granted' directive should not be used in a VirtualHost Directory section with a root directory-path.",
       "severity": "MAJOR",
       "element": "httpd.vhost.directory.root",

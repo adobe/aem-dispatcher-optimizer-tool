@@ -30,7 +30,7 @@ Example rules file:
 {
   "rules": [
     {
-      "id": "DOTRules:Disp-1",
+      "id": "DOTRules:Disp-1---ignoreUrlParams-allow-list",
       "description": "ignoreUrlParams should be configured in an allow list manner...",
       "severity": "INFO",
       "farmTypeList": ["PUBLISH"],
