@@ -5,12 +5,12 @@
   <parent>
     <groupId>com.adobe.aem.dot</groupId>
     <artifactId>dispatcher-optimizer-parent</artifactId>
-    <version>0.2.8</version>
+    <version>0.2.9-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>dispatcher-optimizer-core</artifactId>
-  <version>1.0.14</version>
+  <version>1.0.15-SNAPSHOT</version>
 
   <properties>
     <maven.javadoc.skip>false</maven.javadoc.skip>
@@ -23,7 +23,7 @@
     <connection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</connection>
     <developerConnection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</developerConnection>
     <url>https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/core</url>
-    <tag>core-v1.0.14</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>
