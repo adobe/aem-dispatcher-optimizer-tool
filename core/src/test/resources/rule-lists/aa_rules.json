@@ -2,7 +2,7 @@
   "mergeMode": "EXTEND",
   "rules": [
     {
-      "id": "DOTRules:Disp-1",
+      "id": "DOTRules:Disp-1---ignoreUrlParams-allow-list",
       "description": "ignoreUrlParams short test",
       "severity": "INFO",
       "farmTypeList": ["PUBLISH"],

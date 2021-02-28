@@ -326,7 +326,7 @@ public class AnalyzerTest {
     assertEquals("First should have context1", "context1", first.getContext());
     assertEquals("Second should have count 3", 3, second.getRuleViolationCount());
     assertEquals("Second should have context2", "context2", second.getContext());
-    assertEquals("Second should have rule Disp-2", "DOTRules:Disp-2", second.getAnalyzerRule().getId());
+    assertEquals("Second should have rule Disp-2", "DOTRules:Disp-2---statfileslevel", second.getAnalyzerRule().getId());
 
     counted = Analyzer.reduceViolationList(violations, false);
     assertNotNull(counted);
@@ -338,7 +338,7 @@ public class AnalyzerTest {
     assertEquals("First should have context1", "context1", first.getContext());
     assertEquals("Second should have count -1", -1, second.getRuleViolationCount());
     assertEquals("Second should have context2", "context2", second.getContext());
-    assertEquals("Second should have rule Disp-2", "DOTRules:Disp-2", second.getAnalyzerRule().getId());
+    assertEquals("Second should have rule Disp-2", "DOTRules:Disp-2---statfileslevel", second.getAnalyzerRule().getId());
 
     assertEquals("Third should have context4", "context4", counted.get(2).getContext());
     assertEquals("Fourth should have context5", "context5", counted.get(3).getContext());

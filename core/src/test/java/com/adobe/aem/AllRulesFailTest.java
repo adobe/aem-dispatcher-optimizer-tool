@@ -63,15 +63,15 @@ public class AllRulesFailTest {
             "DOTRules:Disp-S5---mandatory-missing",
             "DOTRules:Disp-S6---property-deprecated",
             "DOTRules:Httpd-S1---include-failed",
-            "DOTRules:Disp-1",
-            "DOTRules:Disp-2",
-            "DOTRules:Disp-3",
-            "DOTRules:Disp-4",
-            "DOTRules:Disp-5",
-            "DOTRules:Disp-6",
-            "DOTRules:Disp-7",
-            "DOTRules:Disp-8",
-            "DOTRules:Httpd-1"
+            "DOTRules:Disp-1---ignoreUrlParams-allow-list",
+            "DOTRules:Disp-2---statfileslevel",
+            "DOTRules:Disp-3---gracePeriod",
+            "DOTRules:Disp-4---default-filter-deny-rules",
+            "DOTRules:Disp-5---serveStaleOnError",
+            "DOTRules:Disp-6---suffix-allow-list",
+            "DOTRules:Disp-7---selector-allow-list",
+            "DOTRules:Disp-8---unique-farm-name",
+            "DOTRules:Httpd-1---require-all-granted"
     };
 
     for (String expectedRuleId : expectedRuleIds) {

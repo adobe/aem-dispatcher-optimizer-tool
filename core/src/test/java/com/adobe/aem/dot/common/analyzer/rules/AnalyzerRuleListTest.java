@@ -97,8 +97,8 @@ public class AnalyzerRuleListTest {
     // Test the core rule's documentation URL.
     for (AnalyzerRule rule: internalRuleList.getRules()) {
       String docURL = rule.getDocumentationURL();
-      // Quick Format...
-      String expected = String.format(GoUrlUtil.GO_URL_TEMPLATE, StringUtils.substringAfter(rule.getId(), ":"));
+      // Quick Format, while still limiting the ID to 20 characters
+      String expected = String.format(GoUrlUtil.GO_URL_TEMPLATE, StringUtils.substringAfter(rule.getId(), ":").substring(0, 20));
       assertEquals(expected.toLowerCase(), docURL);
     }
   }
