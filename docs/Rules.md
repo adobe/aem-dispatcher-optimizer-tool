@@ -252,7 +252,7 @@ This violation will be raised if a parsing-related problem occurs that does not 
 
 ## DOT - The Dispatcher publish farm cache should have serveStaleOnError enabled
 
-Key: `DOTRules:Disp-5`
+Key: `DOTRules:Disp-5---serveStaleOnError`
 
 Type: Code Smell
 
@@ -278,18 +278,33 @@ For additional detail on this setting: https://helpx.adobe.com/experience-manage
   /serveStaleOnError "1"
 ```
 
-DOT - The Dispatcher publish farm filters should contain the default `deny` rules from the 6.x.x version of the AEM archetype
-Key: DOTRules:Disp-4
+## DOT - The Dispatcher publish farm filters should contain the default `deny` rules from the 6.x.x version of the AEM archetype
+
+Key: `DOTRules:Disp-4---default-filter-deny-rules`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 The default deny rules from the AMS flavour of the AEM archetype should be left in-place and extended as needed.
+
 The AEM archetype's dispatcher.ams configuration contains a set of publish farm rules which are intended to be left as-is for security and performance reasons: conf.dispatcher.d/filters/ams_publish_filters.any.
+
 As additional filter rules are needed, they should be added in a separate file next to ams_publish_filters.any. The publish farm file (999_ams_publish_farm.any for example) would then be amended with an additional $include to pull in the site-specific filter rule file.
+
 With this approach, any upstream changes to ams_publish_filters.any (for example, blocking of newly discovered exploit vectors) can be easily integrated by replacing this file.
+
 #### Non-Compliant Code
+
+```
 /0001 { /type "allow"  /url "*" }
+```
+
 #### Compliant Code
+
+```
 # filter set for a publish farm should start with a "deny" of "*"
 /0001 { /type "deny"  /url "*" }
  
@@ -299,41 +314,83 @@ With this approach, any upstream changes to ams_publish_filters.any (for example
 /0102 { /type "deny" /method "GET" /query "wcmmode=*" }
 /0103 { /type "deny" /path "/content/ams/healthcheck/*" }
 /0104 { /type "deny" /url "/content/regent.html" }
-DOT - The Dispatcher publish farm cache statfileslevel property should be >= 2
-Key: DOTRules:Disp-2
+```
+
+## DOT - The Dispatcher publish farm cache statfileslevel property should be >= 2
+
+Key: `DOTRules:Disp-2---statfileslevel`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 A statfileslevel set to 0 or 1 can cause issues where cache invalidations affect vast (and unrelated) parts of the cache, causing unnecessary stress on the publish tier whenever activations happen.
+
 When a publish farm's statfileslevel is set to 2 or greater, it means that .stat files can be placed deeper into the cache directories (1 = /content, 2 = /content/we-retail, etc.). When set optimally, publishing changes to a page will only invalidate related portions of the cache where this page may be referenced. For example, changing a page in the the us/en language hierarchy of the site should only invalidate us/en, while sparing ca/fr from invalidation.
+
 A statfileslevel of 0 means that there is only one .stat file present in the cache: at the root. Whenever anything is activated this .stat file is touched, and the entire cache is considered invalid (the exact files that are considered invalid are defined by the /invalidate rules). When an increased volume of activation events occurs, this setting can cause the publish tier to repeatedly render the same pages over and over each time they become invalidated in the cache. Given enough traffic, this can cause stress on the publish tier and result in performance degredation. At best, it reduces the end user's experience of the site, as rendering a page takes much longer than serving it directly from the cache.
-If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: Effect of a statfileslevel greater than 0
+
+If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: [Effect of a statfileslevel greater than 0](https://github.com/adobe/aem-dispatcher-experiments/blob/main/experiments/statfileslevel)
+
 #### Non-Compliant Code
+
+```
 /cache {
   /statfileslevel "0"
+```
+
 #### Compliant Code
+
+```
 /cache {
   /statfileslevel "2"
-DOT - The Dispatcher publish farm gracePeriod property should be >= 2
-Key: DOTRules:Disp-3
+```
+
+## DOT - The Dispatcher publish farm gracePeriod property should be >= 2
+
+Key: `DOTRules:Disp-3---gracePeriod`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 Setting gracePeriod defines the number of seconds a stale, auto-invalidated resource may still be served from the cache after the last activation occurring. This can shield the publish tier from spikes in load when a number of cache invalidation events occur in quick succession. Please evaluate whether this can work with your site requirements.
+
 If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: Effect of the gracePeriod setting
+
 #### Non-Compliant Code
+
+```
 /cache {
   # gracePeriod unset, which defaults to "0"
+```
+
 #### Compliant Code
+
+```
 /cache {
   /gracePeriod "2"
-DOT - Each Dispatcher farm should have a unique name
-Key: DOTRules:Disp-8
+```
+
+## DOT - Each Dispatcher farm should have a unique name
+
+Key: `DOTRules:Disp-8---unique-farm-name`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 All enabled farms referenced from dispatcher.any should have a unique name.
+
 #### Non-Compliant Code
+
+```
 /farms
   {
   # author farm
@@ -342,44 +399,80 @@ All enabled farms referenced from dispatcher.any should have a unique name.
   # publish farm
   /examplesite { ... }
   }
+```
+
 #### Compliant Code
+
+```
 /farms
   {
   /examplepublish { ... }
  
   /exampleauthor { ... }
   }
-DOT - The Dispatcher publish farm cache should have its ignoreUrlParams rules configured in an allow list manner
-Key: DOTRules:Disp-1
+```
+
+## DOT - The Dispatcher publish farm cache should have its ignoreUrlParams rules configured in an allow list manner
+
+Key: `DOTRules:Disp-1---ignoreUrlParams-allow-list`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 For a publish farm's cache config, the ignoreUrlParams setting should be configured so that all query parameters are ignored, and only known/expected query parameters are exempt ("denied") from being ignored. This means that a request containing an unexpected query param (for example, en.html?utm_source=email) will still be handled by the dispatcher as a request for en.html, and can be served from the cache (if present and valid).
-If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: Effect of an ignoreUrlParams allow list
+
+If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: [Effect of an ignoreUrlParams allow list](https://github.com/adobe/aem-dispatcher-experiments/blob/main/experiments/ignoreUrlParams)
+
 #### Non-Compliant Code
+
+```
 /ignoreUrlParams {
   /0001 { /glob "*" /type "deny" }              # all query params "denied" from being ignored
   /0002 { /glob "utm_campaign" /type "allow" }  # only utm_campaign is ignored
 }
-If there are query parameters which are needed by the server side code, then they should explicitly be "denied" from being ignored. For example, consider a search term query param which is used by a server side search method. When a request for en.html?search=cycling is received, it should be handled by the publish tier and always count as a cache miss. 
-In this case, "search" would be added to the allow list:
+```
+
 #### Compliant Code
+
+If there are query parameters which are needed by the server side code, then they should explicitly be "denied" from being ignored. For example, consider a search term query param which is used by a server side search method. When a request for en.html?search=cycling is received, it should be handled by the publish tier and always count as a cache miss.
+
+In this case, "search" would be added to the allow list:
+
+```
 /ignoreUrlParams {
   /0001 { /glob "*" /type "allow" }
   /0002 { /glob "search" /type "deny" }
 }
-DOT - The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner
-Key: DOTRules:Disp-7
+```
+
+## DOT - The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner
+
+Key: `DOTRules:Disp-7---selector-allow-list`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 For a publish farm config, all Sling selectors should be denied by a filter rule to prevent a malicious user from crafting requests that could overwhelm both the publish tier and consume disk space on the dispatcher. Individual selectors which are needed on the server side can be added in an allow list manner.
-For more background on this recommended approach, please refer to the Security Checklist: Mitigate Denial of Service (DoS) Attacks
+
+For more background on this recommended approach, please refer to the Security Checklist: [Mitigate Denial of Service (DoS) Attacks](https://helpx.adobe.com/ca/experience-manager/6-3/sites/administering/using/security-checklist.html#FurtherReadings)
+
 #### Non-Compliant Code
+
+```
 /publishfarm {
   /filter {
     # no restriction on which selectors can be used
+```
+
 #### Compliant Code
+
+```
 /publishfarm {
   /filter {
     # filter set from AMS-style AEM archetype
@@ -389,18 +482,33 @@ For more background on this recommended approach, please refer to the Security C
  
     # Individual selectors which are needed on the server side can be added in an allow list manner
     /0151 { /type "allow" /url "/content*" /selectors '(legit-selector|other-fine-selector)' /method "GET" }
-DOT - The Dispatcher publish farm filters should specify the allowed Sling suffix patterns in an allow list manner
-Key: DOTRules:Disp-6
+```
+
+## DOT - The Dispatcher publish farm filters should specify the allowed Sling suffix patterns in an allow list manner
+
+Key: `DOTRules:Disp-6---suffix-allow-list`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 For a publish farm config, all Sling suffixes should be denied by a filter rule to prevent a malicious user from crafting requests that could overwhelm both the publish tier and consume disk space on the dispatcher. Suffix patterns which are needed on the server side can be added in an allow list manner.
-For more background on this recommended approach, please refer to the Security Checklist: Mitigate Denial of Service (DoS) Attacks
+
+For more background on this recommended approach, please refer to the Security Checklist: [Mitigate Denial of Service (DoS) Attacks](https://helpx.adobe.com/ca/experience-manager/6-3/sites/administering/using/security-checklist.html#FurtherReadings)
+
 #### Non-Compliant Code
+
+```
 /publishfarm {
   /filter {
     # no restriction on which suffixes can be used
+```
+
 #### Compliant Code
+
+```
 /publishfarm {
   /filter {
     # filter set from AMS-style AEM archetype
@@ -410,23 +518,38 @@ For more background on this recommended approach, please refer to the Security C
  
     # Suffix patterns which are needed on the server side can be added in an allow list manner
     /0161 { /type "allow" /url "/content/we-retail/us/en/equipment/*" /suffix "/content/we-retail/*" /method "GET" }
-DOT - The 'Require all granted' directive should not be used in a VirtualHost Directory section with a root directory-path
-Key: DOTRules:Httpd-1
+```
+
+## DOT - The 'Require all granted' directive should not be used in a VirtualHost Directory section with a root directory-path
+
+Key: `DOTRules:Httpd-1---require-all-granted`
+
 Type: Code Smell
+
 Severity: Major
+
 Since: TBD
+
 When a VirtualHost's Directory section is configured improperly it can allow access to files that exist outside of the Apache document root. Setting "Require all granted" on the root can expose the filesystem to anonymous access.
+
 The AEM archetype should be used as a reference when resolving violations of this rule. Note how the top level `<Directory />` section has Require all denied set. The `<Directory />` sections in the individual .vhost files do not include `Require all granted` (i.e. aem_publish.vhost).
+
 #### Non-Compliant Code
+
+```
 <VirtualHost *:80>
     <Directory />
         Require all granted
     </Directory>
 </VirtualHost>
+```
+
 #### Compliant Code
+
+```
 <VirtualHost *:80>
     <Directory "${PUBLISH_DOCROOT}">
         Require all granted
     </Directory>
 </VirtualHost>
-
+```
