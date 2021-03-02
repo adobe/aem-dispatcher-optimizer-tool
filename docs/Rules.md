@@ -360,7 +360,7 @@ Since: TBD
 
 Setting gracePeriod defines the number of seconds a stale, auto-invalidated resource may still be served from the cache after the last activation occurring. This can shield the publish tier from spikes in load when a number of cache invalidation events occur in quick succession. Please evaluate whether this can work with your site requirements.
 
-If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: Effect of the gracePeriod setting
+If you'd like to experiment with this setting, consider trying the AEM dispatcher experiments: [Effect of the gracePeriod setting](https://github.com/adobe/aem-dispatcher-experiments/tree/main/experiments/gracePeriod#effect-of-the-graceperiod-setting)
 
 #### Non-Compliant Code
 
