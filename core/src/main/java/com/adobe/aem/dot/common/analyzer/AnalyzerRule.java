@@ -104,7 +104,7 @@ public class AnalyzerRule {
           fieldNameToCheck = elementTokens[2];
           objectToCheck = callGetter(farm, secondLevelElementName);
           configValueToCheck = callGetter(objectToCheck, fieldNameToCheck);
-          logger.debug("Property on object=\"{}\" named=\"{}\" has value=\"{}\"", secondLevelElementName,
+          logger.trace("Property on object=\"{}\" named=\"{}\" has value=\"{}\"", secondLevelElementName,
                   fieldNameToCheck, configValueToCheck);
         } else {
           // This method does not know how to handle this particular rule element
@@ -115,7 +115,7 @@ public class AnalyzerRule {
         logger.trace("secondLevelElement: filter");
 
         configValueToCheck = callGetter(farm, secondLevelElementName);
-        logger.debug("Property on object=\"{}\" named=\"{}\" has value=\"{}\"", topLevelElementName,
+        logger.trace("Property on object=\"{}\" named=\"{}\" has value=\"{}\"", topLevelElementName,
                 secondLevelElementName, configValueToCheck);
         break;
       default:
@@ -191,7 +191,7 @@ public class AnalyzerRule {
               "get" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1),
               null);
       Object result = propertyDescriptor.getReadMethod().invoke(valueObj);
-      logger.debug("callGetter found result for property=\"{}\" value=\"{}\"", fieldName,
+      logger.trace("callGetter found result for property=\"{}\" value=\"{}\"", fieldName,
               result != null ? result.toString() : "null");
       return result;
     } catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
