@@ -106,7 +106,15 @@ public class JSONRuleReader {
 
   private AnalyzerRuleList parseRulesFromInputStream(InputStream input) throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.readValue(input, AnalyzerRuleList.class);
+    // Check for empty file.
+    if (input != null && input.available() > 0) {
+      try {
+        return objectMapper.readValue(input, AnalyzerRuleList.class);
+      } catch (IOException ioEx) {
+        logger.warn("Error reading rule file.  Reason=\"{}\"", ioEx.getLocalizedMessage(), ioEx);
+      }
+    }
+    return new AnalyzerRuleList();
   }
 
   /**

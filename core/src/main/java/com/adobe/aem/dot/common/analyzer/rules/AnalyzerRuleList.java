@@ -51,6 +51,11 @@ public class AnalyzerRuleList {
    * @param origin A short indicator of the origin of the next rules for logging clarity.  Usually file name.
    */
   void addRules(AnalyzerRuleList ruleList, String origin) {
+    if (ruleList == null || ruleList.getRules() == null) {
+      logger.warn("Rule file did not contain any rules.  origin={}", origin);
+      return;
+    }
+
     if (this.rules == null || ruleList.getMergeMode() == MergeMode.REPLACE) {
       this.rules = ruleList.getRules();
       mergeMode = ruleList.getMergeMode();
@@ -190,4 +195,3 @@ public class AnalyzerRuleList {
     return asJson;
   }
 }
-
