@@ -85,14 +85,17 @@ public class PathUtil {
   }
 
   /**
-   * For a Windows' path, strip off the drive (ie "C:") from the path.
+   * For a Windows' path, strip off the drive (ie "C:") from the path.  Assumes only one colon in the path, which is
+   * part of the drive (i.e. "C:\...")
    * @param path A path
    * @return path Path without drive.
    */
   public static String stripOffDrive(String path) {
-    if (StringUtils.isNotEmpty(path) && path.length() > 2 && path.charAt(1) == ':') {
-      path = path.substring(2);
+    if (StringUtils.isNotEmpty(path) && path.contains(":")) {
+      String[] split = path.split(":");
+      path = split[1];
     }
+
     return path;
   }
 
