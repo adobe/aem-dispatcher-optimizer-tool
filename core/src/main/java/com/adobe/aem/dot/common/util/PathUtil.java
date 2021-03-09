@@ -85,15 +85,24 @@ public class PathUtil {
   }
 
   /**
+   * For a Windows' path, strip off the drive (ie "C:") from the path.
+   * @param path A path
+   * @return path Path without drive.
+   */
+  public static String stripOffDrive(String path) {
+    if (StringUtils.isNotEmpty(path) && path.length() > 2 && path.charAt(1) == ':') {
+      path = path.substring(2);
+    }
+    return path;
+  }
+
+  /**
    * Return the final folder or filename.
    * @param path A path
    * @return path Path without the final folder. If not a path (no slashes), returns original string.
    */
   public static String getLastPathElement(String path) {
-    if (path.contains(":")) {
-      String[] split = path.split(":");
-      path = split[1];
-    }
+    path = stripOffDrive(path);
     return Paths.get(path).getFileName().toString();
   }
 

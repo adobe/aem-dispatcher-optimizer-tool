@@ -74,7 +74,8 @@ public class HttpdConfigurationFactoryTest {
     String classPath = PathEncodingHelper.getDecodedClassPath(this.getClass());
 
     // Provide valid repo path without any 'httpd.conf' files.
-    ConfigurationParseResults results = hcf.getHttpdConfiguration(classPath + File.separator + "helpers", "hi");
+    ConfigurationParseResults<HttpdConfiguration> results = hcf.getHttpdConfiguration(
+            classPath + File.separator + "helpers", "hi");
     assertNull("config not found - null", results);
 
     List<ILoggingEvent> logsList = listAppender.list;
