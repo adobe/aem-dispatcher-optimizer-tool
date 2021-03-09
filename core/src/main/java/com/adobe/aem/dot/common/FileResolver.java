@@ -116,6 +116,11 @@ public class FileResolver {
       File[] files = directory.listFiles(fileFilter);
 
       if (files != null && files.length > 0) {
+        // If directories are not allowed, then simply return our list instead of processing subdirectories.
+        if (!allowDirectoryPath) {
+          return Arrays.asList(files);
+        }
+
         List<File> directoryFiles = new ArrayList<>();
         for (File nextFile: files) {
           String name = PathUtil.stripOffDrive(nextFile.getPath());
