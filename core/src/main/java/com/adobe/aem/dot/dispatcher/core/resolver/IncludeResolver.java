@@ -97,7 +97,7 @@ public class IncludeResolver {
 
         String includeFolder = PathUtil.stripLastPathElement(includeFile);
         String fileToInclude = getFilePathFromInclude(line, includeFile);
-        FileResolver fileResolver = new FileResolver(this.basePath);
+        FileResolver fileResolver = new FileResolver(this.basePath, false);
         List<File> filesToInclude = fileResolver.resolveFiles(fileToInclude, includeFolder);
 
         for (File file : filesToInclude) {

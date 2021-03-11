@@ -40,11 +40,12 @@ import java.util.regex.Pattern;
  */
 public class FileResolver {
 
-  private String basePath;
+  private final String basePath;
+  private final boolean allowDirectoryPath;
 
   private static final Logger logger = LoggerFactory.getLogger(FileResolver.class);
 
-  private static Map<String, String> cachedIncludeFiles = new HashMap<>();
+  private final static Map<String, String> cachedIncludeFiles = new HashMap<>();
 
   private static final String missingEnvVarStart = "_ENV___";
   private static final String missingEnvVarEnd = "__";
@@ -52,9 +53,11 @@ public class FileResolver {
   /**
    * Instantiate a new FileResolver.
    * @param basePath - the starting point to handle relative path includes from
+   * @param allowDirectoryPath - whether to allow a directory to be included, without wildcards
    */
-  public FileResolver(String basePath) {
+  public FileResolver(String basePath, boolean allowDirectoryPath) {
     this.basePath = basePath;
+    this.allowDirectoryPath = allowDirectoryPath;
   }
 
   /**
@@ -113,7 +116,26 @@ public class FileResolver {
       File[] files = directory.listFiles(fileFilter);
 
       if (files != null && files.length > 0) {
-        return Arrays.asList(files);
+        // If directories are not allowed, then simply return our list instead of processing subdirectories.
+        if (!allowDirectoryPath) {
+          return Arrays.asList(files);
+        }
+
+        List<File> directoryFiles = new ArrayList<>();
+        for (File nextFile: files) {
+          String name = PathUtil.removeDriveLetterPrefix(nextFile.getPath());
+          if (name.startsWith(currentWorkingDirectory)) {
+            name = name.substring(currentWorkingDirectory.length() + 1);
+          } else {
+            String target = PathUtil.stripLastPathElement(filePath);
+            name = PathUtil.appendPaths(target, nextFile.getName());
+          }
+          List<File> nextFiles = resolveFiles(name, currentWorkingDirectory);
+          if (!nextFiles.isEmpty()) {
+            directoryFiles.addAll(nextFiles);
+          }
+        }
+        return directoryFiles;
       } else {
         logger.info("No files included with wildcard include. Path=\"{}\"", resolvedPath);
         return Collections.emptyList();
@@ -154,9 +176,20 @@ public class FileResolver {
     } else {
       File resolvedFile = new File(resolvedPath);
       if (resolvedFile.exists()) {
+        if (resolvedFile.isDirectory()) {
+          if (!allowDirectoryPath) {
+            logger.error("Cannot include a directory.  Use wildcards to include the contents.  Path=\"{}\"", resolvedPath);
+            return Collections.emptyList();
+          }
+
+          logger.warn("Including a directory is not recommended.  Instead, use wildcards.  Path=\"{}\"", resolvedPath);
+          return resolveFiles(PathUtil.appendPaths(filePath, "*"), currentWorkingDirectory);
+        }
+
+        // It is a existing, non-directory file.
         return Collections.singletonList(resolvedFile);
       } else {
-        return new ArrayList<>();
+        return Collections.emptyList();
       }
     }
   }
@@ -278,7 +311,6 @@ public class FileResolver {
 
     // See if the baseIncludePath can fit on any section of the cwd.
     String cwdSection = cwd;
-    //String[] includeSections = PathUtil.split(withoutRelativeParent);
     while (StringUtils.isNotEmpty(cwdSection)) {
       String lastBase = cwdSection;
       // If not absolute path, take away folders from the end.
@@ -323,7 +355,7 @@ public class FileResolver {
       return null;
     }
 
-    cachedIncludeFiles.put(key, combinedPath + includeSuffix);
+    cachedIncludeFiles.put(key, FilenameUtils.separatorsToSystem(combinedPath + includeSuffix));
     return cachedIncludeFiles.get(key);
   }
 }

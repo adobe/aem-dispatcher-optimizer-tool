@@ -234,7 +234,7 @@ public class HttpdConfigurationParser {
   }
 
   private List<File> getFilesToInclude(String pattern, String basePath) {
-    FileResolver fileResolver = new FileResolver(basePath);
+    FileResolver fileResolver = new FileResolver(basePath, true);
     return fileResolver.resolveFiles(pattern);
   }
 

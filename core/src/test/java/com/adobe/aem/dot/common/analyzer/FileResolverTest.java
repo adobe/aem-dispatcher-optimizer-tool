@@ -43,7 +43,7 @@ public class FileResolverTest {
 
   @Before
   public void before() {
-    fileResolver = new FileResolver(missingBasePath);
+    fileResolver = new FileResolver(missingBasePath, false);
 
     classPath = PathEncodingHelper.getDecodedClassPath(this.getClass());
     realPath = PathUtil.stripFirstPathElement(classPath).substring(1);
@@ -72,7 +72,6 @@ public class FileResolverTest {
     assertTrue("files is empty", files.isEmpty());
 
     List<ILoggingEvent> logsList = listAppender.list;
-    // Check that the 'unclosed' regex was logged - "regex(.*" - should be the first entry in the logs.
     assertEquals("Environment variable is not set.  EnvVar=\"{}\"",
             logsList.get(0).getMessage());
     assertEquals("Severity should be WARN.", Level.WARN, logsList.get(0).getLevel());
@@ -91,7 +90,7 @@ public class FileResolverTest {
   public void resolveWildCardFileTest() {
     List<File> files = fileResolver.resolveFiles(realPath + File.separator + "*", realBase);
     assertNotNull("Should not be null", files);
-    assertTrue("files have some files", files.size() > 0);
+    assertTrue("files should have some files", files.size() > 0);
     assertTrue("files contain this class", files.toString().contains(this.getClass().getSimpleName()));
   }
 
@@ -104,7 +103,31 @@ public class FileResolverTest {
 
     files = fileResolver.resolveFiles(realPath + File.separator + "FileResolverTest.class[2]", realBase);
     assertNotNull("Should not be null", files);
-    assertTrue("files have some files", files.size() > 0);
+    assertTrue("files should have some files", files.size() > 0);
     assertTrue("files contain this class", files.toString().contains(this.getClass().getSimpleName()));
+  }
+
+  @Test
+  public void denyDirectoryPathTest() {
+    List<File> files = fileResolver.resolveFiles(realPath, realBase);
+    assertNotNull("Should not be null", files);
+    assertTrue("files should NOT have some files", files.isEmpty());
+
+    List<ILoggingEvent> logsList = listAppender.list;
+    assertTrue(logsList.get(0).getMessage().startsWith("Cannot include a directory.  Use wildcards to include the contents.  Path="));
+    assertEquals("Severity should be WARN.", Level.ERROR, logsList.get(0).getLevel());
+  }
+
+  @Test
+  public void allowDirectoryPathTest() {
+    String testDirectory = PathUtil.appendPaths(realPath, "rules");
+    FileResolver fileResolverAllow = new FileResolver(realBase, true);
+    List<File> files = fileResolverAllow.resolveFiles(testDirectory, realBase);
+    assertNotNull("Should not be null", files);
+    assertTrue("files should have some files", files.size() > 0);
+
+    List<ILoggingEvent> logsList = listAppender.list;
+    assertTrue(logsList.get(0).getMessage().startsWith("Including a directory is not recommended.  Instead, use wildcards.  Path="));
+    assertEquals("Severity should be WARN.", Level.WARN, logsList.get(0).getLevel());
   }
 }
