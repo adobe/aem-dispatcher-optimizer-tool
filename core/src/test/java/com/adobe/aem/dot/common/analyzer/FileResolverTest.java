@@ -115,8 +115,6 @@ public class FileResolverTest {
     assertTrue("files should NOT have some files", files.isEmpty());
 
     List<ILoggingEvent> logsList = listAppender.list;
-    // Check that the 'unclosed' regex was logged - "regex(.*" - should be the first entry in the logs.
-    assertTrue(logsList.get(0).getMessage().startsWith("Cannot include a directory.  Use wildcards to include the contents.  Path="));
     assertTrue(logsList.get(0).getMessage().startsWith("Cannot include a directory.  Use wildcards to include the contents.  Path="));
     assertEquals("Severity should be WARN.", Level.ERROR, logsList.get(0).getLevel());
   }

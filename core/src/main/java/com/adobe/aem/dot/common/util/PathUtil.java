@@ -90,7 +90,7 @@ public class PathUtil {
    * @param path A path
    * @return path Path without drive.
    */
-  public static String stripOffDrive(String path) {
+  public static String removeDriveLetterPrefix(String path) {
     if (StringUtils.isNotEmpty(path) && path.contains(":")) {
       String[] split = path.split(":");
       path = split[1];
@@ -100,12 +100,12 @@ public class PathUtil {
   }
 
   /**
-   * Return the final folder or filename.
+   * Return the name of the final folder or filename.
    * @param path A path
    * @return path Path without the final folder. If not a path (no slashes), returns original string.
    */
   public static String getLastPathElement(String path) {
-    path = stripOffDrive(path);
+    path = removeDriveLetterPrefix(path);
     return Paths.get(path).getFileName().toString();
   }
 

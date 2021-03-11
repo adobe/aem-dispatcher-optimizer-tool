@@ -123,7 +123,7 @@ public class FileResolver {
 
         List<File> directoryFiles = new ArrayList<>();
         for (File nextFile: files) {
-          String name = PathUtil.stripOffDrive(nextFile.getPath());
+          String name = PathUtil.removeDriveLetterPrefix(nextFile.getPath());
           if (name.startsWith(currentWorkingDirectory)) {
             name = name.substring(currentWorkingDirectory.length() + 1);
           } else {
