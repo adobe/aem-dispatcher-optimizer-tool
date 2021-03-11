@@ -72,7 +72,6 @@ public class FileResolverTest {
     assertTrue("files is empty", files.isEmpty());
 
     List<ILoggingEvent> logsList = listAppender.list;
-    // Check that the 'unclosed' regex was logged - "regex(.*" - should be the first entry in the logs.
     assertEquals("Environment variable is not set.  EnvVar=\"{}\"",
             logsList.get(0).getMessage());
     assertEquals("Severity should be WARN.", Level.WARN, logsList.get(0).getLevel());
@@ -128,7 +127,6 @@ public class FileResolverTest {
     assertTrue("files should have some files", files.size() > 0);
 
     List<ILoggingEvent> logsList = listAppender.list;
-    // Check that the 'unclosed' regex was logged - "regex(.*" - should be the first entry in the logs.
     assertTrue(logsList.get(0).getMessage().startsWith("Including a directory is not recommended.  Instead, use wildcards.  Path="));
     assertEquals("Severity should be WARN.", Level.WARN, logsList.get(0).getLevel());
   }
