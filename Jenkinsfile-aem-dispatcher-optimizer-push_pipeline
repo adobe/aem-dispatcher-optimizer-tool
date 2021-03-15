@@ -39,11 +39,10 @@ pipeline {
         //Stage: Maven Integration
         stage('Maven build') {
             steps{
-                configFileProvider([configFile(fileId: '02d67b33-bd34-43dc-8acd-7dae5a90b8f0', variable: 'MAVEN_SETTINGS')]) {
-                    sh """
-                        mvn -s '${MAVEN_SETTINGS}' clean install
-                    """
-                }
+                sh '''
+                    export PATH=${tool 'Maven 3.2.1'}/bin:$PATH
+                    mvn clean install
+                '''
             }
         }
     }

@@ -29,7 +29,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 The Dispatcher configuration has a well defined structure. Reserved words and hierarchies are used to configure specific aspects of the module. When these reserved tokens are used out of place, or some unknown token is used, the intent will not be achieved. In fact, they might have unattended side-effects which are not immediately evident.
 
@@ -59,7 +59,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 Many Dispatcher configuration string values are expected to be contained within quotes, either double or single quotes. At times, quotes can be misplaced, inserted incorrectly, accidentally pasted or deleted, etc. and many unattended side-effects can occur which are not immediately evident. These missing or additional quotes can be hard to find in the set of Dispatcher configuration files.
 
@@ -85,7 +85,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 Most multi-valued properties in the Dispatcher configuration group values within curly braces. At times, braces can be misplaced, inserted incorrectly, accidentally pasted or deleted, etc. and many unpredictable configurations can result. These missing or additional braces can be difficult to locate in the set of Dispatcher configuration files.
 
@@ -120,7 +120,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 Most multi-valued properties in the Dispatcher configuration group values within curly braces. At times, braces can be misplaced, inserted incorrectly, accidentally pasted or deleted, etc. and many unpredictable configurations can result. These missing or additional braces can be difficult to locate in the set of Dispatcher configuration files.
 
@@ -150,7 +150,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 The Dispatcher configuration has a well defined structure. Some multi-valued properties have values that are mandatory.
 This parsing violation will identify missing values that are mandatory for the multi-valued property. It is also recommended to review the logs as they contain more details than the reported violations.
@@ -177,7 +177,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 The Dispatcher configuration has a well defined structure which has evolved over time. As technology changes, some values become deprecated.
 
@@ -208,7 +208,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 A "dispatcher.any" configuration file was not found so the configuration parsing and analysis could not be performed.  This violation is mostly to ensure the user is not given the impression that their configuration was free of violations.  Instead it announces that no Dispatcher configuration was analyzed at all.
 
@@ -220,7 +220,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 The Apache Httpd configuration spec contains an `Include` directive. This indicates that its argument should be included as part of the configuration. It also contains a `IncludeOptional` directive. The difference between the two is that the former reports an error if the included file is not found. The latter does not report an error.
 
@@ -246,7 +246,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 This violation will be raised if a parsing-related problem occurs that does not fit into the foreseen categories (above). The developer should review the logs to determine the details of this general violation.
 
@@ -258,7 +258,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 The serveStaleOnError flag may be considered to be set to "1" to enable invalidated pages to be served from the cache when an error response is received from the AEM publish tier, if this is acceptable with your customization requirement.
 
@@ -286,7 +286,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 The default deny rules from the AMS flavour of the AEM archetype should be left in-place and extended as needed.
 
@@ -324,7 +324,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 A statfileslevel set to 0 or 1 can cause issues where cache invalidations affect vast (and unrelated) parts of the cache, causing unnecessary stress on the publish tier whenever activations happen.
 
@@ -356,7 +356,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 Setting gracePeriod defines the number of seconds a stale, auto-invalidated resource may still be served from the cache after the last activation occurring. This can shield the publish tier from spikes in load when a number of cache invalidation events occur in quick succession. Please evaluate whether this can work with your site requirements.
 
@@ -384,7 +384,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 All enabled farms referenced from dispatcher.any should have a unique name.
 
@@ -420,7 +420,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 For a publish farm's cache config, the ignoreUrlParams setting should be configured so that all query parameters are ignored, and only known/expected query parameters are exempt ("denied") from being ignored. This means that a request containing an unexpected query param (for example, en.html?utm_source=email) will still be handled by the dispatcher as a request for en.html, and can be served from the cache (if present and valid).
 
@@ -456,7 +456,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 For a publish farm config, all Sling selectors should be denied by a filter rule to prevent a malicious user from crafting requests that could overwhelm both the publish tier and consume disk space on the dispatcher. Individual selectors which are needed on the server side can be added in an allow list manner.
 
@@ -492,7 +492,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 For a publish farm config, all Sling suffixes should be denied by a filter rule to prevent a malicious user from crafting requests that could overwhelm both the publish tier and consume disk space on the dispatcher. Suffix patterns which are needed on the server side can be added in an allow list manner.
 
@@ -528,7 +528,7 @@ Type: Code Smell
 
 Severity: Major
 
-Since: TBD
+Since: Core 1.0.14, Cloud Manager 2021.3.0
 
 When a VirtualHost's Directory section is configured improperly it can allow access to files that exist outside of the Apache document root. Setting "Require all granted" on the root can expose the filesystem to anonymous access.
 
