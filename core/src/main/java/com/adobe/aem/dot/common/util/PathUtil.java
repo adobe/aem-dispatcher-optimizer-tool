@@ -100,7 +100,6 @@ public class PathUtil {
   }
 
   /**
-   * Remove
    * If the provided path (descendant) is a sub-folder of another path (ancestor).  Drive letters are ignored.
    * @param descendantPath The path further down in the path hierarchy.
    * @param ancestorPath The path higher up in the path hierarchy.
