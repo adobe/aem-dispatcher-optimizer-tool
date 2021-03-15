@@ -85,6 +85,41 @@ public class PathUtil {
   }
 
   /**
+   * Determine if a path (descendant) is a sub-folder of another path (ancestor).  Drive letters are ignored.
+   * @param descendantPath The path further down in the path hierarchy.
+   * @param ancestorPath The path higher up in the path hierarchy.
+   * @return True if descendantPath is a subdirectory (with any level) of ancestorPath.
+   */
+  public static boolean isDescendantOf(String descendantPath, String ancestorPath) {
+    descendantPath = removeDriveLetterPrefix(descendantPath);
+    ancestorPath = removeDriveLetterPrefix(ancestorPath);
+    if (!ancestorPath.endsWith(String.valueOf(File.separatorChar))) {
+      ancestorPath += File.separatorChar;
+    }
+    return descendantPath.startsWith(ancestorPath);
+  }
+
+  /**
+   * Remove
+   * If the provided path (descendant) is a sub-folder of another path (ancestor).  Drive letters are ignored.
+   * @param descendantPath The path further down in the path hierarchy.
+   * @param ancestorPath The path higher up in the path hierarchy.
+   * @return True if descendantPath is a subdirectory (with any level) of ancestorPath.
+   */
+  public static String removeAncestorPath(String descendantPath, String ancestorPath) {
+    descendantPath = removeDriveLetterPrefix(descendantPath);
+    ancestorPath = removeDriveLetterPrefix(ancestorPath);
+    String subPath = descendantPath;
+    if (isDescendantOf(descendantPath, ancestorPath)) {
+      subPath = descendantPath.substring(ancestorPath.length());
+      if (subPath.startsWith(String.valueOf(File.separatorChar))) {
+        subPath = subPath.substring(1);
+      }
+    }
+    return subPath;
+  }
+
+  /**
    * For a Windows' path, strip off the drive (ie "C:") from the path.  Assumes only one colon in the path, which is
    * part of the drive (i.e. "C:\...")
    * @param path A path

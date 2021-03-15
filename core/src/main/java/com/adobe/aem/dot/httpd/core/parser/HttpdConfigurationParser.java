@@ -74,7 +74,7 @@ public class HttpdConfigurationParser {
     ConfigurationViolations.clearViolations();
 
     List<ConfigurationLine> configLines = this.normalizeConfig(configFile,
-            configFile.getParentFile().getAbsolutePath(), true);
+            configFile.getParentFile().getPath(), true);
 
     // Parse ConfigurationLine items into an HttpdConfiguration object
     HttpdConfiguration config = this.parseConfigurationLines(configLines);
