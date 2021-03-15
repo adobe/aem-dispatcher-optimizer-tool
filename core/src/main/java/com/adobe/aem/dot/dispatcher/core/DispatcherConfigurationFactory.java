@@ -23,6 +23,7 @@ import com.adobe.aem.dot.common.ConfigurationSource;
 import com.adobe.aem.dot.common.analyzer.Severity;
 import com.adobe.aem.dot.common.parser.ConfigurationParseResults;
 import com.adobe.aem.dot.common.parser.ConfigurationViolations;
+import com.adobe.aem.dot.common.util.PathUtil;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
 import com.adobe.aem.dot.dispatcher.core.parser.ConfigurationParser;
 import com.adobe.aem.dot.dispatcher.core.parser.ConfigurationSyntaxException;
@@ -60,20 +61,22 @@ public class DispatcherConfigurationFactory {
     if (StringUtils.isEmpty(repoPath)) {
       throw new IllegalArgumentException("The repo folder is not set.");
     }
-    if (StringUtils.isEmpty(dispatcherAnyFilePath)) {
-      logger.info("The Dispatcher configuration directory is not set.");
-    }
 
     // first check to see if the repo that we're given exists (the mount point)
     File repoFile = new File(repoPath);
-
     if (!repoFile.exists()) {
       throw new ConfigurationException(MessageFormat.format("The `{0}` folder does not exist", repoPath));
     }
 
-    // now we can see if the 'anyDir' exists, this directory contains the dispatcher.any file
-    File dispatcherAnyFile = FileUtils.getFile(repoPath, dispatcherAnyFilePath + File.separator +
-                                                                 DispatcherConstants.DISPATCHER_ANY);
+    File dispatcherAnyFile;
+    if (StringUtils.isEmpty(dispatcherAnyFilePath)) {
+      logger.info("The Dispatcher configuration directory is not set.");
+      dispatcherAnyFile = FileUtils.getFile(repoPath, DispatcherConstants.DISPATCHER_ANY);
+    } else {
+      // now we can see if the 'anyDir' exists, this directory contains the dispatcher.any file
+      dispatcherAnyFile = FileUtils.getFile(repoPath,
+              PathUtil.appendPaths(dispatcherAnyFilePath, DispatcherConstants.DISPATCHER_ANY));
+    }
 
     // If ANY file was not found in specified location, try to locate it somewhere under the 'repoPath' location.
     if (!dispatcherAnyFile.exists()) {

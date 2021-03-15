@@ -124,8 +124,8 @@ public class FileResolver {
         List<File> directoryFiles = new ArrayList<>();
         for (File nextFile: files) {
           String name = PathUtil.removeDriveLetterPrefix(nextFile.getPath());
-          if (name.startsWith(currentWorkingDirectory)) {
-            name = name.substring(currentWorkingDirectory.length() + 1);
+          if (PathUtil.isDescendantOf(name, currentWorkingDirectory)) {
+            name = PathUtil.removeAncestorPath(name, currentWorkingDirectory);
           } else {
             String target = PathUtil.stripLastPathElement(filePath);
             name = PathUtil.appendPaths(target, nextFile.getName());
