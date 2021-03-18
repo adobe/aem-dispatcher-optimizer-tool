@@ -437,7 +437,10 @@ If you'd like to experiment with this setting, consider trying the AEM dispatche
 
 #### Compliant Code
 
-If there are query parameters which are needed by the server side code, then they should explicitly be "denied" from being ignored. For example, consider a search term query param which is used by a server side search method. When a request for en.html?search=cycling is received, it should be handled by the publish tier and always count as a cache miss.
+If there are query parameters which are needed by the server side code, then they should explicitly be "denied" from
+being ignored. For example, consider a search term query param which is used by a server side search method. When a
+request for en.html?search=cycling is received, it should be handled by the publish tier and always count as a cache
+miss.
 
 In this case, "search" would be added to the allow list:
 
@@ -447,6 +450,14 @@ In this case, "search" would be added to the allow list:
   /0002 { /glob "search" /type "deny" }
 }
 ```
+
+### Security Caveat
+Accidentally caching a page with personalized or protected data needs to be avoided.  This can happen if the list
+is not kept in sync with new features that are added during development. The best way to avoid undesired caching
+depends on your scenario.
+
+Consider adding a `Dispatcher: no-cache` header on the response to requests for pages that should _never_ be
+cached.  See [documentation for 'no-cache'](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html?lang=en#configuring-load-balancing-statistics).
 
 ## DOT - The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner
 
