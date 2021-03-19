@@ -457,7 +457,8 @@ is not kept in sync with new features that are added during development. The bes
 depends on your scenario.
 
 Consider adding a `Dispatcher: no-cache` header on the response to requests for pages that should _never_ be
-cached.  See [documentation for 'no-cache'](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html?lang=en#configuring-load-balancing-statistics).
+cached.  See "[Specifying the Documents to Cache](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html?lang=en#specifying-the-documents-to-cache)"
+section for 'no-cache' documentation.
 
 ## DOT - The Dispatcher publish farm filters should specify the allowed Sling selectors in an allow list manner
 
