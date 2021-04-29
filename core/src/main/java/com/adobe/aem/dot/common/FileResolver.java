@@ -99,8 +99,8 @@ public class FileResolver {
       return new ArrayList<>();
     }
 
-    // Resolve CWD and filepath, finding a common base.
-    resolvedPath = getBaseCombinedPath(filePath, currentWorkingDirectory);
+    // Resolve CWD and resolvedPath, finding a common base.
+    resolvedPath = getBaseCombinedPath(resolvedPath, currentWorkingDirectory);
     if (resolvedPath == null) {
       logger.error("Skipping include with unresolvable path with respect to current environment.  Path=\"{}\"",
               filePath);

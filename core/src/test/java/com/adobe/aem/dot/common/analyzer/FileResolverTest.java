@@ -15,23 +15,28 @@
  */
 
 package com.adobe.aem.dot.common.analyzer;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
+import uk.org.webcompere.systemstubs.rules.EnvironmentVariablesRule;
+
 import com.adobe.aem.dot.common.FileResolver;
 import com.adobe.aem.dot.common.helpers.AssertHelper;
 import com.adobe.aem.dot.common.helpers.PathEncodingHelper;
 import com.adobe.aem.dot.common.util.PathUtil;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class FileResolverTest {
   private ListAppender<ILoggingEvent> listAppender;
@@ -40,6 +45,9 @@ public class FileResolverTest {
   private String realPath;
   private String realBase;
   private String classPath;
+
+  @Rule
+  public EnvironmentVariablesRule environmentVariablesRule = new EnvironmentVariablesRule();
 
   @Before
   public void before() {
@@ -79,6 +87,18 @@ public class FileResolverTest {
             logsList.get(1).getMessage());
     assertEquals("Severity should be ERROR.", Level.ERROR, logsList.get(1).getLevel());
   }
+
+  @Test
+  public void resolveFileWithEnvVarSetTest() {
+    //construct path to an  existing configuration file in test resources
+    String workDir = Paths.get("src", "test", "resources", "dispatcher-includes", "src", "conf.dispatcher.d").toAbsolutePath().toString();
+    //set ENV_VAR to 'filters' folder  in path above
+    environmentVariablesRule.set("ENV_VAR", "filters");
+    // include the file in 'filters' folder
+    List<File> files =  fileResolver.resolveFiles("${ENV_VAR}/filter.any", workDir);
+    assertTrue("files are not empty", files.size()  >0);
+  }
+
 
   @Test
   public void resolveNonExistentDirectory() {
