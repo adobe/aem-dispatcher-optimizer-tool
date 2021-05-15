@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>dispatcher-optimizer-core</artifactId>
-  <version>1.0.17-SNAPSHOT</version>
+  <version>1.0.18</version>
 
   <properties>
     <maven.javadoc.skip>false</maven.javadoc.skip>
@@ -23,7 +23,7 @@
     <connection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</connection>
     <developerConnection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</developerConnection>
     <url>https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/core</url>
-    <tag>HEAD</tag>
+    <tag>core-v1.0.18</tag>
   </scm>
 
   <dependencies>
