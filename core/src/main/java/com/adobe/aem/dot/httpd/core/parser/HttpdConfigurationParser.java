@@ -341,7 +341,7 @@ public class HttpdConfigurationParser {
 
       if (!optional) {
         throw new FileNotFoundException(
-                MessageFormat.format("Configuration file was not found.  File=\"{}\"", configFile.getPath()));
+                MessageFormat.format("Configuration file was not found.  File=\"{0}\"", configFile.getPath()));
       }
     }
   }
