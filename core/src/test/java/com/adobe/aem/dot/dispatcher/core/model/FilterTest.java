@@ -138,11 +138,11 @@ public class FilterTest {
 
       Filter sixth = filters.get(5);
       assertNull("Null type", sixth.getType());
-      assertTrue("Very empty", sixth.toString().isEmpty());
+      assertEquals("Empty, aside from the label", "Label=nobrace", sixth.toString());
 
       Filter seventh = filters.get(6);
       assertNull("Null type", seventh.getType());
-      assertEquals("Equals without type", ",Suffix=top,Method=get,Glob=*top", seventh.toString());
+      assertEquals("Equals without type", "Label=notype,Suffix=top,Method=get,Glob=*top", seventh.toString());
       assertFalse("different class", seventh.equals(new FeedbackProcessor()));
       assertFalse("null", seventh.equals(null));
       assertNotEquals("hashcode", 0, seventh.hashCode());

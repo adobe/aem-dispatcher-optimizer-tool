@@ -52,7 +52,7 @@ public class RuleTest {
   @Before
   public void before() {
     // Get Logback Logger: create and start a ListAppender
-    listAppender = AssertHelper.getLogAppender(Rule.class);
+    listAppender = AssertHelper.getLogAppender(Filter.class);
   }
 
   @BeforeClass
@@ -86,13 +86,13 @@ public class RuleTest {
       assertNotEquals("Try the hashcode()", "hello", cache.hashCode());
       // ====================================================================
 
-      List<Rule> rules = cache.getRules().getValue();
+      List<Filter> rules = cache.getRules().getValue();
       assertNotNull(rules);
 
       assertEquals("Check filter size", 4, rules.size());
 
       // Check Rule values
-      Rule first = rules.get(0);
+      Filter first = rules.get(0);
       assertEquals("Check label 1", "0000", first.getLabel());
       assertEquals("Check glob 1", "*", first.getGlob());
       assertEquals("Check type 1", RuleType.ALLOW, first.getType());
@@ -107,7 +107,7 @@ public class RuleTest {
       assertNotNull("Should be a logger", first.getLogger());
       assertNotNull("Should be a class name", first.getSimpleClassName());
 
-      Rule second = rules.get(1);
+      Filter second = rules.get(1);
       assertEquals("Check label 2", "stout", second.getLabel());
       assertEquals("Check glob 2", "/en/news/'*?lang=en", second.getGlob());
       assertEquals("Check type 2", RuleType.DENY, second.getType());
@@ -118,11 +118,11 @@ public class RuleTest {
               second.getLabelData().getIncludedFrom());
       assertEquals("equals itself", second, second);
 
-      Rule third = rules.get(2);
+      Filter third = rules.get(2);
       assertNull("Null type", third.getType());
-      assertEquals("Equals without type", ",Label=notype", third.toString());
+      assertEquals("Equals without type", "Label=notype,Method=get", third.toString());
 
-      Rule fourth = rules.get(3);
+      Filter fourth = rules.get(3);
       assertTrue("Check label 3", StringUtils.isEmpty(fourth.getLabel()));
       assertEquals("Check glob 3", "*/private/*", fourth.getGlob());
       assertEquals("Check type 3", RuleType.DENY, fourth.getType());
@@ -181,13 +181,13 @@ public class RuleTest {
 
     List<ILoggingEvent> logsList = listAppender.list;
     assertEquals("Should be 7 log entries", 7, logsList.size());
-    assertTrue(logsList.get(0).getMessage().startsWith("Each rule must begin with a '{' character."));
+    assertTrue(logsList.get(0).getMessage().startsWith("Each filter rule must begin with a '{' character."));
     assertEquals("Severity should be ERROR.", Level.ERROR, logsList.get(0).getLevel());
 
-    assertTrue(logsList.get(1).getMessage().startsWith("Each rule must begin with a '{' character."));
+    assertTrue(logsList.get(1).getMessage().startsWith("Each filter rule must begin with a '{' character."));
     assertEquals("Severity should be ERROR.", Level.ERROR, logsList.get(1).getLevel());
 
-    assertTrue(logsList.get(2).getMessage().startsWith("A reserved token was used to label a Rule indicating a section may have been closed incorrectly.  Label=\"glob\""));
+    assertTrue(logsList.get(2).getMessage().startsWith("A reserved token was used to label a Filter indicating a section may have been closed incorrectly.  Label=\"glob\""));
     assertEquals("Severity should be WARN.", Level.WARN, logsList.get(2).getLevel());
   }
 }

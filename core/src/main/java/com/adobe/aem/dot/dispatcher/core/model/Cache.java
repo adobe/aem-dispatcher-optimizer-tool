@@ -49,7 +49,7 @@ public class Cache {
   private ConfigurationValue<Boolean> serveStaleOnError = DEFAULT_BOOLEAN_FALSE;
   private ConfigurationValue<Integer> gracePeriod = DEFAULT_INT_ZERO;
   private ConfigurationValue<Boolean> enableTTL = DEFAULT_BOOLEAN_FALSE;
-  private ConfigurationValue<List<Rule>> rules;
+  private ConfigurationValue<List<Filter>> rules;
   private ConfigurationValue<List<Rule>> invalidate;
   private ConfigurationValue<String> invalidateHandler;
   private ConfigurationValue<List<Rule>> allowedClients;
@@ -107,7 +107,7 @@ public class Cache {
           break;
         case "/rules":
           logger.trace("cache > rules");
-          ConfigurationValue<List<Rule>> rules = Rule.parseRules(reader);
+          ConfigurationValue<List<Filter>> rules = Filter.parseFilters(reader);
           cache.setRules(rules);
           break;
         case "/invalidate":

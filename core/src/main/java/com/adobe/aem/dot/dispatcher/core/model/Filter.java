@@ -213,7 +213,7 @@ public class Filter extends LabeledConfigurationValue {
     // Expect { to begin the filter block, unless there is no label.
     if (!skipLabel) {
       if (!reader.isNextChar('{', false)) {
-        FeedbackProcessor.error(logger,"Each filter must begin with a '{' character.",
+        FeedbackProcessor.error(logger,"Each filter rule must begin with a '{' character.",
                 reader.getCurrentConfigurationValue(), Severity.MAJOR);
         return new Filter();
       }
@@ -297,7 +297,8 @@ public class Filter extends LabeledConfigurationValue {
   @Override
   public String toString() {
     StringBuilder str = new StringBuilder();
-    appendIfNotEmpty(str, "Type", getType() == null ? null : getType().toString(), true);
+    appendIfNotEmpty(str, "Label", getLabel(), true);
+    appendIfNotEmpty(str, "Type", getType() == null ? null : getType().toString(), false);
     appendIfNotEmpty(str, "URL", getUrl(), false);
     appendIfNotEmpty(str, "Extension", getExtension(), false);
     appendIfNotEmpty(str, "Selectors", getSelectors(), false);

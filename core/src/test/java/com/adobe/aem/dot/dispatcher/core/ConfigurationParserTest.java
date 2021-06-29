@@ -157,11 +157,11 @@ public class ConfigurationParserTest {
   public void shouldParseCacheRules() {
     Cache cache = basicConfig.getFarms().get(0).getValue().getCache().getValue();
     // Check source
-    Rule rule1 = cache.getRules().getValue().get(0);
+    Filter rule1 = cache.getRules().getValue().get(0);
     assertEquals("Expect rule glob to be parsed", "*", rule1.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.DENY, rule1.getType());
 
-    Rule rule2 = cache.getRules().getValue().get(1);
+    Filter rule2 = cache.getRules().getValue().get(1);
     assertEquals("Expect rule glob to be parsed", "/content/*", rule2.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.ALLOW, rule2.getType());
   }
