@@ -5,12 +5,12 @@
   <parent>
     <groupId>com.adobe.aem.dot</groupId>
     <artifactId>dispatcher-optimizer-parent</artifactId>
-    <version>0.2.9-SNAPSHOT</version>
+    <version>0.2.8</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>dispatcher-optimizer-maven-plugin</artifactId>
-  <version>0.2.15-SNAPSHOT</version>
+  <version>0.2.16</version>
   <packaging>maven-plugin</packaging>
 
   <name>Dispatcher Optimizer - Maven plugin</name>
@@ -19,7 +19,7 @@
     <connection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</connection>
     <developerConnection>scm:git:git@github.com:adobe/aem-dispatcher-optimizer-tool.git</developerConnection>
     <url>https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/plugin</url>
-    <tag>plugin-v0.2.2</tag>
+    <tag>plugin-v0.2.16</tag>
   </scm>
 
   <properties>
@@ -82,7 +82,7 @@
     <dependency>
       <groupId>com.adobe.aem.dot</groupId>
       <artifactId>dispatcher-optimizer-core</artifactId>
-      <version>1.0.19-SNAPSHOT</version>
+      <version>1.0.20</version>
       <scope>compile</scope>
     </dependency>
 
