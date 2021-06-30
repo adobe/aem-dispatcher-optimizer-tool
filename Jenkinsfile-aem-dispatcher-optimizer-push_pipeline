@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'k8s-aem-on-prem' }
     
     environment{
         GITHUB_CLONE_URL = 'https://github.com/adobe/aem-dispatcher-optimizer-tool.git'
