@@ -37,8 +37,8 @@ import java.util.List;
 @Setter(AccessLevel.PRIVATE)
 public class AuthChecker extends LabeledConfigurationValue {
   private ConfigurationValue<String> url;
-  private ConfigurationValue<List<Filter>> filter;
-  private ConfigurationValue<List<Rule>> headers;     // Each /headers are in the form of a Rule (i.e. glob & type)
+  private ConfigurationValue<List<FilterRule>> filter;
+  private ConfigurationValue<List<GlobRule>> headers;     // Each /headers are in the form of a Rule (i.e. glob & type)
 
   private static final Logger logger = LoggerFactory.getLogger(AuthChecker.class);
 
@@ -77,12 +77,12 @@ public class AuthChecker extends LabeledConfigurationValue {
           break;
         case "/filter":
           logger.trace("AuthChecker > filter");
-          ConfigurationValue<List<Filter>> filters = Filter.parseFilters(reader);
+          ConfigurationValue<List<FilterRule>> filters = FilterRule.parseFilters(reader);
           authChecker.setFilter(filters);
           break;
         case "/headers":
           logger.trace("AuthChecker > headers");
-          ConfigurationValue<List<Rule>> tokens = Rule.parseRules(reader);
+          ConfigurationValue<List<GlobRule>> tokens = GlobRule.parseRules(reader);
           authChecker.setHeaders(tokens);
           break;
         case "}":

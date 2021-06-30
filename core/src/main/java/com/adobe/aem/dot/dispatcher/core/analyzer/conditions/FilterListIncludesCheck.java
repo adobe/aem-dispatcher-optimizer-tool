@@ -20,7 +20,7 @@ import com.adobe.aem.dot.common.analyzer.Check;
 import com.adobe.aem.dot.common.analyzer.CheckResult;
 import com.adobe.aem.dot.common.analyzer.Condition;
 import com.adobe.aem.dot.dispatcher.core.model.ConfigurationValue;
-import com.adobe.aem.dot.dispatcher.core.model.Filter;
+import com.adobe.aem.dot.dispatcher.core.model.FilterRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,9 +46,9 @@ public class FilterListIncludesCheck extends Check {
     }
 
     try {
-      ConfigurationValue<List<Filter>> wrappedConfigFilters = (ConfigurationValue<List<Filter>>) configurationValue;
-      List<Filter> configFilters = wrappedConfigFilters.getValue();
-      Filter checkFilter = this.getFilterValue();
+      ConfigurationValue<List<FilterRule>> wrappedConfigFilters = (ConfigurationValue<List<FilterRule>>) configurationValue;
+      List<FilterRule> configFilters = wrappedConfigFilters.getValue();
+      FilterRule checkFilter = this.getFilterValue();
       return new CheckResult(this.processFailIf(configFilters != null && !configFilters.isEmpty() &&
               configFilters.contains(checkFilter)),
               wrappedConfigFilters.getConfigurationSource());

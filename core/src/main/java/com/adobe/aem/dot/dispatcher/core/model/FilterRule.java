@@ -37,7 +37,7 @@ import java.util.List;
  */
 @Getter
 @Setter(AccessLevel.PRIVATE)
-public class Filter extends LabeledConfigurationValue {
+public class FilterRule extends LabeledConfigurationValue {
   private ConfigurationValue<RuleType> type;
   private ConfigurationValue<String> url;
   private ConfigurationValue<String> extension;
@@ -48,7 +48,7 @@ public class Filter extends LabeledConfigurationValue {
   private ConfigurationValue<String> query;
   private ConfigurationValue<String> glob;
 
-  private static final Logger logger = LoggerFactory.getLogger(Filter.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(FilterRule.class.getName());
 
   Logger getLogger() {
     return logger;
@@ -136,7 +136,7 @@ public class Filter extends LabeledConfigurationValue {
 
     if (o == null || getClass() != o.getClass()) return false;
 
-    Filter filter = (Filter) o;
+    FilterRule filter = (FilterRule) o;
 
     return new MatchesBuilder()
             .append(getType(), filter.getType())
@@ -165,8 +165,8 @@ public class Filter extends LabeledConfigurationValue {
             .toHashCode();
   }
 
-  static ConfigurationValue<List<Filter>> parseFilters(ConfigurationReader reader) throws ConfigurationSyntaxException {
-    List<Filter> filters = new ArrayList<>();
+  static ConfigurationValue<List<FilterRule>> parseFilters(ConfigurationReader reader) throws ConfigurationSyntaxException {
+    List<FilterRule> filters = new ArrayList<>();
 
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
@@ -190,7 +190,7 @@ public class Filter extends LabeledConfigurationValue {
       } else {
         // If the next character is a open brace, the label (/0001) was skipped.
         boolean missingLabel = currentToken.getValue().equals("{");
-        Filter filter = Filter.parseFilter(reader, missingLabel);
+        FilterRule filter = FilterRule.parseFilter(reader, missingLabel);
         if (missingLabel) {
           FeedbackProcessor.info(logger, "Label on Filter is missing.", currentToken);
         } else {
@@ -205,9 +205,9 @@ public class Filter extends LabeledConfigurationValue {
             firstToken.getFileName(), firstToken.getLineNumber(), firstToken.getIncludedFrom());
   }
 
-  private static Filter parseFilter(ConfigurationReader reader, boolean skipLabel)
+  private static FilterRule parseFilter(ConfigurationReader reader, boolean skipLabel)
           throws ConfigurationSyntaxException {
-    Filter filter = new Filter();
+    FilterRule filter = new FilterRule();
     ConfigurationValue<String> nextToken;
 
     // Expect { to begin the filter block, unless there is no label.
@@ -215,7 +215,7 @@ public class Filter extends LabeledConfigurationValue {
       if (!reader.isNextChar('{', false)) {
         FeedbackProcessor.error(logger,"Each filter rule must begin with a '{' character.",
                 reader.getCurrentConfigurationValue(), Severity.MAJOR);
-        return new Filter();
+        return new FilterRule();
       }
       reader.next(); // Advance the reader's pointer passed the "{" marker.
     }

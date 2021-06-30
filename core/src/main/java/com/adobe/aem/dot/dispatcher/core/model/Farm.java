@@ -28,7 +28,6 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +47,7 @@ public class Farm extends LabeledConfigurationValue {
   private List<ConfigurationValue<String>> clientHeaders;
   private List<ConfigurationValue<String>> virtualHosts;
   private ConfigurationValue<List<Render>> renders;
-  private ConfigurationValue<List<Filter>> filter;
+  private ConfigurationValue<List<FilterRule>> filter;
   private ConfigurationValue<Cache> cache;
   private ConfigurationValue<Statistics> statistics;
   private ConfigurationValue<VanityUrls> vanityUrls;
@@ -201,7 +200,7 @@ public class Farm extends LabeledConfigurationValue {
           break;
         case "/filter":
           logger.trace("farm > filter");
-          ConfigurationValue<List<Filter>> filters = Filter.parseFilters(reader);
+          ConfigurationValue<List<FilterRule>> filters = FilterRule.parseFilters(reader);
           farm.setFilter(filters);
           break;
         case "/cache":

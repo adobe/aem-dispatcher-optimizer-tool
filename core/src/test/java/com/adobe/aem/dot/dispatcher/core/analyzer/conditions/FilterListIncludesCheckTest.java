@@ -28,7 +28,7 @@ import com.adobe.aem.dot.common.parser.ConfigurationParseResults;
 import com.adobe.aem.dot.common.util.PathUtil;
 import com.adobe.aem.dot.dispatcher.core.DispatcherConstants;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
-import com.adobe.aem.dot.dispatcher.core.model.Filter;
+import com.adobe.aem.dot.dispatcher.core.model.FilterRule;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -62,7 +62,7 @@ public class FilterListIncludesCheckTest {
 
   @Test
   public void emptyListCase() {
-    List<Filter> list = new ArrayList<>();
+    List<FilterRule> list = new ArrayList<>();
     FilterListIncludesCheck check = new FilterListIncludesCheck();
     CheckResult checkResult = check.performCheck(list);
     assertFalse("empty list value should be negative", checkResult.isPassed());

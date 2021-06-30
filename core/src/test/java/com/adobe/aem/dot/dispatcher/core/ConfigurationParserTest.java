@@ -22,9 +22,9 @@ import com.adobe.aem.dot.dispatcher.core.model.Cache;
 import com.adobe.aem.dot.dispatcher.core.model.ConfigurationValue;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
 import com.adobe.aem.dot.dispatcher.core.model.Farm;
-import com.adobe.aem.dot.dispatcher.core.model.Filter;
+import com.adobe.aem.dot.dispatcher.core.model.FilterRule;
 import com.adobe.aem.dot.dispatcher.core.model.Render;
-import com.adobe.aem.dot.dispatcher.core.model.Rule;
+import com.adobe.aem.dot.dispatcher.core.model.GlobRule;
 import com.adobe.aem.dot.dispatcher.core.model.RuleType;
 import com.adobe.aem.dot.dispatcher.core.model.Statistics;
 import com.adobe.aem.dot.dispatcher.core.model.StatisticsRule;
@@ -116,7 +116,7 @@ public class ConfigurationParserTest {
 
   @Test
   public void shouldParseFilterRules() {
-    Filter filter1 = basicConfig.getFarms().get(0).getValue().getFilter().getValue().get(0);
+    FilterRule filter1 = basicConfig.getFarms().get(0).getValue().getFilter().getValue().get(0);
     assertEquals("Expect name to be parsed", "0001", filter1.getLabel());
 
     // type
@@ -124,7 +124,7 @@ public class ConfigurationParserTest {
     // url
     assertEquals("Expect url to be parsed", "*", filter1.getUrl());
 
-    Filter filter2 = basicConfig.getFarms().get(0).getValue().getFilter().getValue().get(1);
+    FilterRule filter2 = basicConfig.getFarms().get(0).getValue().getFilter().getValue().get(1);
     assertEquals("Expect name to be parsed", "0002", filter2.getLabel());
 
     // type
@@ -135,7 +135,7 @@ public class ConfigurationParserTest {
     // path
     assertEquals("Expect path to be parsed", "/content/dispatchertester", filter2.getPath());
 
-    Filter filter3 = basicConfig.getFarms().get(0).getValue().getFilter().getValue().get(2);
+    FilterRule filter3 = basicConfig.getFarms().get(0).getValue().getFilter().getValue().get(2);
     assertEquals("Expect suffix to be parsed", "*", filter3.getSuffix());
   }
 
@@ -157,11 +157,11 @@ public class ConfigurationParserTest {
   public void shouldParseCacheRules() {
     Cache cache = basicConfig.getFarms().get(0).getValue().getCache().getValue();
     // Check source
-    Filter rule1 = cache.getRules().getValue().get(0);
+    FilterRule rule1 = cache.getRules().getValue().get(0);
     assertEquals("Expect rule glob to be parsed", "*", rule1.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.DENY, rule1.getType());
 
-    Filter rule2 = cache.getRules().getValue().get(1);
+    FilterRule rule2 = cache.getRules().getValue().get(1);
     assertEquals("Expect rule glob to be parsed", "/content/*", rule2.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.ALLOW, rule2.getType());
   }
@@ -169,13 +169,13 @@ public class ConfigurationParserTest {
   @Test
   public void shouldParseCacheInvalidateRules() {
     Cache cache = basicConfig.getFarms().get(0).getValue().getCache().getValue();
-    Rule rule1 = cache.getInvalidate().getValue().get(0);
+    GlobRule rule1 = cache.getInvalidate().getValue().get(0);
     assertEquals("Expect rule name to be parsed", "0000", rule1.getLabel());
     assertEquals("Expect rule glob to be parsed", "*", rule1.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.DENY, rule1.getType());
 
 
-    Rule rule3 = cache.getInvalidate().getValue().get(2);
+    GlobRule rule3 = cache.getInvalidate().getValue().get(2);
     assertEquals("Expect rule name to be parsed", "0002", rule3.getLabel());
     assertEquals("Expect rule glob to be parsed", "/etc/segmentation.segment.js", rule3.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.ALLOW, rule3.getType());
@@ -184,13 +184,13 @@ public class ConfigurationParserTest {
   @Test
   public void shouldParseCacheAllowedClientsRules() {
     Cache cache = basicConfig.getFarms().get(0).getValue().getCache().getValue();
-    Rule rule1 = cache.getAllowedClients().getValue().get(0);
+    GlobRule rule1 = cache.getAllowedClients().getValue().get(0);
     assertEquals("Expect rule name to be parsed", "0000", rule1.getLabel());
     assertEquals("Expect rule glob to be parsed", "*", rule1.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.DENY, rule1.getType());
 
 
-    Rule rule2 = cache.getAllowedClients().getValue().get(1);
+    GlobRule rule2 = cache.getAllowedClients().getValue().get(1);
     assertEquals("Expect rule name to be parsed", "0001", rule2.getLabel());
     assertEquals("Expect rule glob to be parsed", "127.0.0.1", rule2.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.ALLOW, rule2.getType());
@@ -199,13 +199,13 @@ public class ConfigurationParserTest {
   @Test
   public void shouldParseCacheIgnoreUrlParamsRules() {
     Cache cache = basicConfig.getFarms().get(0).getValue().getCache().getValue();
-    Rule rule1 = cache.getIgnoreUrlParams().getValue().get(0);
+    GlobRule rule1 = cache.getIgnoreUrlParams().getValue().get(0);
     assertEquals("Expect rule name to be parsed", "0101", rule1.getLabel());
     assertEquals("Expect rule glob to be parsed", "*", rule1.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.ALLOW, rule1.getType());
 
 
-    Rule rule2 = cache.getIgnoreUrlParams().getValue().get(1);
+    GlobRule rule2 = cache.getIgnoreUrlParams().getValue().get(1);
     assertEquals("Expect rule name to be parsed", "0202", rule2.getLabel());
     assertEquals("Expect rule glob to be parsed", "q", rule2.getGlob());
     assertEquals("Expect rule type to be parsed", RuleType.DENY, rule2.getType());

@@ -38,13 +38,13 @@ import java.util.List;
  */
 @Getter
 @Setter(AccessLevel.PRIVATE)
-public class Rule extends LabeledConfigurationValue {
+public class GlobRule extends LabeledConfigurationValue {
   private ConfigurationValue<String> glob;
   private ConfigurationValue<RuleType> type;
 
-  private static final Logger logger = LoggerFactory.getLogger(Rule.class);
+  private static final Logger logger = LoggerFactory.getLogger(GlobRule.class);
 
-  public Rule() {  }
+  public GlobRule() {  }
 
   Logger getLogger() {
     return logger;
@@ -80,8 +80,8 @@ public class Rule extends LabeledConfigurationValue {
     this.type = new ConfigurationValue<>(RuleType.valueOf(type));
   }
 
-  static ConfigurationValue<List<Rule>> parseRules(ConfigurationReader reader) throws ConfigurationSyntaxException {
-    List<Rule> rules = new ArrayList<>();
+  static ConfigurationValue<List<GlobRule>> parseRules(ConfigurationReader reader) throws ConfigurationSyntaxException {
+    List<GlobRule> rules = new ArrayList<>();
 
     // Expect { to begin the block
     if (!reader.isNextChar('{', false)) {
@@ -105,7 +105,7 @@ public class Rule extends LabeledConfigurationValue {
       } else {
         // If the next character is a open brace, the label (/0001) was skipped.
         boolean missingLabel = currentToken.getValue().equals("{");
-        Rule rule = Rule.parseRule(reader, missingLabel);
+        GlobRule rule = GlobRule.parseRule(reader, missingLabel);
         if (missingLabel) {
           FeedbackProcessor.info(logger, "Label on Rule is missing.", currentToken);
         } else {
@@ -120,8 +120,8 @@ public class Rule extends LabeledConfigurationValue {
             firstToken.getFileName(), firstToken.getLineNumber(), firstToken.getIncludedFrom());
   }
 
-  private static Rule parseRule(ConfigurationReader reader, boolean skipLabel) throws ConfigurationSyntaxException {
-    Rule rule = new Rule();
+  private static GlobRule parseRule(ConfigurationReader reader, boolean skipLabel) throws ConfigurationSyntaxException {
+    GlobRule rule = new GlobRule();
     ConfigurationValue<String> nextToken;
 
     // Expect { to begin the rule block, unless there is no label.
@@ -129,7 +129,7 @@ public class Rule extends LabeledConfigurationValue {
       if (!reader.isNextChar('{', false)) {
         FeedbackProcessor.error(logger,"Each rule must begin with a '{' character.",
                 reader.getCurrentConfigurationValue(), Severity.MAJOR);
-        return new Rule();
+        return new GlobRule();
       }
       reader.next(); // Advance the reader's pointer passed the "{" marker.
     }
@@ -177,7 +177,7 @@ public class Rule extends LabeledConfigurationValue {
 
     if (o == null || getClass() != o.getClass()) return false;
 
-    Rule rule = (Rule) o;
+    GlobRule rule = (GlobRule) o;
 
     return new MatchesBuilder()
             .append(getGlob(), rule.getGlob())

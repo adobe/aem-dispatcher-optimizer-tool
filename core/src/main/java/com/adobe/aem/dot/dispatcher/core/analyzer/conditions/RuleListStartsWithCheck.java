@@ -20,7 +20,7 @@ import com.adobe.aem.dot.common.analyzer.Check;
 import com.adobe.aem.dot.common.analyzer.CheckResult;
 import com.adobe.aem.dot.common.analyzer.Condition;
 import com.adobe.aem.dot.dispatcher.core.model.ConfigurationValue;
-import com.adobe.aem.dot.dispatcher.core.model.Rule;
+import com.adobe.aem.dot.dispatcher.core.model.GlobRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,9 +46,9 @@ public class RuleListStartsWithCheck extends Check {
     }
 
     try {
-      ConfigurationValue<List<Rule>> wrappedConfigRules = (ConfigurationValue<List<Rule>>) configurationValue;
-      List<Rule> configRules = wrappedConfigRules.getValue();
-      Rule checkRule = this.getRuleValue();
+      ConfigurationValue<List<GlobRule>> wrappedConfigRules = (ConfigurationValue<List<GlobRule>>) configurationValue;
+      List<GlobRule> configRules = wrappedConfigRules.getValue();
+      GlobRule checkRule = this.getRuleValue();
       return new CheckResult(this.processFailIf(configRules != null && !configRules.isEmpty() &&
               checkRule.equals(configRules.get(0))),
               wrappedConfigRules.getConfigurationSource());
