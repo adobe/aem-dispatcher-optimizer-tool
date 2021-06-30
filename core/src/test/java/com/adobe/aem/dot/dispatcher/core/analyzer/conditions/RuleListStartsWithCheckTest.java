@@ -28,7 +28,7 @@ import com.adobe.aem.dot.common.parser.ConfigurationParseResults;
 import com.adobe.aem.dot.common.util.PathUtil;
 import com.adobe.aem.dot.dispatcher.core.DispatcherConstants;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
-import com.adobe.aem.dot.dispatcher.core.model.Rule;
+import com.adobe.aem.dot.dispatcher.core.model.GlobRule;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -62,7 +62,7 @@ public class RuleListStartsWithCheckTest {
 
   @Test
   public void emptyListCase() {
-    List<Rule> list = new ArrayList<>();
+    List<GlobRule> list = new ArrayList<>();
     RuleListStartsWithCheck check = new RuleListStartsWithCheck();
     CheckResult checkResult = check.performCheck(list);
     assertFalse("empty list value should be negative", checkResult.isPassed());

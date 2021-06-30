@@ -49,11 +49,11 @@ public class Cache {
   private ConfigurationValue<Boolean> serveStaleOnError = DEFAULT_BOOLEAN_FALSE;
   private ConfigurationValue<Integer> gracePeriod = DEFAULT_INT_ZERO;
   private ConfigurationValue<Boolean> enableTTL = DEFAULT_BOOLEAN_FALSE;
-  private ConfigurationValue<List<Rule>> rules;
-  private ConfigurationValue<List<Rule>> invalidate;
+  private ConfigurationValue<List<FilterRule>> rules;
+  private ConfigurationValue<List<GlobRule>> invalidate;
   private ConfigurationValue<String> invalidateHandler;
-  private ConfigurationValue<List<Rule>> allowedClients;
-  private ConfigurationValue<List<Rule>> ignoreUrlParams;
+  private ConfigurationValue<List<GlobRule>> allowedClients;
+  private ConfigurationValue<List<GlobRule>> ignoreUrlParams;
   private List<ConfigurationValue<String>> headers;
   private ConfigurationValue<String> mode = new ConfigurationValue<>(DEFAULT_MODE_VALUE, DEFAULT_VALUE_FILE_NAME, 0);
 
@@ -107,12 +107,12 @@ public class Cache {
           break;
         case "/rules":
           logger.trace("cache > rules");
-          ConfigurationValue<List<Rule>> rules = Rule.parseRules(reader);
+          ConfigurationValue<List<FilterRule>> rules = FilterRule.parseFilters(reader);
           cache.setRules(rules);
           break;
         case "/invalidate":
           logger.trace("cache > invalidate");
-          ConfigurationValue<List<Rule>> invalidateRules = Rule.parseRules(reader);
+          ConfigurationValue<List<GlobRule>> invalidateRules = GlobRule.parseRules(reader);
           cache.setInvalidate(invalidateRules);
           break;
         case "/invalidateHandler":
@@ -127,12 +127,12 @@ public class Cache {
           break;
         case "/allowedClients":
           logger.trace("cache > allowedClients");
-          ConfigurationValue<List<Rule>> allowedClients = Rule.parseRules(reader);
+          ConfigurationValue<List<GlobRule>> allowedClients = GlobRule.parseRules(reader);
           cache.setAllowedClients(allowedClients);
           break;
         case "/ignoreUrlParams":
           logger.trace("cache > ignoreUrlParams");
-          ConfigurationValue<List<Rule>> ignoreUrlParams = Rule.parseRules(reader);
+          ConfigurationValue<List<GlobRule>> ignoreUrlParams = GlobRule.parseRules(reader);
           cache.setIgnoreUrlParams(ignoreUrlParams);
           break;
         case "/headers":

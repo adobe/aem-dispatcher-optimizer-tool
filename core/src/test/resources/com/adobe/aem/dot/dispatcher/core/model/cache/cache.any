@@ -30,4 +30,16 @@
   /mode "0200"
   /gracePeriod "2"
   /enableTTL "1"
+
+  /rules {
+    /0000  {  /glob "*"   /type "deny" }
+    /0001  {  /glob "*.html" /type "allow" }
+    /0002  {
+      /type "allow"
+      /path "/etc"
+      /selectors '(test-selector)'
+      /extension '(css|js)'
+      /suffix "test-suffix"
+    }
+  }
 }

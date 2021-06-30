@@ -35,7 +35,7 @@ import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.RuleListIncludesChe
 import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.RuleListStartsWithCheck;
 import com.adobe.aem.dot.dispatcher.core.model.ConfigurationValue;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
-import com.adobe.aem.dot.dispatcher.core.model.Rule;
+import com.adobe.aem.dot.dispatcher.core.model.GlobRule;
 import com.adobe.aem.dot.dispatcher.core.model.RuleType;
 import org.junit.Assert;
 import org.junit.Before;
@@ -234,8 +234,8 @@ public class IgnoreUrlParamsAllowListRuleTest {
     assertEquals("Severity should be ERROR.", Level.ERROR, logsList.get(2).getLevel());
   }
 
-  private Rule createRule(String label, String glob, RuleType type) {
-    Rule rule = new Rule();
+  private GlobRule createRule(String label, String glob, RuleType type) {
+    GlobRule rule = new GlobRule();
     rule.setLabel(new ConfigurationValue<>(label, "IgnoreUrlParamsAllowListRuleTest.any", 1));
     rule.setGlob(new ConfigurationValue<>(glob, "IgnoreUrlParamsAllowListRuleTest.any", 2));
     rule.setType(new ConfigurationValue<>(type, "IgnoreUrlParamsAllowListRuleTest.any", 3));

@@ -56,7 +56,7 @@ public class FilterTest {
   @Before
   public void before() {
     // Get Logback Logger: create and start a ListAppender
-    listAppender = AssertHelper.getLogAppender(Filter.class);
+    listAppender = AssertHelper.getLogAppender(FilterRule.class);
   }
 
 
@@ -77,13 +77,13 @@ public class FilterTest {
       assertEquals("Should be 1 farm", 1, config.getFarms().size());
 
       Farm farm = config.getFarms().get(0).getValue();
-      List<Filter> filters = farm.getFilter().getValue();
+      List<FilterRule> filters = farm.getFilter().getValue();
       assertNotNull(filters);
 
       assertEquals("Check filter size", 7, filters.size());
 
       // Check Filter values
-      Filter first = filters.get(0);
+      FilterRule first = filters.get(0);
       assertEquals("Check label 1", "0001", first.getLabel());
       assertNull("Url 1 is null", first.getUrl());
       assertEquals("Check glob 1", "*", first.getGlob());
@@ -99,20 +99,20 @@ public class FilterTest {
       assertEquals("Try the equals()", first, first);
       assertNotEquals("Try the equals()", new FeedbackProcessor(), first);  // Equals on different class.
 
-      Filter second = filters.get(1);
+      FilterRule second = filters.get(1);
       assertEquals("Check label 2", "0002", second.getLabel());
       assertNull("Glob 2 is null", second.getGlob());
       assertEquals("Check glob 2", "/libs/cq/workflow/content/console*", second.getUrl());
       assertEquals("Check type 2", RuleType.ALLOW, second.getType());
 
-      Filter third = filters.get(2);
+      FilterRule third = filters.get(2);
       assertEquals("Check label 3", "hi", third.getLabel());
       assertNull("Glob 3 is null", third.getGlob());
       assertEquals("Check glob 3", "*.asp", third.getUrl());
       assertEquals("Check type 3", RuleType.DENY, third.getType());
       assertEquals("Check path 3", "a_path", third.getPath());
 
-      Filter fourth = filters.get(3);
+      FilterRule fourth = filters.get(3);
       assertEquals("Check label 4", "there", fourth.getLabel());
       assertNull("Glob 4 is null", fourth.getGlob());
       assertEquals("Check glob 4", "/content/[.]*.form.html", fourth.getUrl());
@@ -123,7 +123,7 @@ public class FilterTest {
       assertNull("Check suffix 4", fourth.getSuffix());
       assertNull("Check selectors 4", fourth.getSelectors());
 
-      Filter fifth = filters.get(4);
+      FilterRule fifth = filters.get(4);
       assertEquals("Check label 5", "tester", fifth.getLabel());
       assertNull("Glob 5 is null", fifth.getGlob());
       assertEquals("Check glob 5", "/huh", fifth.getUrl());
@@ -136,13 +136,13 @@ public class FilterTest {
       fifth.setGlob("*");
       assertEquals("Check glob", "*", fifth.getGlob());
 
-      Filter sixth = filters.get(5);
+      FilterRule sixth = filters.get(5);
       assertNull("Null type", sixth.getType());
-      assertTrue("Very empty", sixth.toString().isEmpty());
+      assertEquals("Empty, aside from the label", "Label=nobrace", sixth.toString());
 
-      Filter seventh = filters.get(6);
+      FilterRule seventh = filters.get(6);
       assertNull("Null type", seventh.getType());
-      assertEquals("Equals without type", ",Suffix=top,Method=get,Glob=*top", seventh.toString());
+      assertEquals("Equals without type", "Label=notype,Suffix=top,Method=get,Glob=*top", seventh.toString());
       assertFalse("different class", seventh.equals(new FeedbackProcessor()));
       assertFalse("null", seventh.equals(null));
       assertNotEquals("hashcode", 0, seventh.hashCode());
@@ -166,7 +166,7 @@ public class FilterTest {
       assertEquals("Should be 1 farm", 1, config.getFarms().size());
 
       Farm farm = config.getFarms().get(0).getValue();
-      List<Filter> filters = farm.getFilter().getValue();
+      List<FilterRule> filters = farm.getFilter().getValue();
       assertNotNull(filters);
 
       assertEquals("Check filter size", 3, filters.size());
@@ -197,12 +197,12 @@ public class FilterTest {
 
   @Test
   public void filterSelectorSuffixDifferenceNotEqual() {
-    Filter selectorFilter = new Filter();
+    FilterRule selectorFilter = new FilterRule();
     selectorFilter.setType("DENY");
     selectorFilter.setURL("/content*");
     selectorFilter.setSelectors("*");
 
-    Filter suffixFilter = new Filter();
+    FilterRule suffixFilter = new FilterRule();
     suffixFilter.setType("DENY");
     suffixFilter.setURL("/content*");
     suffixFilter.setSuffix("*");

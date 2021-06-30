@@ -24,8 +24,8 @@ import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.IntGreaterOrEqualCh
 import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.IsUniqueLabelCheck;
 import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.RuleListIncludesCheck;
 import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.RuleListStartsWithCheck;
-import com.adobe.aem.dot.dispatcher.core.model.Filter;
-import com.adobe.aem.dot.dispatcher.core.model.Rule;
+import com.adobe.aem.dot.dispatcher.core.model.FilterRule;
+import com.adobe.aem.dot.dispatcher.core.model.GlobRule;
 import com.adobe.aem.dot.httpd.core.analyzer.conditions.HasDirectiveCheck;
 import com.adobe.aem.dot.httpd.core.model.Directive;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -58,8 +58,8 @@ import org.slf4j.LoggerFactory;
 @Setter
 public abstract class Check {
   private String value;
-  private Rule ruleValue;
-  private Filter filterValue;
+  private GlobRule ruleValue;
+  private FilterRule filterValue;
   private Directive directiveValue;
   private String context;
   private boolean failIf = false;

@@ -23,7 +23,7 @@ import com.adobe.aem.dot.dispatcher.core.DispatcherConstants;
 import com.adobe.aem.dot.dispatcher.core.model.ConfigurationValue;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
 import com.adobe.aem.dot.dispatcher.core.model.Farm;
-import com.adobe.aem.dot.dispatcher.core.model.Filter;
+import com.adobe.aem.dot.dispatcher.core.model.FilterRule;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -79,7 +79,7 @@ public class AnalyzerRuleTest {
     // Change the rule's element to farm.filter
     testRule1.setElement("farm.filter");
     checkTarget = testRule1.determineCheckTarget(farm);
-    ConfigurationValue<List<Filter>> filtersTarget = (ConfigurationValue<List<Filter>>) checkTarget;
+    ConfigurationValue<List<FilterRule>> filtersTarget = (ConfigurationValue<List<FilterRule>>) checkTarget;
     assertEquals("Should extract the list of filters from the farm", "/content/test-filter/*",
             filtersTarget.getValue().get(0).getGlob());
   }

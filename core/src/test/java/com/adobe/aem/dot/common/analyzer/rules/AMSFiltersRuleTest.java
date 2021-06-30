@@ -29,7 +29,7 @@ import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.FilterListIncludesC
 import com.adobe.aem.dot.dispatcher.core.analyzer.conditions.FilterListStartsWithCheck;
 import com.adobe.aem.dot.dispatcher.core.model.ConfigurationValue;
 import com.adobe.aem.dot.dispatcher.core.model.DispatcherConfiguration;
-import com.adobe.aem.dot.dispatcher.core.model.Filter;
+import com.adobe.aem.dot.dispatcher.core.model.FilterRule;
 import com.adobe.aem.dot.dispatcher.core.model.RuleType;
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,8 +50,8 @@ public class AMSFiltersRuleTest {
 
   private AnalyzerRule amsFiltersRule;
   private RuleProcessor ruleProcessor;
-  private Filter denyAllUrls;
-  private Filter anyAllowWithMethodCondition;
+  private FilterRule denyAllUrls;
+  private FilterRule anyAllowWithMethodCondition;
   private Check check1;
   private Check check2;
 
@@ -61,7 +61,7 @@ public class AMSFiltersRuleTest {
     // 1st check
     this.check1 = new FilterListStartsWithCheck();
     // Expect a DENY of /url "*" as the first filter
-    denyAllUrls = new Filter();
+    denyAllUrls = new FilterRule();
     denyAllUrls.setType(new ConfigurationValue<>(RuleType.DENY, "AMSFiltersRuleTest.any", 1));
     denyAllUrls.setUrl(new ConfigurationValue<>("*", "AMSFiltersRuleTest.any", 2));
     this.check1.setFilterValue(denyAllUrls);
@@ -69,7 +69,7 @@ public class AMSFiltersRuleTest {
     // 2nd check
     this.check2 = new FilterListIncludesCheck();
     // Expect a DENY of a number of selectors & extensions next
-    Filter denyContentGrabbing = new Filter();
+    FilterRule denyContentGrabbing = new FilterRule();
     denyContentGrabbing.setType(new ConfigurationValue<>(RuleType.DENY, "AMSFiltersRuleTest.any", 3));
     denyContentGrabbing.setExtension(new ConfigurationValue<>("(json|xml|html|feed)", "AMSFiltersRuleTest.any", 4));
     denyContentGrabbing.setSelectors(new ConfigurationValue<>("(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)", "AMSFiltersRuleTest.any", 5));
@@ -91,7 +91,7 @@ public class AMSFiltersRuleTest {
      *   }
      * }
      */
-    anyAllowWithMethodCondition = new Filter();
+    anyAllowWithMethodCondition = new FilterRule();
     anyAllowWithMethodCondition.setType(new ConfigurationValue<>(RuleType.ALLOW, "AMSFiltersRuleTest.any", 6));
     anyAllowWithMethodCondition.setMethod(new ConfigurationValue<>("regex(.*)", "AMSFiltersRuleTest.any", 7));
 
